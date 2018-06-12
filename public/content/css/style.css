@@ -1,0 +1,142 @@
+.navbar{
+    margin: 0px;
+    padding: 10px;       
+}
+
+.container{  
+    margin: 10px;
+    margin-top: 50px;
+}
+
+li:hover > .dropdown-menu{
+    display: block;
+    background-color: #2a91c7;
+}
+
+/*.dropdown-menu ul{
+    top: 0px;
+    margin-left: 160px;
+}
+*/
+/*.dropdown-menu{
+  color: #000;
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+} 
+*/
+/*.dropdown-menu li{
+  color: #000;
+  list-style: none;
+  border: 1px solid #efefef;
+  height: 30px;
+  width: 50px;
+  text-align: center;
+  line-height: 30px;
+  position: relative;
+}*/
+
+.dropdown-menu a{
+  /*text-decoration: none;*/
+  /*color: #000;*/
+  /*display: block;*/
+}
+
+.dropdown-menu a:hover{
+  background: #fff;
+}
+
+.custom-caret-right {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #000;
+    margin-top: 5px;
+    margin-right: -10px;    
+}
+
+.dropdown-menu > li > a:hover{
+    background-color: #fff;
+    color: #fff;
+}
+
+.dropdown-menu > li > a:hover > .custom-caret-right {
+    border-left-color: #fff;
+}
+
+.table-striped{
+    background-color: #efefef;
+}
+
+.bg-custom{
+    /*background-color: #BF00EF;*/
+    background-color: #286090;
+}
+
+.color-white{
+    color: blue;
+
+}
+
+.flipkart-navbar-input {
+    padding: 11px 16px;
+    background-color: #fff;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    width: 320px;
+    height: 32px;
+    margin-right: -38px;
+    outline: 0 none;
+    font-size: 15px;
+}
+
+.flipkart-navbar-button {
+    background-color: #fff;
+    /*height: 33px;*/
+    border: 0px solid #fff;  
+    /*border-bottom: 1px solid #efeffe; */
+    /*border-top: 1px solid #efeffe; */
+    /*color: #000;*/
+    /*border-radius: 0 2px 2px 0;*/
+    /*padding: 5px 5px 5px 5px;*/
+    /*padding-right: 5px;*/
+    padding: 2px;
+    align-items: center;
+    /*margin-left: -5px;*/
+    cursor: pointer;
+}
+
+.masthead{
+    position:absolute;
+    /*background-color:#212529;*/
+    background:url('/images/banner.png') no-repeat center center;
+    height: 550px;
+    -webkit-background-size:cover;
+    -moz-background-size:cover;
+    -o-background-size:cover;
+    background-size:cover;
+    padding: 10rem;
+}
+.masthead .overlay{
+    position:absolute;
+    background-color:#212529;
+    height:100%;
+    width:100%;
+    top:0;
+    left:0;
+    opacity:.3
+}
+
+.item-panel{
+  background: #efefef;
+  border-radius: 10px;
+  margin: 10px;
+  /*margin-bottom: 50px;*/
+  padding: 5px;
+
+}
