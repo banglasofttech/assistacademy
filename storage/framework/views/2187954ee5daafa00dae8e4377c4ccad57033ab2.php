@@ -21,10 +21,10 @@
         </div>
         
         <div class="col-md-7" style="float: left;">
-          <span style="font-weight: bold;">Title: </span> <?php echo e($book->file_name); ?>
+          <span style="font-weight: bold;"></span> <?php echo e($book->file_name); ?>
 
           <br>
-          <span style="font-weight: bold;">Author: </span> <a class="" href=<?php echo e($authorLink); ?>><?php echo e($author->first_name); ?> <?php echo e($author->last_name); ?></a>
+          <span style="font-weight: bold;">By: </span> <a class="" href=<?php echo e($authorLink); ?>><?php echo e($author->first_name); ?> <?php echo e($author->last_name); ?></a>
           <br>
           <span style="font-weight: bold;">Catagory: </span> <?php echo e($book->catagory_name); ?>
 
@@ -66,6 +66,17 @@
     </div>
   </div>
 
+  <script type="text/javascript">
+    
+    $(document).ready(function() {
+      console.log('Coming');
+      function stateChange(newState) {
+          setTimeout(function () {
+              console.log("Hello");
+          }, 5000);
+      }
+    });
+  </script>
    
 
 <?php $__env->stopSection(); ?>

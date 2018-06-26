@@ -4,7 +4,7 @@
 
 @section('content')
 
-<section class="video-list item-list" id="video-list">
+<section class="training-list item-list" id="training-list">
   <h1 class="text-uppercase text-center item-heading">Online Training/Video</h1>
   <div class="row  d-flex justify-content-around">
       <div class="col-md-2.5">
@@ -55,7 +55,7 @@
 </section>
 
 <section class="course-list item-list"   id="course-list">
-  <h1 class="text-uppercase text-center item-heading">Course/Training</h1>
+  <h1 class="text-uppercase text-center item-heading">Courses</h1>
   <div class="row  d-flex justify-content-around">
       <div class="col-md-2.5">
         <div class="content-list">
@@ -154,7 +154,7 @@
   </div>
 </section>
 
-<section class="item-list" id="journal-list">
+<section class="video-list item-list" id="video-list">
   <h1 class="text-uppercase text-center item-heading">Videos</h1>
   <div class="row  d-flex justify-content-around">
       <div class="col-md-2.5">

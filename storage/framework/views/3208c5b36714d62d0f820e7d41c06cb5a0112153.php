@@ -75,56 +75,70 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="/"><i class="fa fa-home fa-fw"></i> Assist Academy Home</a>
+                            <a href="<?php echo e(asset('/')); ?>"><i class="fa fa-home fa-fw"></i> Assist Academy Home</a>
                         </li>
                         <li>
-                            <a href="/mypanel"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a href="<?php echo e(asset('/mypanel')); ?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> Manage Files<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="/managefiles/books">Books</a>
+                                    <a href="<?php echo e(asset('/managefiles/books')); ?>">Books</a>
                                 </li>
                                 <li>
-                                    <a href="/managefiles/ppts">PPTs</a>
+                                    <a href="<?php echo e(asset('/managefiles/ppts')); ?>">PPTs</a>
                                 </li>
                                 <li>
-                                    <a href="/managefiles/ppts">Journal</a>
+                                    <a href="<?php echo e(asset('/managefiles/videos')); ?>">Videos</a>
                                 </li>
                                 <li>
-                                    <a href="/managefiles/videos">Training Files</a>
+                                    <a href="<?php echo e(asset('/managefiles/trainings')); ?>">Training Files</a>
                                 </li>
                                 <li>
-                                    <a href="/managefiles/courses">Courses</a>
+                                    <a href="<?php echo e(asset('/managefiles/courses')); ?>">Courses</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="/searchauthor"><i class="fa fa-search fa-fw"></i> Search Authors</a>
+                            <a href="<?php echo e(asset('/searchauthor')); ?>"><i class="fa fa-search fa-fw"></i> Search Authors</a>
                         </li>
                         <li>
-                            <a href="/upload"><i class="fa fa-edit fa-fw"></i> Upload Files</a>
+                            <a href="<?php echo e(asset('/upload')); ?>"><i class="fa fa-edit fa-fw"></i> Upload Files</a>
                         </li>
                         <li>
-                            <a href="/addcourse"><i class="fa fa-plus-circle fa-fw"></i> Add Course</a>
+                            <a href="<?php echo e(asset('/addtraining')); ?>"><i class="fa fa-plus-circle fa-fw"></i> Add Training</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo e(asset('/addcourse')); ?>"><i class="fa fa-plus-circle fa-fw"></i> Add Course</a>
                         </li>
                         <?php if(Auth::user()->user_type=="admin"): ?>
                             <li>
-                                <a href="/authorrequest"><i class="fa fa-check-square-o fa-fw"></i> Author Request</a>
+                                <a href="#"><i class="fa fa-check-square-o fa-fw"></i> User Request<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="<?php echo e(asset('authorrequest')); ?>">Author Request</a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo e(asset('corporaterequest')); ?>">Corporate User Request</a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo e(asset('learnerrequest')); ?>">Learner Request</a>
+                                    </li>
+                                </ul>
                             </li>
                             <li>
                                 <a href="#"><i class="fa fa-user fa-fw"></i> Manage Members<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="/authorlist">Author/Trainer</a>
+                                        <a href="<?php echo e(asset('/authorlist')); ?>">Author/Trainer</a>
                                     </li>
                                     <li>
-                                        <a href="/generaluserlist">Leraner</a>
+                                        <a href="<?php echo e(asset('/learnerlist')); ?>">Leraner</a>
                                     </li>
                                     <li>
-                                        <a href="/corporateuserlist">Corporate Member</a>
+                                        <a href="<?php echo e(asset('/corporateuserlist')); ?>">Corporate Member</a>
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
@@ -162,6 +176,31 @@
 
     </div>
     <!-- /#wrapper -->
+
+    <!-- Other part -->
+    <div class="modal fade" id="add-catagory-modal" tabindex="-1" role="dialog" aria-labelledby="add-catagory-modal-title" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="add-catagory-modal-title">New Catagory</h5>
+          </div>
+          <form class="form-group" method="POST" action="<?php echo e(route('addcatagory')); ?>">
+            <?php echo e(csrf_field()); ?>
+
+              <div class="modal-body">
+                <div class="form-group">
+                    <label for="catagory">Catagory Name</label><br>
+                    <input type="text" class="form-control" name="catagory_name" placeholder="Enter Catagory Name" required autofocus='true'>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <input type="submit" class="btn btn-primary" value="Add Catagory">
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
     <!-- jQuery -->
     <script type="text/javascript" src="<?php echo e(asset('content/js/panel/jquery.min.js')); ?>"></script>

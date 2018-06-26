@@ -9,6 +9,8 @@
     <tr>
       <th scope="col">Name</th>
       <th scope="col">Email</th>
+      <th scope="col">Occupation</th>
+      <th scope="col">Institution</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
@@ -21,10 +23,12 @@
         <input type="hidden"  id="request_user_id" value="<?php echo e($user->id); ?>" >
         <td><?php echo e($user->first_name); ?> <?php echo e($user->last_name); ?></td>
         <td><?php echo e($user->email); ?></td>
+        <td><?php echo e($user->occupation); ?></td>
+        <td><?php echo e($user->organization); ?></td>
         
         <td id="accept_reject_author">
-          <a href="/acceptrequest/<?php echo e($user->id); ?>" class="btn btn-success" id="accept_author_request_button">Accept</a>
-          <a href="/rejectrequest/<?php echo e($user->id); ?>" class="btn btn-danger" id="reject_author_request_button">Reject</a>
+          <a href="<?php echo e(asset('/authorrequest/accept/'.$user->id)); ?>" class="btn btn-success" id="accept_author_request_button">Accept</a>
+          <a href="<?php echo e(asset('/authorrequest/reject/'.$user->id)); ?>" class="btn btn-danger" id="reject_author_request_button">Reject</a>
         </td>
 
         <td id="undo_section" style="display: none">

@@ -34,11 +34,12 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="/#book-list">Book</a>
           <a class="dropdown-item" href="/#ppt-list">PPT</a>
+          <a class="dropdown-item" href="/#video-list">Video</a>
           <a class="dropdown-item" href="/#journal-list">Journal</a>
         </div>
       </li>
 
-      <a class="" href="/#video-list">Online Training/Video</a>
+      <a class="" href="/#training-list">Online Training</a>
       <a class="" href="/#course-list">Course/Training</a>
       <a class="" href="#">Notice</a>
       <a class="" href="#">Contact</a>

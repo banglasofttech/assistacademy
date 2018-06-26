@@ -10,7 +10,7 @@
             <th scope="col">File Name</th>
             <th scope="col">Catagory</th>
             <th scope="col">Views</th>
-            <th scope="col">Earning</th>
+            <th scope="col">Users</th>
             <th scope="col">
               <?php if(Auth::user()->user_type=="author"): ?>
                 Uploaded At
@@ -31,7 +31,7 @@
               <td><a href=<?php echo e($contentLink); ?>> <?php echo e($video->file_name); ?></a></td>
               <td><?php echo e($video->catagory_id); ?></td>
               <td><?php echo e($video->total_view); ?></td>
-              <td>$0</td>
+              <td><?php echo e($video->users); ?></td>
               <td>
                 <?php if(Auth::user()->user_type=="author"): ?>
                   <?php echo e($video->created_at); ?>

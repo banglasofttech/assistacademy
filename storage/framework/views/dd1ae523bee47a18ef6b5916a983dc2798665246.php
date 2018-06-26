@@ -5,7 +5,7 @@
 <?php $__env->startSection('content'); ?>
 
 <div class="row">
-    <div class="col-lg-3 col-md-6">
+    <div class="col-lg-3">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <div class="row">
@@ -26,7 +26,7 @@
             </a>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6">
+    <div class="col-lg-3">
         <div class="panel panel-green">
             <div class="panel-heading">
                 <div class="row">
@@ -47,15 +47,15 @@
             </a>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-yellow">
+    <div class="col-lg-3">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <h2>Training</h2>
+                        <h2>Videos</h2>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <h2><?php echo e($total_training); ?></h2>
+                        <h2><?php echo e($total_videos); ?></h2>
                     </div>
                 </div>
             </div>
@@ -68,7 +68,30 @@
             </a>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6">
+
+    <div class="col-lg-3">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <h2>Training</h2>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <h2><?php echo e($total_training); ?></h2>
+                    </div>
+                </div>
+            </div>
+            <a href="/managefiles/trainings">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
         <div class="panel panel-red">
             <div class="panel-heading">
                 <div class="row">
@@ -91,15 +114,16 @@
     </div>
 
     <?php if(Auth::user()->user_type=="admin"): ?>
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-3">
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-xs-3">
-                            <h2>Requests</h2>
+                        <div class="col-xs-9">
+                            Author<br>
+                            <span class="" style="font-size: 25px;">Request</span>
                         </div>
-                        <div class="col-xs-9 text-right">
-                            <h2><?php echo e($total_requests); ?></h2>
+                        <div class="col-xs-3 text-right">
+                            <h2><?php echo e($author_requests); ?></h2>
                         </div>
                     </div>
                 </div>
@@ -113,7 +137,53 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-3">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-9">
+                            Corporate<br>
+                            <span class="" style="font-size: 25px;">Request</span>
+                        </div>
+                        <div class="col-xs-3 text-right">
+                            <h2><?php echo e($corporate_requests); ?></h2>
+                        </div>
+                    </div>
+                </div>
+                <a href="/corporaterequest">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-9">
+                             Learner <br>
+                            <span class="" style="font-size: 25px;">Request</span>
+                        </div>
+                        <div class="col-xs-3 text-right">
+                            <h2><?php echo e($learner_requests); ?></h2>
+                        </div>
+                    </div>
+                </div>
+                <a href="/learnerrequest">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
             <div class="panel panel-danger">
                 <div class="panel-heading">
                     <div class="row">
@@ -135,7 +205,7 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-3">
             <div class="panel panel-success">
                 <div class="panel-heading">
                     <div class="row">
@@ -147,7 +217,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="/generaluserlist">
+                <a href="/learnerlist">
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -157,7 +227,7 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-3">
             <div class="panel panel-warning">
                 <div class="panel-heading">
                     <div class="row">

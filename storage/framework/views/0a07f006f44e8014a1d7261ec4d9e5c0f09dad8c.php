@@ -10,21 +10,21 @@
             <th scope="col">Title</th>
             <th scope="col">Trainer</th>
             <th scope="col">Duration</th>
-            <th scope="col">Created At</th>
-            <th scope="col">Action</th>
+            <th scope="col">Views</th>
+            <th scope="col">Users</th>
           </tr>
         </thead>
         <tbody>
           <?php $__currentLoopData = $courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr>
               <input type="hidden"  id="content_id" value="<?php echo e($course->id); ?>" >
-              <td style="word-wrap: break-word;"><?php echo e($course->title); ?></td>
+              <td style="word-wrap: break-word;">
+                <a href="/courses/view/<?php echo e($course->id); ?>"><?php echo e($course->title); ?></a>
+              </td>
               <td style="word-wrap: break-word;"><?php echo e($course->trainer_description); ?></td>
               <td><?php echo e($course->duration); ?></td>
-              <td><?php echo e($course->created_at); ?></td>             
-              <td>
-                <a href="/courses/view/<?php echo e($course->id); ?>" class="btn btn-success" id="view_course_button">View</a>
-              </td>
+              <td><?php echo e($course->total_view); ?></td>             
+              <td><?php echo e($course->users); ?></td>
             </tr>
           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </tbody>

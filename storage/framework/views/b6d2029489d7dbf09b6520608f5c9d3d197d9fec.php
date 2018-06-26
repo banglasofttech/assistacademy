@@ -1,7 +1,6 @@
 \
 
 <?php $__env->startSection('title', "Add Course"); ?>
-
 <?php $__env->startSection('content_title', "Add Course"); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -11,12 +10,41 @@
             <?php echo e(csrf_field()); ?>
 
             <input type="hidden" name="author_email" value="<?php echo e(Auth::user()->email); ?>">
+            
             <table class="table table-striped table-hover">
+
+              <tr class="form-group">
+                <td>
+                  <label class="control-label " for="file_catagory">Course catagory</label>
+                </td>
+                <td>
+                  <div id="csrf_catagory" data-token='<?php echo e(csrf_token()); ?>'></div>
+                  <select class="form-control" name="catagory_id" id="file_catagory" action="<?php echo e(route('getsubcatagories')); ?>" required autofocus style="width: 200px; height: 33px;">
+                        <option value="" selected disabled>--Select Catagory--</option>
+                        <?php $__currentLoopData = $catagories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $catagory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                          <option value="<?php echo e($catagory->id); ?>"><?php echo e($catagory->catagory_name); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <option value="add-catagory" id="add-catagory">Other</option>
+                    </select>
+                </td>
+              </tr>
+
+              <!-- <tr class="form-group" id="sub_catagory" style="display: none;">
+                <td>
+                  <label class="control-label " for="file_sub_catagory">Sub Catagory</label>
+                </td>
+                <td>
+                  <select class="form-control" name="file_sub_catagory" id="file_sub_catagory" style="width: 200px; height: 33px;" >
+                        <option value="" selected disabled>--Select Sub Catagory--</option>
+                    </select>
+                </td>
+              </tr>
+
+              <input type="hidden" name="catagory_id" id="catagory_id" value=" " /> -->
+
               <tr>
                 <td>
-                  <label>Course Name
-                  <br>(<span id="title_format" style="color: gray;">Maximum 34 character</span>)
-                  </label>
+                  <label>Course Name</label>
                 </td>
                 <td>
                   <div class="form-group">
@@ -42,7 +70,13 @@
                 </td>
                 <td>
                   <div class="form-group">
-                      <input type="number" class="form-control" id="course_duration" placeholder="Enter Duration in days" name="duration" required autofocus/>
+                      <input type="number" class="form-control" id="course_duration" placeholder="Enter Course Duration" name="duration" required autofocus style="display: inline; width: 250px" />
+                      <select class="form-control" id="duration_type" name="duration_type" style="display: inline; width: 100px">
+                        <option value="Hours">Hours</option>
+                        <option value="Days">Days</option>
+                        <option value="Months">Months</option>
+                        <option value="Year">Year</option>
+                      </select>
                   </div>
                 </td>
               </tr>
@@ -94,12 +128,12 @@
 
               <tr>
                 <td>
-                  <label>Study Introduction: Video (<span id="title_format" style="color: gray;">mp4 file</span>)
+                  <label>Course Introduction: File (<span id="title_format" style="color: gray;">mp4,jpg,png,pdf</span>)
                   </label>
                 </td>
                 <td>
                   <div class="form-group">
-                   <input type="file" class=" " name="study_introduction_video" accept="video/mp4"/>
+                   <input type="file" class=" " name="study_introduction_file" />
                   </div>
                 </td>
               </tr>
@@ -214,7 +248,7 @@
             </table>
             <table table class="table table-striped table-hover" id="study_instruction_table">
             </table>
-            <input type="submit" class="btn btn-success" value="Add Course">
+            <input type="submit" id="upload_file_button" class="btn btn-success" value="Add Course">
         </form>
     </div>
 

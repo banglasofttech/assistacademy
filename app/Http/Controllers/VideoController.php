@@ -60,6 +60,7 @@ class VideoController extends Controller
     }
 
     private function checkUserinViewerList($viewer_id){
+
         $user_id=','.Auth::user()->id;
         
         // dd($viewer_id);
@@ -73,7 +74,7 @@ class VideoController extends Controller
     }
 
     public function catagoryVideo($id){
-    	$videos=Videos::where("catagory_id",$id)->orderBy("id","desc")->paginate(12);;
+    	$videos=Videos::where("catagory_id",$id)->orderBy("id","desc")->paginate(12);
     	$catagory=Catagory::where("id",$id)->first();
     	
     	if($catagory!=null){
@@ -81,6 +82,7 @@ class VideoController extends Controller
         }
         else{
             $title="Not found";
+            return redirect("/videos");
         }
 
         for ($i=0;$i<count($videos);$i++) {

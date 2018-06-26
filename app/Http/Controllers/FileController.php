@@ -86,7 +86,8 @@ class FileController extends Controller
 
             Videos::where('id',$data->id)->update([
                 "file" => $fname,
-                "thumbnail" => $thumbname
+                "thumbnail" => $thumbname,
+                "viewer_id" => "0"
             ]);
 
             $file->storeAs('public/files/videos',$fname);
@@ -109,7 +110,8 @@ class FileController extends Controller
 
             PPTs::where('id',$data->id)->update([
                 "file" => $fname,
-                "thumbnail" => $thumbname
+                "thumbnail" => $thumbname,
+                "viewer_id" => "0"
             ]);
 
             $file->storeAs('public/files/ppts',$fname);

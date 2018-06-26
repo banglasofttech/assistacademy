@@ -17,6 +17,12 @@
     <link href=<?php echo e(asset('content/css/jquery-ui.css')); ?> rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('content/css/main.css')); ?>">
 
+    <?php if(auth()->guard()->guest()): ?>
+      <input type="hidden" id="logincheck" value="guest">
+    <?php else: ?>
+      <input type="hidden" id="logincheck" value="logged">
+    <?php endif; ?>
+
   </head>
 
   <body>
@@ -28,11 +34,12 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="/#book-list">Book</a>
           <a class="dropdown-item" href="/#ppt-list">PPT</a>
+          <a class="dropdown-item" href="/#video-list">Video</a>
           <a class="dropdown-item" href="/#journal-list">Journal</a>
         </div>
       </li>
 
-      <a class="" href="/#video-list">Online Training/Video</a>
+      <a class="" href="/#training-list">Online Training</a>
       <a class="" href="/#course-list">Course/Training</a>
       <a class="" href="#">Notice</a>
       <a class="" href="#">Contact</a>
@@ -62,7 +69,7 @@
         <?php else: ?>
           <?php if(Auth::user()->user_type=="admin"|| Auth::user()->user_type=="author"): ?>
             <a class="btn btn-outline-light btn-sm" href="/mypanel">Go to your Panel</a>
-          <?php elseif(Auth::user()->user_type=="general_user"): ?>
+          <?php elseif(Auth::user()->user_type=="learner"): ?>
             <button type="button" class="btn btn-outline-light btn-sm corporate-login" href="#"   data-toggle="modal" data-target="#AuthorRequestModal">Send Author/Trainer Request</button>
           <?php endif; ?>
           <a class="btn btn-outline-light btn-sm" href="<?php echo e(route('logout')); ?>"
@@ -145,60 +152,107 @@
       </div>
     </div>
 
-    <div class="modal fade" id="RegistrationModal" tabindex="-1" role="dialog" aria-labelledby="RegistrationModalTitle" aria-hidden="true">
+    
+
+    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="login-modal" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content col-md-8">
+        <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Registration</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+            <h5 class="modal-title" id="exampleModalLongTitle">Login</h5>
           </div>
           <div class="modal-body">
-            <form method="post" action="<?php echo e(route('register')); ?>" role='login'>
-              <?php echo e(csrf_field()); ?>
-
-
-              <?php if(count($errors) > 0): ?>
-                <p class="bg-danger text-white text-center">
-                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <?php echo e($error); ?>
-
-                        <br>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </p>
-              <?php endif; ?>
-              <input type="text" class="form-control" placeholder="First Name" id="first_name" name="first_name" required autofocus style="margin-bottom: 5px" />
-
-              <input type="text" class="form-control" placeholder="Last Name" id="last_name" name="last_name" required autofocus style="margin-bottom: 5px"/>
-
-              <input type="email" class="form-control" placeholder="Enter Email" id="user_email" name="email" required autofocus style="margin-bottom: 5px"/>
-
-              <input type="text" class="form-control" placeholder="Enter Address" name="address" required autofocus style="margin-bottom: 5px"/>
-
-              <input type="number" class="form-control" placeholder="Enter Phone Number" name="phone" required autofocus style="margin-bottom: 5px"/>
-
-              <input type="text" class="form-control" placeholder="Enter Country" name="country" required autofocus style="margin-bottom: 5px"/>
-
-              <input type="password" class="form-control" placeholder="Enter Password" id="password" name="password" required autofocus style="margin-bottom: 5px"/>
-
-              <input type="password" class="form-control" placeholder="Enter Password Again" id="password_again" name="password_confirmation" required autofocus style="margin-bottom: 5px"/>
-
-              <select class="form-control" id="selected_user_type" name="user_type" required autofocus>
-                  <option value="">--Select User Type--</option>
-                  <option value="author">Trainer/Author/Teacher</option>
-                  <option value="learner">Learner</option>
-                  <option value="corporate">Corporate User</option>
-              </select>
-
-              <input type="text" class="form-control" placeholder="Enter Organization name" id="organization" name="organization" style="margin-top: 5px;"/>
-         
-              <button type="submit" name="go" class="btn btn-lrg btn-success btn-block" style="margin-top: 10px">Register</button>
-            </form>
+            Your free session has expired. Please login to continue.
+          </div>
+          <div class="modal-footer">
+            <a href="/login" class="btn btn-primary">Login</a>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="RegistrationModal" tabindex="-1" role="dialog" aria-labelledby="RegistrationModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="RegistrationModalTitle">Registration</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <form class="form-group" method="POST" action="<?php echo e(route('register')); ?>" enctype="multipart/form-data">
+        <?php echo e(csrf_field()); ?>
+
+      <div class="modal-body">
+            <div class="row">
+                <div class="col-lg-6">
+                      <div class="form-group">
+                          <label for="Moto">User Type</label><br>
+                           <select class="form-control" id="selected_user_type" name="user_type" required autofocus>
+                              <option value="" selected disabled>--Select User Type--</option>
+                              <option value="author">Trainer/Author/Teacher</option>
+                              <option value="learner">Learner</option>
+                              <option value="corporate">Corporate User</option>
+                          </select>
+                      </div>
+                     <div class="form-group">
+                        <label for="first_name">First Name</label><br>
+                        <input type="text" class="form-control" name="first_name" placeholder="Enter First Name" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="last_name">Last Name</label><br>
+                        <input type="text" class="form-control" name="last_name" placeholder="Enter Last Name" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="email">Email</label><br>
+                        <input type="email" class="form-control" name="email" placeholder="Enter Email"required>
+                    </div>
+                     <div class="form-group">
+                        <label for="address">Address</label><br>
+                        <input type="text" class="form-control" name="address" placeholder="Enter Address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country</label><br>
+                        <?php echo $__env->make('country', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="Phone">Phone</label><br>
+                        <input type="text" class="form-control" name="phone" placeholder="Enter Phone Number" required>
+                    </div>
+                    <div class="form-group" id="occupation">
+                        <label for="occupation">Occupation</label><br>
+                        <input type="text" class="form-control" name="occupation" placeholder="Enter Occupation" >
+                    </div>
+                    <div class="form-group" id="organization">
+                        <label for="organization">Organization</label><br>
+                        <input type="text" class="form-control" name="organization" placeholder="Enter Organization">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label><br>
+                        <input type="password" class="form-control" name="password" placeholder="Enter Password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password Again</label><br>
+                        <input type="password" class="form-control" name="password_confirmation" placeholder="Enter Password Again" required>
+                    </div>
+                     <div class="form-group" id="picture">
+                        <label for="picture">Profile Picture</label><br>
+                        <input type="file" class="form-control" name="picture" accept="image/x-png">
+                    </div>
+                </div>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <input type="submit" class="btn btn-success" value='Register'/>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+
+
+
 
     <!-- Footer -->
     <!-- <section class="bg-navigation-bar" id="footer" style="margin-top: 50px;">
@@ -213,6 +267,10 @@
     <script type="text/javascript" src="<?php echo e(asset('content/js/bootstrap.min.js')); ?>"></script>
     <script type="text/javascript" src="<?php echo e(asset('content/js/main.js')); ?>"></script>
     <script type="text/javascript" src="<?php echo e(asset('content/js/adminpanel.js')); ?>"></script>
+
+    
+
+
   </body>
 
 </html>

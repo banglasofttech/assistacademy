@@ -26,7 +26,7 @@
         <tbody>
           @foreach($trainings as $training)
           <?php
-            $contentLink='/trainings/view/'.$training->id;
+            $contentLink='/training/view/'.$training->id;
           ?>
             <tr>
               <input type="hidden"  id="content_id" value="{{ $training->id }}" >
@@ -42,7 +42,7 @@
                 @endif
               </td>             
               <td id="remove_file">
-                <a href="/managefiles/trainings/remove/{{$training->id}}" class="btn btn-danger" id="remove_file_button">Remove</a>
+                <a href="/managefiles/training/remove/{{$training->id}}" class="btn btn-danger" id="remove_file_button">Remove</a>
               </td>
             </tr>
           @endforeach
