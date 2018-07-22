@@ -2,67 +2,99 @@
 
 @section('title', $title)
 
-@section('content_title', $title)
-
 @section('content')
-  <?php
-    $image='/storage/thumbnail/ppts/'.$ppt->thumbnail;
-    $file='/storage/files/ppts/'.$ppt->file;
-    $authorLink='/author/'.$author->id;
-    $downloadLink='/ppts/download/'.$ppt->id;
-  ?>
 
-  <div class="row ">
-    <div class="col-md-5">
-      <!-- ppt Info -->
-      <h2 class="item-panel text-center text-primary" style="padding: 5px">PPT Info</h2>
+<link rel="stylesheet" type="text/css" href="{{asset('content/style/course.css')}}">
 
+  <div class="course">
+    <div class="container">
       <div class="row">
-        <div class="col-md-5">
-          <img src="{{asset($image)}}" width="150px" height="180px" style="float: right;">
-        </div>
-        
-        <div class="col-md-7" style="float: left;">
-          <span style="font-weight: bold;">Title: </span> {{$ppt->file_name}}
-          <br>
-          <span style="font-weight: bold;">Author: </span> <a class="" href={{$authorLink}}>{{$author->first_name}} {{$author->last_name}}</a>
-          <br>
-          <span style="font-weight: bold;">Catagory: </span> {{$ppt->catagory_name}}
-          <br><br>
-          <span style="font-weight: bold;">Total Views: </span> {{$ppt->total_view}}
-          <br>
-          <span style="font-weight: bold;">Uploaded at: </span> {{$ppt->created_at}}
-          <br>
-          <!-- <a href={{$downloadLink}} class="btn btn-success" role="button">Download Now</a> -->
+        <!-- Course -->
+        <div class="col-lg-8">
+          <div class="course_container">
+            <div class="course_title">{{$ppt->file_name}}</div>
+            <div class="course_info d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
+
+              <!-- Course Info Item -->
+              <div class="course_info_item">
+                <div class="course_info_title">Author:</div>
+                <div class="course_info_text"><a href="{{asset('ppts/author/'.$ppt->uploader_email)}}">{{$author->first_name}} {{$author->last_name}}</a></div>
+              </div>
+
+              <!-- Course Info Item -->
+              <div class="course_info_item">
+                <div class="course_info_title">Uploaded On:</div>
+                <div class="course_info_text">{{$ppt->created_at}}</div>
+              </div>
+
+              <div class="course_info_item">
+                <div class="course_info_title">Views:</div>
+                <div class="course_info_text">{{$ppt->total_view}}</div>
+              </div>
+
+              <!-- Course Info Item -->
+              <div class="course_info_item">
+                <div class="course_info_title">Category:</div>
+                <div class="course_info_text"><a href="{{asset('ppts/catagory/'.$ppt->catagory_id)}}"> {{$ppt->catagory_name}}</a></div>
+              </div>
+
+            </div>
+          </div>
+            <!-- PPT Viewer -->
+            <!--<iframe class="ppt_viewer" src="https://drive.google.com/viewerng/viewer?url=https://desinnet.myblog.it/media/00/02/282529104.ppt&hl=en&pid=explorer&efh=false&a=v&chrome=false&embedded=true" width="100%" style="height:560px;" frameborder="0">-->
+            <!--</iframe> -->
+            
+            <iframe class="ppt_viewer" src="https://view.officeapps.live.com/op/embed.aspx?src={{asset('storage/files/ppts/'.$ppt->file)}}" width="100%" style="height:560px;" frameborder="0">
+            </iframe> 
+
+        </div>          
+      
+        <!-- Course Sidebar -->
+        <div class="col-lg-4">
+          <div class="sidebar">
+            
+              <!-- Author Section -->
+              <div class="sidebar_section">
+                <div class="sidebar_section_title">Author</div>
+                <div class="sidebar_teacher">
+                  <div class="teacher_title_container d-flex flex-row align-items-center justify-content-start">
+                    <div class="teacher_image">
+                        <img src="{{asset('/storage/thumbnail/author/'.$author->pp)}}" alt="">
+                        </div>
+                    <div class="teacher_title">
+                      <div class="teacher_name"><a href="{{asset('ppts/author/'.$ppt->uploader_email)}}">{{$author->first_name}} {{$author->last_name}}</a></div>
+                      <div class="teacher_position">{{$author->occupation}} at {{$author->organization}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Related Content Section -->
+              <div class="sidebar_section">
+                <div class="sidebar_section_title">Related PPTs</div>
+                <div class="sidebar_latest">
+                  @foreach($related_ppts as $related_ppt)
+                    <div class="latest d-flex flex-row align-items-start justify-content-start">
+                      <div class="latest_image"><div>
+                          <img src="{{asset('/storage/thumbnail/ppts/'.$related_ppt->thumbnail)}}" alt="Icon">
+                          </div></div>
+                      <div class="latest_content">
+                        <div class="latest_title"><a href="{{asset('ppts/view/'.$related_ppt->id)}}">{{ $related_ppt->file_name }}</a></div>
+                        <div class="course_author">{{ $related_ppt->author }}</div>
+                      </div>
+                    </div>
+                  @endforeach
+
+                </div>
+              </div>
+
+          </div>
         </div>
       </div>
-
-      <!-- Related ppts -->
-      <h2 class="item-panel text-center text-primary" style="padding: 5px; margin-top: 50px;">Related PPTs</h2>
-       <div class="row">
-          @foreach($related_ppts as $ppt)
-            <div class="col-md-6">
-              <?php
-                $image='/storage/thumbnail/ppts/'.$ppt->thumbnail;
-                $pptLink='/ppts/view/'.$ppt->id;
-              ?>
-              <div class="content-list">
-                <a href={{$pptLink}} class="panel-heading">
-                  <div class="content-name">{{ $ppt->file_name }}</div>
-                  <div class="content-author">{{ $ppt->author }}</div>
-                  <img src="{{asset($image)}}" width="160px" height="150px">
-                </a>
-              </div>
-            </div>
-          @endforeach
-       </div>
-    </div>
-
-    <div class="col-md-7">
-      <iframe src='http://docs.google.com/gview?embedded=true&url={{asset($file)}}' width="100%" style="height:650px;" frameborder="0"></iframe>
     </div>
   </div>
 
-   
+<script src="{{asset('content/js/jquery-3.2.1.min.js')}}"></script>
+<script src="{{asset('content/js/course.js')}}"></script>
 
 @endsection

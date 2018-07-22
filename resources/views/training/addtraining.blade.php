@@ -10,10 +10,10 @@
             {{ csrf_field() }}
 
              <div class="form-group">
-              <label class="control-label" for="file_catagory">Catagory</label>
+              <label class="control-label" for="file_catagory">Category</label>
               <div id="csrf_catagory" data-token='{{ csrf_token() }}'></div>
               <select class="form-control" id="file_catagory" name="catagory_id" required autofocus style="width: 200px; height: 33px;">
-                    <option value="" selected disabled>--Select Catagory--</option>
+                    <option value="" selected disabled>--Select Category--</option>
                     @foreach($catagories as $catagory)
                       <option value="{{ $catagory->id }}">{{ $catagory->catagory_name }}</option>
                     @endforeach
@@ -44,7 +44,7 @@
 
             <div class="form-group">
                 <label>Select Thumbnail (<span id="thumb_fromat" style="color: gray;">jpg,jpeg,png</span>)</label>
-                <input type="file" name="thumbnail" required autofocus/>
+                <input type="file" name="thumbnail" accept="image/x-png,image/gif,image/jpeg" required autofocus/>
             </div>
 
             <input type="hidden" name="uploader_email" value="{{ Auth::user()->email }}" />

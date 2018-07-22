@@ -8,7 +8,7 @@
         <thead class="thead-dark">
           <tr>
             <th scope="col">Title</th>
-            <th scope="col">Catagory</th>
+            <th scope="col">Category</th>
             <th scope="col">Views</th>
             <th scope="col">Users</th>
             <th scope="col">

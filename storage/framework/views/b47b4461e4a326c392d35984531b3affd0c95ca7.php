@@ -1,77 +1,118 @@
 <?php $__env->startSection('title', $title); ?>
 
-<?php $__env->startSection('content_title', $title); ?>
-
 <?php $__env->startSection('content'); ?>
-  <?php
-    $image='/storage/thumbnail/trainings/'.$training->thumbnail;
-    $file='/storage/files/trainings/'.$training->file;
-    $authorLink='/author/'.$author->id;
-    $downloadLink='/trainings/download/'.$training->id;
-  ?>
 
-  <div class="row ">
-    <div class="col-md-5">
-      <!-- training Info -->
-      <h2 class="item-panel text-center text-primary" style="padding: 5px">Training Info</h2>
+<link rel="stylesheet" type="text/css" href="<?php echo e(asset('content/style/course.css')); ?>">
 
+  <div class="course">
+    <div class="container">
       <div class="row">
-        <div class="col-md-5">
-          <img src="<?php echo e(asset($image)); ?>" width="150px" height="180px" style="float: right;">
-        </div>
-        
-        <div class="col-md-7" style="float: left;">
-          <span style="font-weight: bold;">Title: </span> <?php echo e($training->file_name); ?>
+        <!-- Course -->
+        <div class="col-lg-8">
+          <div class="course_container">
+            <div class="course_title"><?php echo e($training->title); ?></div>
+            <div class="course_info d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
 
-          <br>
-          <span style="font-weight: bold;">Author: </span> <a class="" href=<?php echo e($authorLink); ?>><?php echo e($author->first_name); ?> <?php echo e($author->last_name); ?></a>
-          <br>
-          <span style="font-weight: bold;">Catagory: </span> <?php echo e($training->catagory_name); ?>
+              <!-- Course Info Item -->
+              <div class="course_info_item">
+                <div class="course_info_title">Trainer:</div>
+                <div class="course_info_text"><a href="<?php echo e(asset('training/author/'.$training->uploader_email)); ?>"><?php echo e($author->first_name); ?> <?php echo e($author->last_name); ?></a></div>
+              </div>
 
-          <br><br>
-          <span style="font-weight: bold;">Fee: </span> <?php echo e($training->Fee); ?>
+              <!-- Course Info Item -->
+              <div class="course_info_item">
+                <div class="course_info_title">Uploaded On:</div>
+                <div class="course_info_text"><?php echo e($training->created_at); ?></div>
+              </div>
 
-          <br>
-          <span style="font-weight: bold;">Total Views: </span> <?php echo e($training->total_view); ?>
+              <div class="course_info_item">
+                <div class="course_info_title">Fee:</div>
+                <div class="course_info_text">
+                  <?php if($training->fee>0): ?>
+                    $<?php echo e($training->fee); ?>
 
-          <br>
-          <span style="font-weight: bold;">Uploaded at: </span> <?php echo e($training->created_at); ?>
+                  <?php else: ?>
+                    Free
+                  <?php endif; ?>
+                </div>
+              </div>
 
-          <br>
-          <!-- <a href=<?php echo e($downloadLink); ?> class="btn btn-success" role="button">Download Now</a> -->
-        </div>
-      </div>
+              <!-- Course Info Item -->
+              <div class="course_info_item">
+                <div class="course_info_title">Category:</div>
+                <div class="course_info_text"><a href="<?php echo e(asset('training/catagory/'.$training->catagory_id)); ?>"> <?php echo e($training->catagory_name); ?></a></div>
+              </div>
 
-      <!-- Related trainings -->
-      <h2 class="item-panel text-center text-primary" style="padding: 5px; margin-top: 50px;">Related trainings</h2>
-       <div class="row">
-          <?php $__currentLoopData = $related_trainings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $training): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <div class="col-md-6">
-              <?php
-                $image='/storage/thumbnail/trainings/'.$training->thumbnail;
-                $trainingLink='/trainings/view/'.$training->id;
-              ?>
-              <div class="content-list">
-                <a href=<?php echo e($trainingLink); ?> class="panel-heading">
-                  <div class="content-name"><?php echo e($training->file_name); ?></div>
-                  <div class="content-fee">( <?php echo e($training->Fee); ?> )</div>
-                  <div class="content-author"><?php echo e($training->author); ?></div>
-                  <img src="<?php echo e(asset($image)); ?>" width="160px" height="150px">
-                </a>
+            </div>
+          </div>
+
+            <!-- training Player -->
+           <video class="blog_post_video video-js" data-setup='{"controls": true, "autoplay": false, "preload": "auto", "poster": "<?php echo e(asset('/storage/thumbnail/training/'.$training->thumbnail)); ?>"}'>
+              <source src="<?php echo e(asset('/storage/files/training/'.$training->file)); ?>" type="video/mp4">
+              Your browser does not support HTML5 training.
+            </video>
+
+            <div class="tab_panel_section">
+              <div class="tab_panel_title">Description</div>
+              <div class="tab_panel_text">
+                <p><?php echo e($training->description); ?></p>
               </div>
             </div>
-          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-       </div>
-    </div>
 
-    <div class="col-md-7">
-      <training width="100%" height="500px" controls>
-        <source src="<?php echo e(asset($file)); ?>" type="training/mp4">
-      </training>
+          </div>          
+      
+        <!-- Course Sidebar -->
+        <div class="col-lg-4">
+          <div class="sidebar">
+            
+              <!-- Author Section -->
+              <div class="sidebar_section">
+                <div class="sidebar_section_title">Trainer</div>
+                <div class="sidebar_teacher">
+                  <div class="teacher_title_container d-flex flex-row align-items-center justify-content-start">
+                    <div class="teacher_image">
+                        <img src="<?php echo e(asset('/storage/thumbnail/author/'.$author->pp)); ?>" alt="">
+                        </div>
+                    <div class="teacher_title">
+                      <div class="teacher_name"><a href="<?php echo e(asset('training/author/'.$training->uploader_email)); ?>"><?php echo e($author->first_name); ?> <?php echo e($author->last_name); ?></a></div>
+                      <div class="teacher_position"><?php echo e($author->occupation); ?> at <?php echo e($author->organization); ?></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Related Content Section -->
+              <div class="sidebar_section">
+                <div class="sidebar_section_title">Related Trainings</div>
+                <div class="sidebar_latest">
+                  <?php $__currentLoopData = $related_trainings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $related_training): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="latest d-flex flex-row align-items-start justify-content-start">
+                      <div class="latest_image"><div><img src="<?php echo e(asset('/storage/thumbnail/training/'.$related_training->thumbnail)); ?>" alt="Icon"></div></div>
+                      <div class="latest_content">
+                        <div class="latest_title"><a href="<?php echo e(asset('training/view/'.$related_training->id)); ?>"><?php echo e($related_training->title); ?></a></div>
+                        <div class="course_author">
+                          <?php if($related_training->fee>0): ?>
+                            $<?php echo e($related_training->fee); ?>
+
+                          <?php else: ?>
+                            Free
+                          <?php endif; ?>
+                        </div>
+                      </div>
+                    </div>
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                </div>
+              </div>
+
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-   
+<script src="<?php echo e(asset('content/js/jquery-3.2.1.min.js')); ?>"></script>
+<script src="<?php echo e(asset('content/js/course.js')); ?>"></script>
 
 <?php $__env->stopSection(); ?>
 

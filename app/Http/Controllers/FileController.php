@@ -42,7 +42,7 @@ class FileController extends Controller
 
     public function uploadFile(Request $request){
         $this->validate($request,[
-                'file_name' => 'required',
+                'file_name' => 'required|max:255',
                 'thumbnail' => 'required|mimes:jpeg,jpg,png',
                 'catagory_id' => 'required',
                 'file_type' => 'required',
@@ -52,11 +52,12 @@ class FileController extends Controller
             $this->validate($request,[
                 'file' => 'required|mimes:pdf',
             ]);
-
+            
             $data=Books::create($request->all());
 
             $file=$request->file;
             $thumbnail=$request->thumbnail;
+
             
             $fname=$data->id."_".$request->file_name.".".$file->extension();
             $thumbname=$data->id.".".$thumbnail->extension();
@@ -129,6 +130,7 @@ class FileController extends Controller
     public function searchFile(Request $request){
         $file_type=$request->file_type;
         $file_name='%'.$request->file_name.'%';
+        $catagories=Catagory::get();
 
         if($file_type=="book"){
             $books=Books::where("file_name",'like',$file_name)->paginate(12);
@@ -139,7 +141,7 @@ class FileController extends Controller
                 $books[$i]->author=$author->first_name." ".$author->last_name;
             }
 
-            return view("book.bookList")->with(compact("title","books"));
+            return view("book.bookList")->with(compact("title","books","catagories"));
         }
         else if($file_type=="video"){
             $videos=Videos::where("file_name",'like',$file_name)->paginate(12);
@@ -150,7 +152,7 @@ class FileController extends Controller
                 $videos[$i]->author=$author->first_name." ".$author->last_name;
             }
 
-            return view("video.videoList")->with(compact("title","videos"));
+            return view("video.videoList")->with(compact("title","videos","catagories"));
         }
         else if($file_type=="ppt"){
             $ppts=PPTs::where("file_name",'like',$file_name)->paginate(12);
@@ -161,7 +163,7 @@ class FileController extends Controller
                 $ppts[$i]->author=$author->first_name." ".$author->last_name;
             }
 
-            return view("ppt.pptList")->with(compact("title","ppts"));
+            return view("ppt.pptList")->with(compact("title","ppts","catagories"));
         }
 
         else if($file_type=="training"){
@@ -173,14 +175,19 @@ class FileController extends Controller
                 $trainings[$i]->author=$author->first_name." ".$author->last_name;
             }
 
-            return view("training.trainingList")->with(compact("title","trainings"));
+            return view("training.trainingList")->with(compact("title","trainings","catagories"));
         }
 
         else if($file_type=="course"){
             $courses=Course::where("title",'like',$file_name)->paginate(12);
             $title=$request->file_name;
 
-            return view("course.courseList")->with(compact("title","courses"));
+            for ($i=0;$i<count($courses);$i++) {
+                $author=User::where('email',$courses[$i]->author_email)->first();
+                $courses[$i]->author=$author->first_name." ".$author->last_name;
+            }
+
+            return view("course.courseList")->with(compact("title","courses","catagories"));
         }
 
         else if($file_type=="all-files"){
@@ -193,5 +200,21 @@ class FileController extends Controller
 
             return view("File.fileSearchResult")->with(compact("title","total_books","total_ppts","total_videos","total_trainings","total_courses"));
         }
+    }
+
+    public function getoSection(Request $request){
+        $this->validate($request,[
+            'section' => 'required',
+            'catagory_id' => 'required'
+        ]);
+
+        if($request->catagory_id=='0'){
+            $url=$request->section;
+        }
+        else{
+            $url=$request->section.'/catagory/'.$request->catagory_id;
+        }
+
+        return redirect($url);
     }
 }

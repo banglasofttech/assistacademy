@@ -14,14 +14,20 @@ use Auth;
 class CourseController extends Controller
 {
     public function index(){
-        $courses=Course::orderBy("id","desc")->paginate(12);
+        $courses=Course::orderBy("id","desc")->paginate(20);
         $title="Courses";
 
-        return view("course.courseList")->with(compact("title","courses"));
+        foreach ($courses as $course) {
+                $author=User::where('email',$course->author_email)->first();
+                $course->author=$author->first_name." ".$author->last_name;
+            }
+
+        $catagories=Catagory::get();
+        return view("course.courseList")->with(compact("title","courses","catagories"));
     }
 
     public function catagorywiseCourse($id){
-        $courses=Course::where("catagory_id",$id)->orderBy("id","desc")->paginate(12);;
+        $courses=Course::where("catagory_id",$id)->orderBy("id","desc")->paginate(20);;
         $catagory=Catagory::where("id",$id)->first();
 
         if($catagory!=null){
@@ -31,16 +37,17 @@ class CourseController extends Controller
             return redirect('/');
         }
 
-        // for ($i=0;$i<count($courses);$i++) {
-        //         $author=User::where('email',$trainings[$i]->uploader_email)->first();
-        //         $trainings[$i]->author=$author->first_name." ".$author->last_name;
-        //     }
+        foreach ($courses as $course) {
+                $author=User::where('email',$course->author_email)->first();
+                $course->author=$author->first_name." ".$author->last_name;
+            }
 
-        return view("course.courseList")->with(compact("title","courses"));
+        $catagories=Catagory::get();
+        return view("course.courseList")->with(compact("title","courses","catagories"));
     }
 
      public function authorwiseCourse($email){
-        $courses=Course::where("uploader_email",$email)->orderBy("id","desc")->paginate(12);
+        $courses=Course::where("author_email",$email)->orderBy("id","desc")->paginate(20);
         $author=User::where("email",$email)->first();
 
         if($author!=null){
@@ -49,7 +56,13 @@ class CourseController extends Controller
         else{
             return redirect('/');
         }
-        return view("course.courseList")->with(compact("title","courses"));
+
+        for ($i=0;$i<count($courses);$i++) {
+                $courses[$i]->author=$title;
+            }
+
+        $catagories=Catagory::get();
+        return view("course.courseList")->with(compact("title","courses","catagories"));
     }
 
     public function addCourseView(){
@@ -72,6 +85,8 @@ class CourseController extends Controller
                 "viewer_id"=>$viewer_id
             ]);
 
+            $related_courses= Course::where("catagory_id",$course->catagory_id)->orderBy("id","desc")->limit(5)->get();
+
             $book_links=explode(',', $course->book_link);
             $book_files=explode('|', $course->book_file);
             $ppt_links=explode(',', $course->ppt_link);
@@ -80,9 +95,13 @@ class CourseController extends Controller
             $video_files=explode('|', $course->video_file);
             $instructions=explode('|', $course->instruction);
             $exam_files=explode('|', $course->exam_file);
+            $outcomes=explode(',', $course->outcome);
             $duration=count($instructions)-1;
+            $author=User::where('email',$course->author_email)->first();
+            $category=Catagory::where('id',$course->catagory_id)->first();
+            $file_ext=pathinfo( $course->introduction_file, PATHINFO_EXTENSION);
 
-            return view("course.viewCourse")->with(compact("course","book_links","book_files","ppt_links","ppt_files","video_links","video_files","instructions","exam_files","duration"));
+            return view("course.viewCourse")->with(compact("course","book_links","book_files","ppt_links","ppt_files","video_links","video_files","instructions","exam_files","duration","outcomes","author","category","related_courses","file_ext"));
 
         }
         else{
@@ -91,28 +110,29 @@ class CourseController extends Controller
     }
 
     private function checkUserinViewerList($viewer_id){
-        $user_id=','.Auth::user()->id;
-        
-        //if current user id is not in viewer id list, add it
-        if(!strpos($viewer_id, $user_id)){
-            $viewer_id=$viewer_id.$user_id;
+        if(Auth::user()){
+            $user_id=','.Auth::user()->id;
+            
+            //if current user id is not in viewer id list, add it
+            if(!strpos($viewer_id, $user_id)){
+                $viewer_id=$viewer_id.$user_id;
+            }
+            return $viewer_id;
         }
-
-        return $viewer_id;
 
     }
 
     public function addNewCourse(Request $request){
 
     	$this->validate($request,[
-                'title' => 'required|max:34',
+                'title' => 'required|max:255',
                 'trainer_description' => 'required',
                 'duration' => 'required|integer',
                 'course_fee' => 'required|integer',
                 'description' => 'required',
                 'outcome' => 'required',
                 'introduction_text' => 'required',
-                'study_introduction_file' => 'mimes:mp4,jpeg,jpg,png,pdf',
+                'study_introduction_file' => 'mimes:mp4,ppt,pdf',
                 'course_thumbnail' => 'required|mimes:jpeg,jpg,png,gif',
             ]);
 
@@ -157,22 +177,22 @@ class CourseController extends Controller
         $thumbnail=$f_name.'.'.$request->course_thumbnail->extension();
 
         //Save thumbnail
-        $request->course_thumbnail->storeAs('public/thumbnail/courses',$thumbnail);
+        $request->course_thumbnail->storeAs('public/thumbnail/course',$thumbnail);
 
     	//save introduction video to storage
     	if($request->hasFile('study_introduction_file')){
     	    $study_introduction_file=$request->study_introduction_file;
     		$introduction_file=$f_name."_introduction_file".".".$study_introduction_file->extension();
-    		$study_introduction_file->storeAs('public/files/courses',$introduction_file);
+    		$study_introduction_file->storeAs('public/files/course/introduction_files',$introduction_file);
     	}
     	//add books to storage and concate names in book_file
     	if(!empty($books)){    	
     		$i=0;
     		foreach ($books as $book) {
     			$i++;
-    			$file_name=$f_name."_".$i.".pdf";
+    			$file_name=$book->getClientOriginalName();
     			$book_file.=$file_name."|";
-    			$book->storeAs('public/files/books',$file_name);
+    			$book->storeAs('public/files/course/books',$file_name);
     		}
     	}
 
@@ -181,9 +201,9 @@ class CourseController extends Controller
     		$i=0;
     		foreach ($videos as $video) {
     			$i++;
-    			$file_name=$f_name."_".$i.".mp4";
+    			$file_name=$video->getClientOriginalName();
     			$video_file.=$file_name."|";
-    			$video->storeAs('public/files/videos',$file_name);
+    			$video->storeAs('public/files/course/videos',$file_name);
     		}
     	}
     	
@@ -192,9 +212,9 @@ class CourseController extends Controller
     		$i=0;
     		foreach ($ppts as $ppt) {
     			$i++;
-    			$file_name=$f_name."_".$i.'.'.$ppt->extension();
+    			$file_name=$ppt->getClientOriginalName();
     			$ppt_file.=$file_name."|";
-    			$ppt->storeAs('public/files/ppts',$file_name);
+    			$ppt->storeAs('public/files/course/ppts',$file_name);
     		}
     	}
 
@@ -203,9 +223,9 @@ class CourseController extends Controller
     		$i=0;
     		foreach ($exam_files as $ef) {
     			$i++;
-    			$file_name=$f_name."_question_".$i.".pdf";
+    			$file_name=$ef->getClientOriginalName();
     			$exam_file.=$file_name."|";
-    			$ef->storeAs('public/files/books',$file_name);
+    			$ef->storeAs('public/files/course/examfiles',$file_name);
     		}
     	}
 

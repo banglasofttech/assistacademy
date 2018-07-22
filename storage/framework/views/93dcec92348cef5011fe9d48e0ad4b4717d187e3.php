@@ -2,275 +2,468 @@
 
 <?php $__env->startSection('content'); ?>
 
-<section class="training-list item-list" id="training-list">
-  <h1 class="text-uppercase text-center item-heading">Online Training/Video</h1>
-  <div class="row  d-flex justify-content-around">
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/training/catagory/1">
-            <img src="<?php echo e(asset("content/images/hr.png")); ?>" width="120px" height="120px">
-            <div class="content-title">HR</div>
-          </a>
-        </div>
-      </div>
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active home" >
+        <!-- Home Slider Item -->
+        <div class="home_slider_background" style="background-image:url(content/image/home_slider_1.jpg);">
+            <div class="home_slider_content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col text-center">
+                            <div class="home_slider_title">Assist Academy</div>
+                            <div class="home_slider_subtitle">Future Of Education Technology</div>
+                            <div class="home_slider_form_container">
+                                    
+                                <form method="post" class="d-flex flex-row align-items-center justify-content-center" action="<?php echo e(route('filesection')); ?>">
+                                	<?php echo e(csrf_field()); ?>
 
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/training/catagory/3">
-            <img src="<?php echo e(asset("content/images/marketing.png")); ?>" width="120px" height="120px">
-            <div class="content-title">Marketing</div>
-          </a>
-        </div>
-      </div>
+                                    <select class="dropdown_item_select custom-select" name="section" required>
+                                        <option value="" selected disabled>Select a Section</option>
+                                        <option value="courses">Course</option>
+                                        <option value="training">Training</option>
+                                        <option value="books">Books</option>
+                                        <option value="videos">Videos</option>
+                                        <option value="ppts">PPT</option>
+                                    </select>
+                                    <select class="dropdown_item_select custom-select" required name="catagory_id">
+                                        <option value="" selected disabled>Select a Category</option>
+                                        <option value="0">All Category</option>
+                                        <?php $__currentLoopData = $catagories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $Category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        	<option value="<?php echo e($Category->id); ?>"><?php echo e($Category->catagory_name); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                    <button type="submit" class="home_section_button"> GO</button>
+                                </form>
 
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/training/catagory/2">
-            <img src="<?php echo e(asset("content/images/finance.png")); ?>" width="120px" height="120px">
-            <div class="content-title">Finance</div>
-          </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/training/catagory/5">
-            <img src="<?php echo e(asset("content/images/it.png")); ?>" width="120px" height="120px">
-            <div class="content-title">IT</div>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/training/catagory/6" data-toggle="modal" data-target="#exampleModalCenter" id="more-training">
-            <img src="<?php echo e(asset("content/images/more.png")); ?>" width="120px" height="120px">
-            <div class="content-title">More</div>
-          </a>
-        </div>
-      </div>
-  </div>
-</section>
-
-<section class="course-list item-list"   id="course-list">
-  <h1 class="text-uppercase text-center item-heading">Courses</h1>
-  <div class="row  d-flex justify-content-around">
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/courses/catagory/1">
-            <img src="<?php echo e(asset("content/images/hr.png")); ?>" width="120px" height="120px">
-            <div class="content-title">HR</div>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/courses/catagory/3">
-            <img src="<?php echo e(asset("content/images/marketing.png")); ?>" width="120px" height="120px">
-            <div class="content-title">Marketing</div>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/courses/catagory/2">
-            <img src="<?php echo e(asset("content/images/finance.png")); ?>" width="120px" height="120px">
-            <div class="content-title">Finance</div>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/courses/catagory/5">
-            <img src="<?php echo e(asset("content/images/it.png")); ?>" width="120px" height="120px">
-            <div class="content-title">IT</div>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/courses/catagory/6"  data-toggle="modal" data-target="#exampleModalCenter" id="more-course">
-            <img src="<?php echo e(asset("content/images/more.png")); ?>" width="120px" height="120px">
-            <div class="content-title">More</div>
-          </a>
-        </div>
-      </div>  
-  </div>
-</section>
-
-<section class="item-list" id="book-list">
-  <h1 class="text-uppercase text-center item-heading">Book</h1>
-  <div class="row  d-flex justify-content-around">
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/books/catagory/1" >
-            <img src="<?php echo e(asset("content/images/hr.png")); ?>" width="120px" height="120px">
-            <div class="content-title">HR</div>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/books/catagory/3">
-            <img src="<?php echo e(asset("content/images/marketing.png")); ?>" width="120px" height="120px">
-            <div class="content-title">Marketing</div>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/books/catagory/2">
-            <img src="<?php echo e(asset("content/images/finance.png")); ?>" width="120px" height="120px">
-            <div class="content-title">Finance</div>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/books/catagory/5">
-            <img src="<?php echo e(asset("content/images/it.png")); ?>" width="120px" height="120px">
-            <div class="content-title">IT</div>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/books/catagory/6" data-toggle="modal" data-target="#exampleModalCenter" id="more-books"> 
-            <img src="<?php echo e(asset("content/images/more.png")); ?>" width="120px" height="120px">
-            <div class="content-title">More</div>
-          </a>
-        </div>
-      </div>
-  </div>
-</section>
-
-<section class="video-list item-list" id="video-list">
-  <h1 class="text-uppercase text-center item-heading">Videos</h1>
-  <div class="row  d-flex justify-content-around">
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/videos/catagory/1">
-            <img src="<?php echo e(asset("content/images/hr.png")); ?>" width="120px" height="120px">
-            <div class="content-title">HR</div>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/videos/catagory/3">
-            <img src="<?php echo e(asset("content/images/marketing.png")); ?>" width="120px" height="120px">
-            <div class="content-title">Marketing</div>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/videos/catagory/2">
-            <img src="<?php echo e(asset("content/images/finance.png")); ?>" width="120px" height="120px">
-            <div class="content-title">Finance</div>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/videos/catagory/5">
-            <img src="<?php echo e(asset("content/images/it.png")); ?>" width="120px" height="120px">
-            <div class="content-title">IT</div>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/videos/catagory/6" data-toggle="modal" data-target="#exampleModalCenter" id="more-videos">
-            <img src="<?php echo e(asset("content/images/more.png")); ?>" width="120px" height="120px">
-            <div class="content-title">More</div>
-          </a>
-        </div>
-      </div>
-  </div>
-</section>
-
-<section class=" item-list"  id="ppt-list">
-  <h1 class="text-uppercase text-center item-heading">PPT</h1>
-  <div class="row  d-flex justify-content-around">
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/ppts/catagory/1">
-            <img src="<?php echo e(asset("content/images/hr.png")); ?>" width="120px" height="120px">
-            <div class="content-title">HR</div>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/ppts/catagory/3">
-            <img src="<?php echo e(asset("content/images/marketing.png")); ?>" width="120px" height="120px">
-            <div class="content-title">Marketing</div>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/ppts/catagory/2">
-            <img src="<?php echo e(asset("content/images/finance.png")); ?>" width="120px" height="120px">
-            <div class="content-title">Finance</div>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/ppts/catagory/5">
-            <img src="<?php echo e(asset("content/images/it.png")); ?>" width="120px" height="120px">
-            <div class="content-title">IT</div>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-md-2.5">
-        <div class="content-list">
-          <a href="/ppts/catagory/6" data-toggle="modal" data-target="#exampleModalCenter" id="more-ppts">
-            <img src="<?php echo e(asset("content/images/more.png")); ?>" width="120px" height="120px">
-            <div class="content-title">More</div>
-          </a>
-        </div>
-      </div>
-  </div>
-</section>
-
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Select Catagory</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <?php $__currentLoopData = $catagories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $catagory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        <span>
-          <a class="btn btn-outline-info catagory-button" id="catagory-button" href="<?php echo e($catagory->id); ?>"><?php echo e($catagory->catagory_name); ?></a>
-        </span>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-      </div>
     </div>
   </div>
 </div>
 
+    <!-- Popular Courses -->
+    <div class="courses item-section">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex section_title_container">
+                        <h2 class="mr-auto p-2 section_title">Recent Courses</h2>
+
+                        <form method="post" class="d-flex flex-row align-items-center justify-content-center" action="<?php echo e(route('filesection')); ?>">
+                    		<?php echo e(csrf_field()); ?>
+
+                    		<input type="hidden" name="section" value="courses">
+	                        <select name="catagory_id" class="p-2 dropdown_item_select custom-select" required>
+                                <option value="0">All Category</option>
+                                <?php $__currentLoopData = $catagories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $Category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                	<option value="<?php echo e($Category->id); ?>"><?php echo e($Category->catagory_name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+	                        </select>
+	                        <input type="submit" class="p-2 btn section_button" value="View Courses">
+                   	 	</form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="carouselCourseControls" class="carousel slide" data-ride="carousel" data-interval="false">
+
+                <?php if(count($courses)>0): ?>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row courses_row">
+                            	<?php for($i=0; $i < 4 && $i < count($courses); $i++): ?>
+    	                            <div class="col-lg-3 course_col">
+    	                                <div class="course"><a href="<?php echo e(asset('courses/view/'.$courses[$i]->id)); ?>">
+    	                                    <div class="course_image"><img src="<?php echo e(asset('/storage/thumbnail/course/'.$courses[$i]->thumbnail)); ?>" alt=""></div>
+    	                                    <div class="course_body">
+    	                                        <h4 class="course_title"><?php echo e($courses[$i]->title); ?></h4>
+    	                                        <div class="d-flex">
+    	                                            <div class="mr-auto p-2 course_teacher"><?php echo e($courses[$i]->author); ?></div>
+    	                                            <div class="p-2 course_price">
+                                                        <?php if($courses[$i]->course_fee>0): ?>
+                                                            $<?php echo e($courses[$i]->course_fee); ?>  
+                                                        <?php else: ?>
+                                                            Free
+                                                        <?php endif; ?>
+                                                    </div>
+    	                                        </div>
+
+    	                                        <div class="course_text">
+    	                                            <p><?php echo e($courses[$i]->description); ?></p>
+    	                                        </div>
+    	                                    </div>
+    	                                </a></div>
+    	                            </div>
+    	                        <?php endfor; ?>
+                            </div>
+                        </div>
+                        
+                        <?php for($j=2; $j < 4 && $j < count($courses); $j++): ?>
+                            <div class="carousel-item">
+                                <div class="row courses_row">
+                                    <?php for($i=$j; $i < $j*4 && $i < count($courses); $i++): ?>
+                                        <div class="col-lg-3 course_col">
+                                            <div class="course"><a href="<?php echo e(asset('courses/view/'.$courses[$i]->id)); ?>">
+                                                <div class="course_image"><img src="<?php echo e(asset('/storage/thumbnail/course/'.$courses[$i]->thumbnail)); ?>}" alt=""></div>
+                                                <div class="course_body">
+                                                    <h4 class="course_title"><?php echo e($courses[$i]->title); ?></h4>
+                                                    <div class="d-flex">
+                                                        <div class="mr-auto p-2 course_teacher"><?php echo e($courses[$i]->author); ?></div>
+                                                        <div class="p-2 course_price">
+                                                            <?php if($courses[$i]->course_fee>0): ?>
+                                                                $<?php echo e($courses[$i]->course_fee); ?>  
+                                                            <?php else: ?>
+                                                                Free
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="course_text">
+                                                        <p><?php echo e($courses[$i]->description); ?></p>
+                                                    </div>
+                                                </div>
+                                            </a></div>
+                                        </div>
+                                    <?php endfor; ?>
+                                </div>
+                            </div>
+                        <?php endfor; ?>
+                    </div>
+                    <?php endif; ?>
+                </div>
+
+
+          <div class="slider_nav slider_prev" href="#carouselCourseControls" role="button" data-slide="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
+        <div class="slider_nav slider_next" href="#carouselCourseControls" role="button" data-slide="next"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+
+        </div>
+    </div>
+
+    <!-- Training Section -->
+    <div class="Trainging item-section">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex section_title_container">
+                        <h2 class="mr-auto p-2 section_title">Recent Training</h2>
+
+                        <form method="post" class="d-flex flex-row align-items-center justify-content-center" action="<?php echo e(route('filesection')); ?>">
+                    		<?php echo e(csrf_field()); ?>
+
+                    		<input type="hidden" name="section" value="training">
+	                        <select name="catagory_id" class="p-2 dropdown_item_select custom-select" required>
+                                <option value="0">All Category</option>
+                                <?php $__currentLoopData = $catagories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $Category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                	<option value="<?php echo e($Category->id); ?>"><?php echo e($Category->catagory_name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+	                        </select>
+	                        <input type="submit" class="p-2 btn section_button" value="View Trainings">
+                   	 	</form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="carouselTrainingControls" class="carousel slide" data-ride="carousel" data-interval="false">
+                <?php if(count($trainings)>0): ?>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row courses_row">
+                                <?php for($i=0; $i < 4 && $i < count($trainings); $i++): ?>
+                                    <div class="col-lg-3 course_col">
+                                        <div class="course"><a href="<?php echo e(asset('training/view/'.$trainings[$i]->id)); ?>">
+                                            <div class="course_image"><img src="<?php echo e(asset('/storage/thumbnail/training/'.$trainings[$i]->thumbnail)); ?>" alt=""></div>
+                                            <div class="course_body">
+                                                <h4 class="course_title"><?php echo e($trainings[$i]->title); ?></h4>
+                                                <div class="d-flex">
+                                                    <div class="mr-auto p-2 course_teacher"><?php echo e($trainings[$i]->author); ?></div>
+                                                    <div class="p-2 course_price">
+                                                        <?php if($trainings[$i]->fee>0): ?>
+                                                            $<?php echo e($trainings[$i]->fee); ?>  
+                                                        <?php else: ?>
+                                                            Free
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
+
+                                                <div class="course_text">
+                                                    <p><?php echo e($trainings[$i]->description); ?></p>
+                                                </div>
+                                            </div>
+                                        </a></div>
+                                    </div>
+                                <?php endfor; ?>
+                            </div>
+                        </div>
+                        
+                       <?php for($j=2; $j < 4 && $j < count($trainings); $j++): ?>
+                            <div class="carousel-item">
+                                <div class="row courses_row">
+                                    <?php for($i=$j; $i < $j*4 && $i < count($trainings); $i++): ?>
+                                        <div class="col-lg-3 course_col">
+                                            <div class="course"><a href="<?php echo e(asset('training/view/'.$trainings[$i]->id)); ?>">
+                                                <div class="course_image"><img src="<?php echo e(asset('/storage/thumbnail/training/'.$trainings[$i]->thumbnail)); ?>" alt=""></div>
+                                                <div class="course_body">
+                                                    <h4 class="course_title"><?php echo e($trainings[$i]->title); ?></h4>
+                                                    <div class="d-flex">
+                                                        <div class="mr-auto p-2 course_teacher"><?php echo e($trainings[$i]->author); ?></div>
+                                                        <div class="p-2 course_price">
+                                                            <?php if($trainings[$i]->fee>0): ?>
+                                                                $<?php echo e($trainings[$i]->fee); ?>  
+                                                            <?php else: ?>
+                                                                Free
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="course_text">
+                                                        <p><?php echo e($trainings[$i]->description); ?></p>
+                                                    </div>
+                                                </div>
+                                            </a></div>
+                                        </div>
+                                    <?php endfor; ?>
+                                </div>
+                            </div>
+                        <?php endfor; ?>
+                    </div>
+                    <?php endif; ?>
+                </div>
+
+
+          <div class="slider_nav slider_prev" href="#carouselTrainingControls" role="button" data-slide="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
+        <div class="slider_nav slider_next" href="#carouselTrainingControls" role="button" data-slide="next"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+        </div>
+    </div>
+
+
+    <!-- Books Section -->
+    <div class="Books item-section">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex section_title_container">
+                        <h2 class="mr-auto p-2 section_title">Recent Books</h2>
+
+                        <form method="post" class="d-flex flex-row align-items-center justify-content-center" action="<?php echo e(route('filesection')); ?>">
+                    		<?php echo e(csrf_field()); ?>
+
+                    		<input type="hidden" name="section" value="books">
+	                        <select name="catagory_id" class="p-2 dropdown_item_select custom-select" required>
+                                <option value="0">All Category</option>
+                                <?php $__currentLoopData = $catagories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $Category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                	<option value="<?php echo e($Category->id); ?>"><?php echo e($Category->catagory_name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+	                        </select>
+	                        <input type="submit" class="p-2 btn section_button" value="View Books">
+                   	 	</form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="carouselBooksControls" class="carousel slide" data-ride="carousel" data-interval="false">
+                <?php if(count($books)>0): ?>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row courses_row">
+                                <?php for($i=0; $i < 4 && $i < count($books); $i++): ?>
+                                    <div class="col-lg-3 course_col">
+                                        <div class="course"><a href="<?php echo e(asset('books/view/'.$books[$i]->id)); ?>">
+                                            <div class="course_image"><img src="<?php echo e(asset('/storage/thumbnail/books/'.$books[$i]->thumbnail)); ?>" alt=""></div>
+                                            <div class="course_body">
+                                                <h4 class="course_title"><?php echo e($books[$i]->file_name); ?></h4>
+                                                <div class="d-flex">
+                                                    <div class="course_teacher"><?php echo e($books[$i]->author); ?></div>
+                                                </div>
+                                            </div>
+                                        </a></div>
+                                    </div>
+                                <?php endfor; ?>
+                            </div>
+                        </div>
+                        
+                        <?php for($j=2; $j < 4 && $j < count($books); $j++): ?>
+                            <div class="carousel-item">
+                                <div class="row courses_row">
+                                    <?php for($i=$j; $i < $j*4 && $i < count($books); $i++): ?>
+                                        <div class="col-lg-3 course_col">
+                                            <div class="course"><a href="<?php echo e(asset('books/view/'.$books[$i]->id)); ?>">
+                                                <div class="course_image"><img src="<?php echo e(asset('/storage/thumbnail/books/'.$books[$i]->thumbnail)); ?>" alt=""></div>
+                                                <div class="course_body">
+                                                    <h4 class="course_title"><?php echo e($books[$i]->file_name); ?></h4>
+                                                    <div class="d-flex">
+                                                        <div class=" course_teacher"><?php echo e($books[$i]->author); ?></div>
+                                                    </div>
+                                                </div>
+                                            </a></div>
+                                        </div>
+                                    <?php endfor; ?>
+                                </div>
+                            </div>
+                        <?php endfor; ?>
+                    </div>
+                    <?php endif; ?>
+                </div>
+
+
+          <div class="slider_nav slider_prev" href="#carouselBooksControls" role="button" data-slide="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
+        <div class="slider_nav slider_next" href="#carouselBooksControls" role="button" data-slide="next"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+
+        </div>
+    </div>
+
+    <!-- Videos Section -->
+    <div class="Videos item-section">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex section_title_container">
+                        <h2 class="mr-auto p-2 section_title">Recent Videos</h2>
+                        
+                        <form method="post" class="d-flex flex-row align-items-center justify-content-center" action="<?php echo e(route('filesection')); ?>">
+                    		<?php echo e(csrf_field()); ?>
+
+                    		<input type="hidden" name="section" value="videos">
+	                        <select name="catagory_id" class="p-2 dropdown_item_select custom-select" required>
+                                <option value="0">All Category</option>
+                                <?php $__currentLoopData = $catagories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $Category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                	<option value="<?php echo e($Category->id); ?>"><?php echo e($Category->catagory_name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+	                        </select>
+	                        <input type="submit" class="p-2 btn section_button" value="View Videos">
+                   	 	</form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="carouselVideosControls" class="carousel slide" data-ride="carousel" data-interval="false">
+                <?php if(count($videos)>0): ?>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row courses_row">
+                                <?php for($i=0; $i < 4 && $i < count($videos); $i++): ?>
+                                    <div class="col-lg-3 course_col">
+                                        <div class="course"><a href="<?php echo e(asset('videos/view/'.$videos[$i]->id)); ?>">
+                                            <div class="course_image"><img src="<?php echo e(asset('/storage/thumbnail/videos/'.$videos[$i]->thumbnail)); ?>" alt=""></div>
+                                            <div class="course_body">
+                                                <h4 class="course_title"><?php echo e($videos[$i]->file_name); ?></h4>
+                                                <div class="d-flex">
+                                                    <div class="course_teacher"><?php echo e($videos[$i]->author); ?></div>
+                                                </div>
+                                            </div>
+                                        </a></div>
+                                    </div>
+                                <?php endfor; ?>
+                            </div>
+                        </div>
+                        
+                        <?php for($j=2; $j < 4 && $j < count($videos); $j++): ?>
+                            <div class="carousel-item">
+                                <div class="row courses_row">
+                                    <?php for($i=$j; $i < $j*4 && $i < count($videos); $i++): ?>
+                                        <div class="col-lg-3 course_col">
+                                            <div class="course"><a href="<?php echo e(asset('videos/view/'.$videos[$i]->id)); ?>">
+                                                <div class="course_image"><img src="<?php echo e(asset('/storage/thumbnail/videos/'.$videos[$i]->thumbnail)); ?>" alt=""></div>
+                                                <div class="course_body">
+                                                    <h4 class="course_title"><?php echo e($videos[$i]->file_name); ?></h4>
+                                                    <div class="d-flex">
+                                                        <div class=" course_teacher"><?php echo e($videos[$i]->author); ?></div>
+                                                    </div>
+                                                </div>
+                                            </a></div>
+                                        </div>
+                                    <?php endfor; ?>
+                                </div>
+                            </div>
+                        <?php endfor; ?>
+                    </div>
+                    <?php endif; ?>
+                </div>
+
+
+        <div class="slider_nav slider_prev" href="#carouselVideosControls" role="button" data-slide="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
+        <div class="slider_nav slider_next" href="#carouselVideosControls" role="button" data-slide="next"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+
+        </div>
+    </div>
+
+    <!-- PPT Section -->
+    <div class="PPT item-section">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex section_title_container">
+                        <h2 class="mr-auto p-2 section_title">Recent PPT</h2>
+
+                        <form method="post" class="d-flex flex-row align-items-center justify-content-center" action="<?php echo e(route('filesection')); ?>">
+                    		<?php echo e(csrf_field()); ?>
+
+                    		<input type="hidden" name="section" value="ppts">
+	                        <select name="catagory_id" class="p-2 dropdown_item_select custom-select" required>
+                                <option value="0">All Category</option>
+                                <?php $__currentLoopData = $catagories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $Category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                	<option value="<?php echo e($Category->id); ?>"><?php echo e($Category->catagory_name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+	                        </select>
+	                        <input type="submit" class="p-2 btn section_button" value="View PPTs">
+                   	 	</form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="carouselPPTControls" class="carousel slide" data-ride="carousel" data-interval="false">
+                <?php if(count($ppts)>0): ?>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row courses_row">
+                                <?php for($i=0; $i < 4 && $i < count($ppts); $i++): ?>
+                                    <div class="col-lg-3 course_col">
+                                        <div class="course"><a href="<?php echo e(asset('ppts/view/'.$ppts[$i]->id)); ?>">
+                                            <div class="course_image"><img src="<?php echo e(asset('/storage/thumbnail/ppts/'.$ppts[$i]->thumbnail)); ?>" alt=""></div>
+                                            <div class="course_body">
+                                                <h4 class="course_title"><?php echo e($ppts[$i]->file_name); ?></h4>
+                                                <div class="d-flex">
+                                                    <div class="course_teacher"><?php echo e($ppts[$i]->author); ?></div>
+                                                </div>
+                                            </div>
+                                        </a></div>
+                                    </div>
+                                <?php endfor; ?>
+                            </div>
+                        </div>
+                        
+                        <?php for($j=2; $j < 4 && $j < count($ppts); $j++): ?>
+                            <div class="carousel-item">
+                                <div class="row courses_row">
+                                    <?php for($i=$j; $i < $j*4 && $i < count($ppts); $i++): ?>
+                                        <div class="col-lg-3 course_col">
+                                            <div class="course"><a href="<?php echo e(asset('ppts/view/'.$ppts[$i]->id)); ?>">
+                                                <div class="course_image"><img src="<?php echo e(asset('/storage/thumbnail/ppts/'.$ppts[$i]->thumbnail)); ?>" alt=""></div>
+                                                <div class="course_body">
+                                                    <h4 class="course_title"><?php echo e($ppts[$i]->file_name); ?></h4>
+                                                    <div class="d-flex">
+                                                        <div class=" course_teacher"><?php echo e($ppts[$i]->author); ?></div>
+                                                    </div>
+                                                </div>
+                                            </a></div>
+                                        </div>
+                                    <?php endfor; ?>
+                                </div>
+                            </div>
+                        <?php endfor; ?>
+                    </div>
+                    <?php endif; ?>
+                </div>
+
+
+        <div class="slider_nav slider_prev" href="#carouselPPTControls" role="button" data-slide="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
+        <div class="slider_nav slider_next" href="#carouselPPTControls" role="button" data-slide="next"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+
+        </div>
+    </div>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

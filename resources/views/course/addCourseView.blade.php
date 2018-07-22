@@ -14,12 +14,12 @@
 
               <tr class="form-group">
                 <td>
-                  <label class="control-label " for="file_catagory">Course catagory</label>
+                  <label class="control-label " for="file_catagory">Course category</label>
                 </td>
                 <td>
                   <div id="csrf_catagory" data-token='{{ csrf_token() }}'></div>
                   <select class="form-control" name="catagory_id" id="file_catagory" action="{{route('getsubcatagories')}}" required autofocus style="width: 200px; height: 33px;">
-                        <option value="" selected disabled>--Select Catagory--</option>
+                        <option value="" selected disabled>--Select Category--</option>
                         @foreach($catagories as $catagory)
                           <option value="{{ $catagory->id }}">{{ $catagory->catagory_name }}</option>
                         @endforeach
@@ -109,7 +109,7 @@
                 </td>
                 <td>
                   <div class="form-group">
-                   <textarea class="form-control" placeholder="Enter Outcome" name="outcome" required autofocus></textarea>
+                   <textarea class="form-control" placeholder="Enter Outcome separated with comma (,)" name="outcome" required autofocus></textarea>
                   </div>
                 </td>
               </tr>
@@ -127,7 +127,7 @@
 
               <tr>
                 <td>
-                  <label>Course Introduction: File (<span id="title_format" style="color: gray;">mp4,jpg,png,pdf</span>)
+                  <label>Course Introduction: File (<span id="title_format" style="color: gray;">mp4,pdf,ppt</span>)
                   </label>
                 </td>
                 <td>

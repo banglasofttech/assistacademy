@@ -48,6 +48,7 @@ class AdminController extends Controller
             'phone'=>$user->phone,
             'organization'=>$user->organization,
             'occupation'=>$user->occupation,
+            'pp'=>$user->pp,
         ]);
 
     	User::where('id',$id)->update([

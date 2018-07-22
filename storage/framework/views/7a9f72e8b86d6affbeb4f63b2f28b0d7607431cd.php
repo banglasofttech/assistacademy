@@ -1,77 +1,97 @@
 <?php $__env->startSection('title', $title); ?>
 
-<?php $__env->startSection('content_title', $title); ?>
-
 <?php $__env->startSection('content'); ?>
-  <?php
-    $image='/storage/thumbnail/videos/'.$video->thumbnail;
-    $file='/storage/files/videos/'.$video->file;
-    $authorLink='/author/'.$author->id;
-    $downloadLink='/videos/download/'.$video->id;
-  ?>
 
-  <div class="row ">
-    <div class="col-md-5">
-      <!-- video Info -->
-      <h2 class="item-panel text-center text-primary" style="padding: 5px">Video Info</h2>
+<link rel="stylesheet" type="text/css" href="<?php echo e(asset('content/style/course.css')); ?>">
 
+  <div class="course">
+    <div class="container">
       <div class="row">
-        <div class="col-md-5">
-          <img src="<?php echo e(asset($image)); ?>" width="150px" height="180px" style="float: right;">
-        </div>
-        
-        <div class="col-md-7" style="float: left;">
-          <span style="font-weight: bold;">Title: </span> <?php echo e($video->file_name); ?>
+        <!-- Course -->
+        <div class="col-lg-8">
+          <div class="course_container">
+            <div class="course_title"><?php echo e($video->file_name); ?></div>
+            <div class="course_info d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
 
-          <br>
-          <span style="font-weight: bold;">Author: </span> <a class="" href=<?php echo e($authorLink); ?>><?php echo e($author->first_name); ?> <?php echo e($author->last_name); ?></a>
-          <br>
-          <span style="font-weight: bold;">Catagory: </span> <?php echo e($video->catagory_name); ?>
+              <!-- Course Info Item -->
+              <div class="course_info_item">
+                <div class="course_info_title">Author:</div>
+                <div class="course_info_text"><a href="<?php echo e(asset('videos/author/'.$video->uploader_email)); ?>"><?php echo e($author->first_name); ?> <?php echo e($author->last_name); ?></a></div>
+              </div>
 
-          <br><br>
-          <span style="font-weight: bold;">Fee: </span> <?php echo e($video->Fee); ?>
+              <!-- Course Info Item -->
+              <div class="course_info_item">
+                <div class="course_info_title">Uploaded On:</div>
+                <div class="course_info_text"><?php echo e($video->created_at); ?></div>
+              </div>
 
-          <br>
-          <span style="font-weight: bold;">Total Views: </span> <?php echo e($video->total_view); ?>
+              <div class="course_info_item">
+                <div class="course_info_title">Views:</div>
+                <div class="course_info_text"><?php echo e($video->total_view); ?></div>
+              </div>
 
-          <br>
-          <span style="font-weight: bold;">Uploaded at: </span> <?php echo e($video->created_at); ?>
+              <!-- Course Info Item -->
+              <div class="course_info_item">
+                <div class="course_info_title">Category:</div>
+                <div class="course_info_text"><a href="<?php echo e(asset('videos/catagory/'.$video->catagory_id)); ?>"> <?php echo e($video->catagory_name); ?></a></div>
+              </div>
 
-          <br>
-          <!-- <a href=<?php echo e($downloadLink); ?> class="btn btn-success" role="button">Download Now</a> -->
+            </div>
+          </div>
+
+            <!-- Video Player -->
+           <video class="blog_post_video video-js" data-setup='{"controls": true, "autoplay": false, "preload": "auto", "poster": "<?php echo e(asset('/storage/thumbnail/videos/'.$video->thumbnail)); ?>"}'>
+              <source src="<?php echo e(asset('/storage/files/videos/'.$video->file)); ?>" type="video/mp4">
+              Your browser does not support HTML5 video.
+            </video>
+
+          </div>          
+      
+        <!-- Course Sidebar -->
+        <div class="col-lg-4">
+          <div class="sidebar">
+            
+              <!-- Author Section -->
+              <div class="sidebar_section">
+                <div class="sidebar_section_title">Author</div>
+                <div class="sidebar_teacher">
+                  <div class="teacher_title_container d-flex flex-row align-items-center justify-content-start">
+                    <div class="teacher_image">
+                        <img src="<?php echo e(asset('/storage/thumbnail/author/'.$author->pp)); ?>" alt="">
+                        </div>
+                    <div class="teacher_title">
+                      <div class="teacher_name"><a href="<?php echo e(asset('videos/author/'.$video->uploader_email)); ?>"><?php echo e($author->first_name); ?> <?php echo e($author->last_name); ?></a></div>
+                      <div class="teacher_position"><?php echo e($author->occupation); ?> at <?php echo e($author->organization); ?></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Related Content Section -->
+              <div class="sidebar_section">
+                <div class="sidebar_section_title">Related Videos</div>
+                <div class="sidebar_latest">
+                  <?php $__currentLoopData = $related_videos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $related_video): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="latest d-flex flex-row align-items-start justify-content-start">
+                      <div class="latest_image"><div><img src="<?php echo e(asset('/storage/thumbnail/videos/'.$related_video->thumbnail)); ?>" alt="Icon"></div></div>
+                      <div class="latest_content">
+                        <div class="latest_title"><a href="<?php echo e(asset('videos/view/'.$related_video->id)); ?>"><?php echo e($related_video->file_name); ?></a></div>
+                        <div class="course_author"><?php echo e($related_video->author); ?></div>
+                      </div>
+                    </div>
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                </div>
+              </div>
+
+          </div>
         </div>
       </div>
-
-      <!-- Related videos -->
-      <h2 class="item-panel text-center text-primary" style="padding: 5px; margin-top: 50px;">Related Videos</h2>
-       <div class="row">
-          <?php $__currentLoopData = $related_videos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $video): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <div class="col-md-6">
-              <?php
-                $image='/storage/thumbnail/videos/'.$video->thumbnail;
-                $videoLink='/videos/view/'.$video->id;
-              ?>
-              <div class="content-list">
-                <a href=<?php echo e($videoLink); ?> class="panel-heading">
-                  <div class="content-name"><?php echo e($video->file_name); ?></div>
-                  <div class="content-fee">( <?php echo e($video->Fee); ?> )</div>
-                  <div class="content-author"><?php echo e($video->author); ?></div>
-                  <img src="<?php echo e(asset($image)); ?>" width="160px" height="150px">
-                </a>
-              </div>
-            </div>
-          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-       </div>
-    </div>
-
-    <div class="col-md-7">
-      <video width="100%" height="500px" controls>
-        <source src="<?php echo e(asset($file)); ?>" type="video/mp4">
-      </video>
     </div>
   </div>
 
-   
+<script src="<?php echo e(asset('content/js/jquery-3.2.1.min.js')); ?>"></script>
+<script src="<?php echo e(asset('content/js/course.js')); ?>"></script>
 
 <?php $__env->stopSection(); ?>
 

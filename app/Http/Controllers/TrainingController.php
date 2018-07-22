@@ -12,7 +12,7 @@ use Auth;
 class TrainingController extends Controller
 {
     public function index(){
-        $trainings=Training::orderBy("id","desc")->paginate(12);
+        $trainings=Training::orderBy("id","desc")->paginate(20);
         $title="Trainings";
 
          for ($i=0;$i<count($trainings);$i++) {
@@ -20,8 +20,8 @@ class TrainingController extends Controller
                 $trainings[$i]->author=$author->first_name." ".$author->last_name;
             }
 
-        //return to view page
-        // return view("training.trainingList")->with(compact("title","trainings"));
+        $catagories=Catagory::get();
+        return view("training.trainingList")->with(compact("title","trainings","catagories"));
     }
 
     public function viewTraining($id){
@@ -38,7 +38,7 @@ class TrainingController extends Controller
                 "viewer_id"=>$viewer_id
             ]);
 
-            $related_trainings= Training::where("catagory_id",$training->catagory_id)->orderBy("id","desc")->limit(6)->get();
+            $related_trainings= Training::where("catagory_id",$training->catagory_id)->orderBy("id","desc")->limit(5)->get();
 
             for($i=0;$i<count($related_trainings);$i++) {
                 $author=User::where('email',$related_trainings[$i]->uploader_email)->first();
@@ -48,30 +48,31 @@ class TrainingController extends Controller
             $catagory=Catagory::where("id",$training->catagory_id)->first();
             $training->catagory_name=$catagory->catagory_name;
 
-            $title=$training->file_name;
+            $title=$training->title;
             $author=User::where("email",$training->uploader_email)->first();
             
             return view("training.viewTraining")->with(compact("title","training","author","related_trainings"));
         }
         else{
-            return redirect("/trainings");
+            return redirect("/training");
         }
     }
 
     private function checkUserinViewerList($viewer_id){
-        $user_id=','.Auth::user()->id;
-        
-        //if current user id is not in viewer id list, add it
-        if(!strpos($viewer_id, $user_id)){
-            $viewer_id=$viewer_id.$user_id;
+        if(Auth::user()){
+            $user_id=','.Auth::user()->id;
+            
+            //if current user id is not in viewer id list, add it
+            if(!strpos($viewer_id, $user_id)){
+                $viewer_id=$viewer_id.$user_id;
+            }
+            return $viewer_id;
         }
-
-        return $viewer_id;
 
     }
 
     public function catagorywiseTraining($id){
-        $trainings=Training::where("catagory_id",$id)->orderBy("id","desc")->paginate(12);;
+        $trainings=Training::where("catagory_id",$id)->orderBy("id","desc")->paginate(20);;
         $catagory=Catagory::where("id",$id)->first();
 
         if($catagory!=null){
@@ -86,11 +87,12 @@ class TrainingController extends Controller
                 $trainings[$i]->author=$author->first_name." ".$author->last_name;
             }
 
-        return view("training.trainingList")->with(compact("title","trainings"));
+        $catagories=Catagory::get();
+        return view("training.trainingList")->with(compact("title","trainings","catagories"));
     }
 
      public function authorwiseTraining($email){
-        $trainings=Training::where("uploader_email",$email)->orderBy("id","desc")->paginate(12);
+        $trainings=Training::where("uploader_email",$email)->orderBy("id","desc")->paginate(20);
         $author=User::where("email",$email)->first();
 
         if($author!=null){
@@ -101,11 +103,11 @@ class TrainingController extends Controller
         }
 
         for ($i=0;$i<count($trainings);$i++) {
-                $author=User::where('email',$trainings[$i]->uploader_email)->first();
-                $trainings[$i]->author=$author->first_name." ".$author->last_name;
+                $trainings[$i]->author=$title;
             }
 
-        // return view("training.trainingList")->with(compact("title","trainings"));
+        $catagories=Catagory::get();
+        return view("training.trainingList")->with(compact("title","trainings","catagories"));
     }
 
     public function addTrainingView(){
@@ -117,7 +119,7 @@ class TrainingController extends Controller
     public function addTraining(Request $request){
     	$this->validate($request,[
     		'catagory_id'=>'required',
-    		'title'=>'required',
+    		'title'=>'required|max:255',
     		'description'=>'required',
     		'fee'=>'required|integer',
     		'uploader_email'=>'required',
@@ -142,6 +144,6 @@ class TrainingController extends Controller
             "viewer_id" => "0"
     	]);
 
-    	return redirect()->back()->withErrors('Training add successfully');
+    	return redirect()->back()->withErrors('Training added successfully');
     }
 }

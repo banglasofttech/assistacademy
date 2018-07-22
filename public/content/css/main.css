@@ -35,15 +35,16 @@
 .content-list{
     display: flex;
     /*justify-content: space-around;*/
-    margin: 20px;
+    margin: 75px 0px 10px 0px;
 } 
 
 .content-list a{
     /*height: 240px;*/
-    width: 180px;
+    color: #fff;
+    /*width: 180px;*/
     background: #2a91c7;
     border-radius: 10px;
-    padding: 10px;
+    padding: 8px;
     text-align: center;
     text-decoration: none;
     
@@ -83,13 +84,26 @@
   /*box-shadow: 5px 5px 5px 5px;*/
 }
 
+.content-list .section{
+  color: #fff;
+  font-style: italic;
+  padding: 5px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #fff;
+}
+
+.content-list .search-result{
+  color: #fff;
+}
+
 .content-list button{
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   background: #2a91c7;
   border: 1px solid #2a91c7;
   border-radius: 120px;
   padding: 10px;
+  color: #fff;
   text-align: center;
   cursor: pointer;
 }
@@ -198,4 +212,12 @@
 
 .course-list .course-fee{
   font-weight: bold;
+}
+
+.col-md-2_5{
+  /*position: relative;*/
+  /*width: 100%;*/
+  /*min-height: 1px;*/
+  padding-right: 15px;
+  padding-left: 15px;
 }

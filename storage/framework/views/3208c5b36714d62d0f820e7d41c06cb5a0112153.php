@@ -135,7 +135,7 @@
                                         <a href="<?php echo e(asset('/authorlist')); ?>">Author/Trainer</a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo e(asset('/learnerlist')); ?>">Leraner</a>
+                                        <a href="<?php echo e(asset('/learnerlist')); ?>">Learner</a>
                                     </li>
                                     <li>
                                         <a href="<?php echo e(asset('/corporateuserlist')); ?>">Corporate Member</a>
@@ -182,20 +182,20 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="add-catagory-modal-title">New Catagory</h5>
+            <h5 class="modal-title" id="add-catagory-modal-title">New Category</h5>
           </div>
           <form class="form-group" method="POST" action="<?php echo e(route('addcatagory')); ?>">
             <?php echo e(csrf_field()); ?>
 
               <div class="modal-body">
                 <div class="form-group">
-                    <label for="catagory">Catagory Name</label><br>
-                    <input type="text" class="form-control" name="catagory_name" placeholder="Enter Catagory Name" required autofocus='true'>
+                    <label for="catagory">Category Name</label><br>
+                    <input type="text" class="form-control" name="catagory_name" placeholder="Enter Category Name" required autofocus='true'>
                 </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <input type="submit" class="btn btn-primary" value="Add Catagory">
+                <input type="submit" class="btn btn-primary" value="Add Category">
               </div>
           </form>
         </div>

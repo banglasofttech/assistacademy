@@ -1,70 +1,80 @@
+
+
 @extends('layouts.layout')
 
 @section('title',$title)
 
 @section('content')
-<div class="">
 
-  <div class="item-panel bg-warning d-flex">
-    <div class="mr-auto p-2">
-      <font style="font-size: 25px;">Search Results for "{{$title}}"</font>
-    </div>
-  </div>
+<div class="content">
+    <div class="courses item-section">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex section_title_container">
+                        <h2 class="section_title">Search Results for "{{$title}}"</h2>
+                    </div>
+                </div>
+            </div>
 
-  <form method="POST"  class=" " action="{{ route('search') }}" enctype="multipart/form-data">
+            <form method="POST"  class=" " action="{{ route('search') }}" enctype="multipart/form-data">
     {{ csrf_field() }}
     <input type="hidden" id="search_file_type" name="file_type" value="book">
 
     <input  type="hidden" class="flipkart-navbar-input" id="file_name" name="file_name" value="{{$title}}">
   
     <div class="row d-flex justify-content-around">
-      <div class="col-md-2.5">
+      <div class="col-md-2_5">
         <div class="content-list">
           <button type="submit" class="panel-heading book-search">
-            <div class="content-author"><h2>Books</h2></div>
-            <div class="content-name"><h3>{{$total_books}}</h3></div>
-          </button>
+             <h3 class="section">Books</h3>
+            <h3 class="search-result">{{$total_books}}</h3>
         </div>
       </div>
 
-      <div class="col-md-2.5">
+      <div class="col-md-2_5">
         <div class="content-list">
           <button type="submit" class="panel-heading ppt-search">
-            <div class="content-author"><h2>PPTs</h2></div>
-            <div class="content-name"><h3>{{$total_ppts}}</h3></div>
+             <h3 class="section">PPTs</h3>
+            <h3 class="search-result">{{$total_ppts}}</h3>
           </button>
         </div>
       </div>
 
 
-      <div class="col-md-2.5">
+      <div class="col-md-2_5">
         <div class="content-list">
           <button type="submit" class="panel-heading video-search">
-            <div class="content-author"><h2>Videos</h2></div>
-            <div class="content-name"><h3>{{$total_videos}}</h3></div>
+             <h3 class="section">Videos</h3>
+            <h3 class="search-result">{{$total_videos}}</h3>
           </button>
         </div>
       </div> 
 
-      <div class="col-md-2.5">
+      <div class="col-md-2_5">
         <div class="content-list">
           <button type="submit" class="panel-heading course-search">
-            <div class="content-author"><h2>Courses</h2></div>
-            <div class="content-name"><h3>{{$total_courses}}</h3></div>
+             <h3 class="section">Courses</h3>
+            <h3 class="search-result">{{$total_courses}}</h3>
           </button>
         </div>
       </div> 
 
-      <div class="col-md-2.5">
+      <div class="col-md-2_5">
         <div class="content-list">
           <button type="submit" class="panel-heading training-search">
-            <div class="content-author"><h2>Trainings</h2></div>
-            <div class="content-name"><h3>{{$total_trainings}}</h3></div>
+            <h3 class="section">Trainings</h3>
+            <h3 class="search-result">{{$total_trainings}}</h3>
           </button>
         </div>
       </div>
     </div>
 
   </form>
+        </div>
+    </div>
 </div>
+
 @endsection
+
+

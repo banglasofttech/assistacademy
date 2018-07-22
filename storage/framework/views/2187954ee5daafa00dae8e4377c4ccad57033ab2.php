@@ -1,83 +1,93 @@
 <?php $__env->startSection('title', $title); ?>
 
-<?php $__env->startSection('content_title', $title); ?>
-
 <?php $__env->startSection('content'); ?>
-  <?php
-    $image='/storage/thumbnail/books/'.$book->thumbnail;
-    $file='/storage/files/books/'.$book->file;
-    $authorLink='/author/'.$author->id;
-    $downloadLink='/books/download/'.$book->id;
-  ?>
 
-  <div class="row ">
-    <div class="col-md-5">
-      <!-- Book Info -->
-      <h2 class="item-panel text-center text-primary" style="padding: 5px">Book Info</h2>
+<link rel="stylesheet" type="text/css" href="<?php echo e(asset('content/style/course.css')); ?>">
 
+  <div class="course">
+    <div class="container">
       <div class="row">
-        <div class="col-md-5">
-          <img src="<?php echo e(asset($image)); ?>" width="150px" height="180px" style="float: right;">
-        </div>
-        
-        <div class="col-md-7" style="float: left;">
-          <span style="font-weight: bold;"></span> <?php echo e($book->file_name); ?>
+        <!-- Course -->
+        <div class="col-lg-8">
+          <div class="course_container">
+            <div class="course_title"><?php echo e($book->file_name); ?></div>
+            <div class="course_info d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
 
-          <br>
-          <span style="font-weight: bold;">By: </span> <a class="" href=<?php echo e($authorLink); ?>><?php echo e($author->first_name); ?> <?php echo e($author->last_name); ?></a>
-          <br>
-          <span style="font-weight: bold;">Catagory: </span> <?php echo e($book->catagory_name); ?>
+              <!-- Course Info Item -->
+              <div class="course_info_item">
+                <div class="course_info_title">Author:</div>
+                <div class="course_info_text"><a href="<?php echo e(asset('books/author/'.$book->uploader_email)); ?>"><?php echo e($author->first_name); ?> <?php echo e($author->last_name); ?></a></div>
+              </div>
 
-          <br><br>
-          <span style="font-weight: bold;">Total Views: </span> <?php echo e($book->total_view); ?>
+              <!-- Course Info Item -->
+              <div class="course_info_item">
+                <div class="course_info_title">Uploaded On:</div>
+                <div class="course_info_text"><?php echo e($book->created_at); ?></div>
+              </div>
 
-          <br>
-          <span style="font-weight: bold;">Uploaded at: </span> <?php echo e($book->created_at); ?>
+              <div class="course_info_item">
+                <div class="course_info_title">Views:</div>
+                <div class="course_info_text"><?php echo e($book->total_view); ?></div>
+              </div>
 
-          <br>
-          <!-- <a href=<?php echo e($downloadLink); ?> class="btn btn-success" role="button">Download Now</a> -->
+              <!-- Course Info Item -->
+              <div class="course_info_item">
+                <div class="course_info_title">Category:</div>
+                <div class="course_info_text"><a href="<?php echo e(asset('books/catagory/'.$book->catagory_id)); ?>"> <?php echo e($book->catagory_name); ?></a></div>
+              </div>
+
+            </div>
+          </div>
+            <!-- PDF Viewer -->
+            <iframe src="https://drive.google.com/viewerng/viewer?url=<?php echo e(asset('/storage/files/books/'.$book->file)); ?>&hl=en&pid=explorer&efh=false&a=v&chrome=false&embedded=true" width="100%" style="height:600px;" frameborder="0">
+            </iframe> 
+          </div>          
+      
+        <!-- Course Sidebar -->
+        <div class="col-lg-4">
+          <div class="sidebar">
+            
+              <!-- Author Section -->
+              <div class="sidebar_section">
+                <div class="sidebar_section_title">Author</div>
+                <div class="sidebar_teacher">
+                  <div class="teacher_title_container d-flex flex-row align-items-center justify-content-start">
+                    <div class="teacher_image">
+                        <img src="<?php echo e(asset('/storage/thumbnail/author/'.$author->pp)); ?>" alt="" width="100%">
+                        </div>
+                    <div class="teacher_title">
+                      <div class="teacher_name"><a href="<?php echo e(asset('books/author/'.$book->uploader_email)); ?>"><?php echo e($author->first_name); ?> <?php echo e($author->last_name); ?></a></div>
+                      <div class="teacher_position"><?php echo e($author->occupation); ?> at <?php echo e($author->organization); ?></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Related Content Section -->
+              <div class="sidebar_section">
+                <div class="sidebar_section_title">Related Books</div>
+                <div class="sidebar_latest">
+                  <?php $__currentLoopData = $related_books; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $related_book): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="latest d-flex flex-row align-items-start justify-content-start">
+                      <div class="latest_image"><div><img src="<?php echo e(asset('/storage/thumbnail/books/'.$related_book->thumbnail)); ?>" alt="Icon"></div></div>
+                      <div class="latest_content">
+                        <div class="latest_title"><a href="<?php echo e(asset('books/view/'.$related_book->id)); ?>"><?php echo e($related_book->file_name); ?></a></div>
+                        <div class="course_author"><?php echo e($related_book->author); ?></div>
+                      </div>
+                    </div>
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                </div>
+              </div>
+
+          </div>
         </div>
       </div>
-
-      <!-- Related Books -->
-      <h2 class="item-panel text-center text-primary" style="padding: 5px; margin-top: 50px;">Related Books</h2>
-       <div class="row">
-          <?php $__currentLoopData = $related_books; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $book): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <div class="col-md-6">
-              <?php
-                $image='/storage/thumbnail/books/'.$book->thumbnail;
-                $bookLink='/books/view/'.$book->id;
-              ?>
-              <div class="content-list">
-                <a href=<?php echo e($bookLink); ?> class="panel-heading">
-                  <div class="content-name"><?php echo e($book->file_name); ?></div>
-                  <div class="content-author"><?php echo e($book->author); ?></div>
-                  <img src="<?php echo e(asset($image)); ?>" width="160px" height="150px">
-                </a>
-              </div>
-            </div>
-          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-       </div>
-    </div>
-
-    <div class="col-md-7">
-       <iframe src='http://docs.google.com/gview?embedded=true&url=<?php echo e(asset($file)); ?>' width="100%" style="height:100%;" frameborder="0"></iframe> 
-        <!--<iframe name="myiframe"  width="100%" id="myiframe" src="<?php echo e(asset($file)); ?>" style="height: 1000px;">-->
     </div>
   </div>
 
-  <script type="text/javascript">
-    
-    $(document).ready(function() {
-      console.log('Coming');
-      function stateChange(newState) {
-          setTimeout(function () {
-              console.log("Hello");
-          }, 5000);
-      }
-    });
-  </script>
-   
+<script src="<?php echo e(asset('content/js/jquery-3.2.1.min.js')); ?>"></script>
+<script src="<?php echo e(asset('content/js/course.js')); ?>"></script>
 
 <?php $__env->stopSection(); ?>
 

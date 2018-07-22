@@ -12,15 +12,17 @@ use Auth;
 class pptController extends Controller
 {
     public function index(){
-    	$ppts=PPTs::orderBy("id","desc")->paginate(12);
+    	$ppts=PPTs::orderBy("id","desc")->paginate(20);
     	$title="PPTs";
 
         for ($i=0;$i<count($ppts);$i++) {
                 $author=User::where('email',$ppts[$i]->uploader_email)->first();
                 $ppts[$i]->author=$author->first_name." ".$author->last_name;
             }
+
+        $catagories=Catagory::get();
             
-    	return view("ppt.pptList")->with(compact("title","ppts"));
+    	return view("ppt.pptList")->with(compact("title","ppts","catagories"));
     }
 
     public function viewPPT($id){
@@ -57,19 +59,20 @@ class pptController extends Controller
     }
 
     private function checkUserinViewerList($viewer_id){
-        $user_id=','.Auth::user()->id;
-        
-        //if current user id is not in viewer id list, add it
-        if(!strpos($viewer_id, $user_id)){
-            $viewer_id=$viewer_id.$user_id;
+        if(Auth::user()){
+            $user_id=','.Auth::user()->id;
+            
+            //if current user id is not in viewer id list, add it
+            if(!strpos($viewer_id, $user_id)){
+                $viewer_id=$viewer_id.$user_id;
+            }
+            return $viewer_id;
         }
-
-        return $viewer_id;
 
     }
 
     public function catagoryPPT($id){
-    	$ppts=PPTs::where("catagory_id",$id)->orderBy("id","desc")->paginate(12);;
+    	$ppts=PPTs::where("catagory_id",$id)->orderBy("id","desc")->paginate(20);;
     	$catagory=Catagory::where("id",$id)->first();
 
         if($catagory!=null){
@@ -84,11 +87,13 @@ class pptController extends Controller
                 $ppts[$i]->author=$author->first_name." ".$author->last_name;
             }
 
-    	return view("ppt.pptList")->with(compact("title","ppts"));
+        $catagories=Catagory::get();
+            
+        return view("ppt.pptList")->with(compact("title","ppts","catagories"));
     }
 
     public function authorPPT($email){
-    	$ppts=PPTs::where("uploader_email",$email)->orderBy("id","desc")->paginate(12);
+    	$ppts=PPTs::where("uploader_email",$email)->orderBy("id","desc")->paginate(20);
     	$author=User::where("email",$email)->first();
 
     	if($author!=null){
@@ -98,7 +103,13 @@ class pptController extends Controller
             $title="Not found";
         }
 
-    	return view("ppt.pptList")->with(compact("title","ppts"));
+        foreach ($ppts as $ppt) {
+                $ppt->author=$title;
+            }
+
+        $catagories=Catagory::get();
+            
+        return view("ppt.pptList")->with(compact("title","ppts","catagories"));
     }
 
     public function downloadPPT($id){

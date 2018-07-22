@@ -2,8 +2,14 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index');
 Route::get('/adminpanel', 'AdminController@showLoginForm');
+
+Route::post('/filesection', 'FileController@getoSection')->name('filesection');
+
+// Route::get('/register', function(){
+// 	return redirect('/');
+// });
 
 // Route::post('/custom/login',[
 // 	'uses'=>'',
@@ -64,13 +70,18 @@ Route::middleware(['adminauthor'])->group(function(){
 });
 
 Route::middleware('auth')->group(function(){
-	Route::get("/author/{id}",'AuthorController@viewProfile');
+	// Route::get("/author/{id}",'AuthorController@viewProfile');
 	
 
-	Route::get("/search",'FileController@showFileSearchForm')->middleware('auth');
-	Route::post("/search",'FileController@searchFile')->name('search');
+	// Route::get("/search",'FileController@showFileSearchForm')->middleware('auth');
+	
 
-	Route::get("/sendauhtorrequest",'AuthorController@sendAuthorRequest')->name('sendauhtorrequest')->middleware('auth');
+	// Route::get("/sendauhtorrequest",'AuthorController@sendAuthorRequest')->name('sendauhtorrequest')->middleware('auth');
+
+	Route::get("/videos/view/{id}",'VideoController@viewVideo');
+	Route::get("/ppts/view/{id}",'PPTController@viewPPT');
+	Route::get("/courses/view/{id}",'CourseController@viewCourse');
+	Route::get("/training/view/{id}",'TrainingController@viewTraining');
 });
 
 Route::middleware(['admin'])->group(function(){
@@ -104,21 +115,19 @@ Route::get("/books/download/{id}",'BookController@downloadBook')->middleware('au
 Route::get("/videos",'VideoController@index');
 Route::get("/videos/catagory/{id}",'VideoController@catagoryVideo');
 Route::get("/videos/author/{email}",'VideoController@authorVideo');
-Route::get("/videos/view/{id}",'VideoController@viewVideo');
 Route::get("/videos/download/{id}",'VideoController@downloadVideo')->middleware('auth');
 
 Route::get("/ppts",'PPTController@index');
 Route::get("/ppts/catagory/{id}",'PPTController@catagoryPPT');
 Route::get("/ppts/author/{email}",'PPTController@authorPPT');
-Route::get("/ppts/view/{id}",'PPTController@viewPPT');
 Route::get("/ppts/download/{id}",'PPTController@downloadPPT')->middleware('auth');
 
 Route::get("/courses",'CourseController@index');
 Route::get("/courses/catagory/{id}",'CourseController@catagorywiseCourse');
 Route::get("/courses/author/{email}",'CourseController@authorwiseCourse');
-Route::get("/courses/view/{id}",'CourseController@viewCourse');
 
 Route::get("/training",'TrainingController@index');
 Route::get("/training/catagory/{id}",'TrainingController@catagorywiseTraining');
 Route::get("/training/author/{email}",'TrainingController@authorwiseTraining');
-Route::get("/training/view/{id}",'TrainingController@viewTraining');
+
+Route::post("/search",'FileController@searchFile')->name('search');

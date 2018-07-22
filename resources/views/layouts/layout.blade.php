@@ -1,171 +1,385 @@
 <!DOCTYPE html>
 <html lang="en">
-
-  <head>
-
+<head>
+    <title>@yield('title')</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Sharif Noor Zisad">
+    <meta name="description" content="AssistAcademy project">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Bangla Soft Tech">
 
-    <title>@yield('title')</title>
+    <link rel="stylesheet" type="text/css" href="{{asset('content/style/bootstrap.min.css')}}">
 
-    <!-- Bootstrap core CSS -->
-    <link href={{asset('content/css/bootstrap.css')}} rel="stylesheet">
-    <link href={{asset('content/css/style.css')}} rel="stylesheet">
-    <link href={{asset('content/css/jquery-ui.css')}} rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{asset('content/style/main_styles.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('content/style/responsive.css')}}">
+    <link href="{{asset('content/plugin/videoPlugin/video-js.css')}}" rel="stylesheet" type="text/css">
+
+    <link href="{{asset('content/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+
+    <!-- <link href="{{asset('content/css/bootstrap.css')}}" rel="stylesheet"> -->
+    <!-- <link href="{{asset('content/css/style.css')}}" rel="stylesheet"> -->
+    <!-- <link href="{{asset('content/css/jquery-ui.css')}}" rel="stylesheet"> -->
     <link rel="stylesheet" type="text/css" href="{{asset('content/css/main.css')}}">
+</head>
+<body>
 
-    @guest
-      <input type="hidden" id="logincheck" value="guest">
-    @else
-      <input type="hidden" id="logincheck" value="logged">
-    @endguest
+<div class="super_container">
 
-  </head>
+  <!-- Header -->
 
-  <body>
-    <section class="d-flex justify-content-around bg-navigation-bar">
-      <a href="/">Home</a>
-
-      <li class="dropdown" style="list-style-type: none;">
-        <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">E-Learning</a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/#book-list">Book</a>
-          <a class="dropdown-item" href="/#ppt-list">PPT</a>
-          <a class="dropdown-item" href="/#video-list">Video</a>
-          <a class="dropdown-item" href="/#journal-list">Journal</a>
+  <header class="header">
+      
+    <!-- Top Bar -->
+    <div class="top_bar">
+      <div class="top_bar_container">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="top_bar_content d-flex flex-row align-items-center justify-content-start">
+                <ul class="top_bar_contact_list">
+                  <li><div class="question">Have any confusion?</div></li>
+                  <li>
+                    <i class="fa fa-phone" aria-hidden="true"></i>
+                    <div>+(88) 01672-420600</div>
+                  </li>
+                  <li>
+                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                    <div>info@assistacademy.org</div>
+                  </li>
+                </ul>
+                <ul class="top_bar_login ml-auto">
+                  @guest
+                    <li class="login_button"><a href="#" data-toggle="modal" data-target="#LoginModalCenter">Login or Register</a></li>
+                  @else
+                    <li class="login_button"><a href="{{ route('logout') }}"
+                      onclick="event.preventDefault();
+                      document.getElementById('logout-form').submit();">Logout</a> 
+                      <form action="{{ route('logout') }}" id="logout-form" method="post">
+                        {{ csrf_field() }}
+                      </form>
+                    </li>
+                  @endguest
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
-      </li>
-
-      <a class="" href="/#training-list">Online Training</a>
-      <a class="" href="/#course-list">Course/Training</a>
-      <a class="" href="#">Notice</a>
-      <a class="" href="#">Contact</a>
-    </section>
-
-    <section>
-      <img src="{{asset('content/images/e-learning.jpg')}}" width="100%" height="200px" alt="Assist Academy">
-    </section>
+      </div>        
+    </div>
 
     @if (count($errors) > 0)
-      <div class="bg-danger text-white text-center" style="font-size: 25px;">
+      <p class="bg-danger text-white text-center">
           @foreach($errors->all() as $error)
               {{$error}}
               <br>
           @endforeach
-      </div>
+      </p>
     @endif
 
-    <div class="d-flex bg-navigation-bar" style="margin-bottom: 50px;">      
-      <section class="mr-auto p-2 ">
-        @guest
-          <button type="button" class="btn btn-outline-light btn-sm author-login" href="#"  data-toggle="modal" data-target="#LoginModal">Login as Trainer/Author/Teacher</button>
-          <button type="button" class="btn btn-outline-light btn-sm learner-login" href="#"  data-toggle="modal" data-target="#LoginModal">Login as Learner</button>
-          <button type="button" class="btn btn-outline-light btn-sm corporate-login" href="#"  data-toggle="modal" data-target="#LoginModal">Login as Corporate</button>
-          <button type="button" class="btn btn-outline-light btn-sm" href="#"  data-toggle="modal" data-target="#RegistrationModal">Register</button>
-        @else
+    @if ($errors->has('message'))
+      <p class="bg-success text-white text-center">
+          {{$errors->messsage}}
+      </p>
+    @endif
+
+    <!-- Header Content -->
+    <div class="header_container">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="header_content d-flex flex-row align-items-center justify-content-start">
+              <div class="logo_container">
+                <a href="/">
+                  <div class="logo_text">Assist<span>Academy</span></div>
+                </a>
+              </div>
+              <nav class="main_nav_contaner ml-auto">
+                <ul class="main_nav">
+                  @auth
+                    @if(Auth::user()->user_type=="admin"|| Auth::user()->user_type=="author")
+                      <li><a href="{{asset('/mypanel')}}">My Panel</a></li>
+                    @endif
+                  @endauth
+                  <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">E-Learning</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item" href="{{asset('/books')}}">Books</a>
+                          <a class="dropdown-item" href="{{asset('/videos')}}">Videos</a>
+                          <a class="dropdown-item" href="{{asset('/ppts')}}">PPT</a>
+                        </div>
+                      </li>
+
+                  <li><a href="{{asset('/training')}}">Training</a></li>
+                  <li><a href="{{asset('/courses')}}">Courses</a></li>
+                  <li><a href="#">Notice</a></li>
+                </ul>
+                <div class="search_button"><i class="fa fa-search" aria-hidden="true"></i></div>
+                <div class="hamburger menu_mm">
+                  <i class="fa fa-bars menu_mm" aria-hidden="true"></i>
+                </div>
+              </nav>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header Search Panel -->
+    <div class="header_search_container">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="header_search_content d-flex flex-row align-items-center justify-content-end">
+              <form method="POST" class="header_search_form" action="{{ route('search') }}">
+                {{ csrf_field() }}
+                <input type="hidden" name="file_type" value="all-files">
+                <input type="search" name="file_name" class="search_input" placeholder="What are you looking" required="required" autofocus>
+                <button class="header_search_button d-flex flex-column align-items-center justify-content-center">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>      
+    </div>     
+  </header>
+
+  <!-- Mobile Version -->
+  <div class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400">
+    <div class="menu_close_container"><div class="menu_close"><div></div><div></div></div></div>
+
+    <!-- Search Bar -->
+    <div class="search">
+      <form method="POST" action="{{ route('search') }}" enctype="multipart/form-data">
+        {{ csrf_field() }}
+        <input type="hidden" name="file_type" value="all-files">
+        <input type="search" class="search_input menu_mm" placeholder="What are you looking for?" required="required" name="file_name">
+        <button type="submit" class="header_search_button d-flex flex-column align-items-center justify-content-center menu_mm">
+          <i class="fa fa-search menu_mm" aria-hidden="true"></i>
+        </button>
+      </form>
+    </div>
+
+    <!-- Mobile Version Menu -->
+    <nav class="menu_nav">
+      <ul class="menu_mm">
+        @auth
           @if(Auth::user()->user_type=="admin"|| Auth::user()->user_type=="author")
-            <a class="btn btn-outline-light btn-sm" href="/mypanel">Go to your Panel</a>
-          @elseif(Auth::user()->user_type=="learner")
-            <button type="button" class="btn btn-outline-light btn-sm corporate-login" href="#"   data-toggle="modal" data-target="#AuthorRequestModal">Send Author/Trainer Request</button>
+            <li><a href="{{asset('/mypanel')}}">My Panel</a></li>
           @endif
-          <a class="btn btn-outline-light btn-sm" href="{{ route('logout') }}"
-                      onclick="event.preventDefault();
-                      document.getElementById('logout-form').submit();">Logout</a> 
-          <form action="{{ route('logout') }}" id="logout-form" method="post">
-            {{ csrf_field() }}
-          </form>
-        @endguest
-      </section>
-      <section  class="p-2">
-        <form method="POST"  class=" " action="{{ route('search') }}" enctype="multipart/form-data">
-            {{ csrf_field() }}
-            <input type="hidden" name="file_type" value="all-files">
-            <input  type="name" class="flipkart-navbar-input" placeholder="What are you looking for?" id="file_name" name="file_name">
-            <button type="submit" class="flipkart-navbar-button">
-                <svg width="20px" height="15px">
-                    <path d="M11.618 9.897l4.224 4.212c.092.09.1.23.02.312l-1.464 1.46c-.08.08-.222.072-.314-.02L9.868 11.66M6.486 10.9c-2.42 0-4.38-1.955-4.38-4.367 0-2.413 1.96-4.37 4.38-4.37s4.38 1.957 4.38 4.37c0 2.412-1.96 4.368-4.38 4.368m0-10.834C2.904.066 0 2.96 0 6.533 0 10.105 2.904 13 6.486 13s6.487-2.895 6.487-6.467c0-3.572-2.905-6.467-6.487-6.467 "></path>
-                </svg>
-            </button>
-          </form>
-      </section>
-    </div>
+        @endauth
+        <li class="menu_mm"><a href="{{asset('/books')}}">Books</a></li>
+        <li class="menu_mm"><a href="{{asset('/videos')}}">Videos</a></li>
+        <li class="menu_mm"><a href="{{asset('/ppts')}}">PPT</a></li>
+        <li class="menu_mm"><a href="{{asset('/training')}}">Training</a></li>
+        <li class="menu_mm"><a href="{{asset('/courses')}}">Courses</a></li>
+        <li class="menu_mm"><a href="{{asset('/notices')}}">Notice</a></li>
+      </ul>
+    </nav>
+  </div>
+  
+  <!-- Content -->
+  @yield('content')
 
-    @yield('content')
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer_background" style="background-image:url(/content/image/footer_background.png)"></div>
+    <div class="container">
+      <div class="row footer_row">
+        <div class="col">
+          <div class="footer_content">
+            <div class="row">
 
-    <div class="modal fade" id="AuthorRequestModal" tabindex="-1" role="dialog" aria-labelledby="AuthorRequestModalTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content col-md-10">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Send Author Request</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+              <div class="col-lg-3 footer_col">
+          
+                <!-- Footer About -->
+                <div class="footer_section footer_about">
+                  <div class="footer_logo_container">
+                    <a href="/">
+                      <div class="footer_logo_text">Assist<span>Academy</span></div>
+                    </a>
+                  </div>
+                  <div class="footer_social">
+                    <ul>
+                      <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                      <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                      <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                      <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+                
+              </div>
+
+              <div class="col-lg-3 footer_col">
+          
+                <!-- Footer Contact -->
+                <div class="footer_section footer_contact">
+                  <div class="footer_title">Contact Us</div>
+                  <div class="footer_contact_info">
+                    <ul>
+                      <li>Email: info@assistacademy.org</li>
+                      <li>Phone:  +(88) 01672-420600</li>
+                      <li>40 Baria Sreet 133/2, Dhaka - 1100, Bangladesh</li>
+                    </ul>
+                  </div>
+                </div>
+                
+              </div>
+
+              <div class="col-lg-3 footer_col">
+          
+                <!-- Footer links -->
+                <div class="footer_section footer_links">
+                  <div class="footer_title">Quick Menu</div>
+                  <div class="footer_links_container">
+                    <ul>
+                      <li><a href="{{asset('/')}}">Home</a></li>
+                      <li><a href="{{asset('/books')}}">Boooks</a></li>
+                      <li><a href="{{asset('/videos')}}">Videos</a></li>
+                      <li><a href="{{asset('/ppts')}}">PPT</a></li>
+                      <li><a href="{{asset('/courses')}}">Courses</a></li>
+                      <li><a href="{{asset('/training')}}">Trainings</a></li>
+                      <li><a href="#">Notice</a></li>
+                      @guest
+                        <li><a href="{{asset('login')}}">Login</a></li>
+                      @else
+                        <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
+                          document.getElementById('logout-form').submit();">Logout</a> 
+                          <form action="{{ route('logout') }}" id="logout-form" method="post">
+                            {{ csrf_field() }}
+                          </form>
+                        </li>
+                      @endguest
+                    </ul>
+                  </div>
+                </div>
+                
+              </div>
+
+              <div class="col-lg-3 footer_col clearfix">
+          
+                <!-- Footer links -->
+                <div class="footer_section footer_contact">
+                  <div class="footer_title">T&C</div>
+                  <div class="footer_links_container">
+                    <ul>
+                      <li><a href="#">Terms of Use</a></li>
+                      <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                  </div>
+                </div>
+                
+              </div>
+
+            </div>
           </div>
-          <div class="modal-body">
-            <h6>Want to be an author/trainer? You may upload your paid or free books, training, presentations, add courses in your panel. Do you  want to send a request now?</h6> 
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-success" href="/sendauhtorrequest">Send Request</a>
+        </div>
+      </div>
+
+      <div class="row copyright_row">
+        <div class="col">
+          <div class="copyright d-flex flex-lg-row flex-column align-items-center justify-content-start">
+            <div class="cr_text">
+              Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved
+            </div>
+            <div class="ml-lg-auto cr_links">
+              Developed by <a href="https://banglasofttech.com" target="_blank">Bangla Soft Tech</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
+  </footer>
+</div>
 
-    <div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="LoginModalTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content col-md-8">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Login</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+<script src="{{asset('content/js/jquery-3.2.1.min.js')}}"></script>
+<script src="{{asset('content/js/popper.js')}}"></script>
+<script src="{{asset('content/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('content/js/ScrollMagic.min.js')}}"></script>
+<script src="{{asset('content/js/custom.js')}}"></script>
+<script src="{{asset('content/js/pdfobject.js')}}"></script>
+<script src="{{asset('content/plugin/videoPlugin/video.min.js')}}"></script>
+
+<!-- <script type="text/javascript" src="{{ asset('content/js/jquery.js') }}"></script> -->
+<!-- <script  type="text/javascript" src="{{ asset('content/js/jquery-ui.js') }}"></script> -->
+<!-- <script type="text/javascript" src="{{ asset('content/js/jquery.min.js') }}"></script> -->
+<!-- <script type="text/javascript" src="{{ asset('content/js/bootstrap.min.js') }}"></script> -->
+<script type="text/javascript" src="{{ asset('content/js/main.js') }}"></script>
+<!-- <script type="text/javascript" src="{{ asset('content/js/adminpanel.js') }}"></script> -->
+
+<!-- Login Modal -->
+<div class="modal fade" id="LoginModalCenter" tabindex="-1" role="dialog" aria-labelledby="LoginModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="LoginModalLongTitle">Login</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+       <form method="post" action="{{route('login')}}" role='login'>
+        <div class="modal-body">
+          {{ csrf_field() }}
+
+          @if (count($errors) > 0)
+            <p class="bg-danger text-white text-center">
+                @foreach($errors->all() as $error)
+                    {{$error}}
+                    <br>
+                @endforeach
+            </p>
+          @endif
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">User Type</label>
+            <h5 class="text-dark">
+              <input type="radio" name="user_type" value="general_user" checked style="margin-left: 5px;"> Learner
+              <input type="radio" name="user_type" value="author" style="margin-left: 5px;"> Trainer/Author/Teacher
+              <input type="radio" name="user_type" value="corporate" style="margin-left: 5px;"> Corporate User
+            </h5>
           </div>
-          <div class="modal-body">
-            <form method="post" action="{{route('login')}}" role='login'>
-              {{ csrf_field() }}
 
-              @if (count($errors) > 0)
-                <p class="bg-danger text-white text-center">
-                    @foreach($errors->all() as $error)
-                        {{$error}}
-                        <br>
-                    @endforeach
-                </p>
-              @endif
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Email"  required autofocus>
+          </div>
 
-              <input type="hidden" id="user_type" name="user_type" value="author">
-              <input type="email" name="email" placeholder="Email" required class="form-control input-lg" style="margin-bottom: 5px"/>   
-              <input type="password" class="form-control input-lg" name="password" placeholder="Password" required="" />               
-              <button type="submit" name="go" class="btn btn-lrg btn-success btn-block" style="margin-top: 10px">Login</button>
-            </form>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Enter Password" required autofocus>
           </div>
         </div>
-      </div>
-    </div>
-
-    
-
-    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="login-modal" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Login</h5>
-          </div>
-          <div class="modal-body">
-            Your free session has expired. Please login to continue.
-          </div>
-          <div class="modal-footer">
-            <a href="/login" class="btn btn-primary">Login</a>
-          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#RegistrationModal">Create new Account</button>
+          <input type="submit" class="btn btn-success" value="Login">
         </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Login Reminder Model -->
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="login-modal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Login</h5>
+      </div>
+      <div class="modal-body">
+        Your free session has expired. Please login to continue.
+      </div>
+      <div class="modal-footer">
+        <a href="/login" class="btn btn-primary">Login</a>
       </div>
     </div>
+  </div>
+</div>
 
-    <div class="modal fade" id="RegistrationModal" tabindex="-1" role="dialog" aria-labelledby="RegistrationModalTitle" aria-hidden="true">
+<!-- Registration Modal -->
+<div class="modal fade" id="RegistrationModal" tabindex="-1" role="dialog" aria-labelledby="RegistrationModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -190,19 +404,19 @@
                       </div>
                      <div class="form-group">
                         <label for="first_name">First Name</label><br>
-                        <input type="text" class="form-control" name="first_name" placeholder="Enter First Name" required>
+                        <input type="text" class="form-control" name="first_name" placeholder="Enter First Name"  required autofocus>
                     </div>
                      <div class="form-group">
                         <label for="last_name">Last Name</label><br>
-                        <input type="text" class="form-control" name="last_name" placeholder="Enter Last Name" required>
+                        <input type="text" class="form-control" name="last_name" placeholder="Enter Last Name"  required autofocus>
                     </div>
                      <div class="form-group">
                         <label for="email">Email</label><br>
-                        <input type="email" class="form-control" name="email" placeholder="Enter Email"required>
+                        <input type="email" class="form-control" name="email" placeholder="Enter Email" required autofocus>
                     </div>
                      <div class="form-group">
                         <label for="address">Address</label><br>
-                        <input type="text" class="form-control" name="address" placeholder="Enter Address" required>
+                        <input type="text" class="form-control" name="address" placeholder="Enter Address"  required autofocus>
                     </div>
                     <div class="form-group">
                         <label for="country">Country</label><br>
@@ -212,11 +426,11 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for="Phone">Phone</label><br>
-                        <input type="text" class="form-control" name="phone" placeholder="Enter Phone Number" required>
+                        <input type="text" class="form-control" name="phone" placeholder="Enter Phone Number"  required autofocus>
                     </div>
                     <div class="form-group" id="occupation">
                         <label for="occupation">Occupation</label><br>
-                        <input type="text" class="form-control" name="occupation" placeholder="Enter Occupation" >
+                        <input type="text" class="form-control" name="occupation" placeholder="Enter Occupation">
                     </div>
                     <div class="form-group" id="organization">
                         <label for="organization">Organization</label><br>
@@ -224,15 +438,15 @@
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label><br>
-                        <input type="password" class="form-control" name="password" placeholder="Enter Password" required>
+                        <input type="password" class="form-control" name="password" placeholder="Enter Password"  required autofocus>
                     </div>
                     <div class="form-group">
                         <label for="password">Password Again</label><br>
-                        <input type="password" class="form-control" name="password_confirmation" placeholder="Enter Password Again" required>
+                        <input type="password" class="form-control" name="password_confirmation" placeholder="Enter Password Again"  required autofocus>
                     </div>
                      <div class="form-group" id="picture">
                         <label for="picture">Profile Picture</label><br>
-                        <input type="file" class="form-control" name="picture" accept="image/x-png">
+                        <input type="file" class="form-control" name="picture" accept="image/x-png,image/gif,image/jpeg">
                     </div>
                 </div>
             </div>
@@ -245,30 +459,8 @@
   </div>
 </div>
 
-
-
-
-    <!-- Footer -->
-    <!-- <section class="bg-navigation-bar" id="footer" style="margin-top: 50px;">
-      <p>Assist Academy @ 2018 </p>
-    </section> -->
-
-    <!-- /.container -->
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="{{ asset('content/js/jquery.js') }}"></script>
-    <script  type="text/javascript" src="{{ asset('content/js/jquery-ui.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('content/js/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('content/js/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('content/js/main.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('content/js/adminpanel.js') }}"></script>
-
-    
-
-
-  </body>
-
+</body>
 </html>
-
 
 
 

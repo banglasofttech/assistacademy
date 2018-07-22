@@ -17,6 +17,7 @@ class Authors extends Model
 		"phone",
 		"organization",
 		"occupation",
+		"pp",
 	];
 }
 

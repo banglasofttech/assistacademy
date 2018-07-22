@@ -9,18 +9,21 @@ use App\Catagory;
 use Auth;
 
 
+
 class VideoController extends Controller
 {
     public function index(){
-    	$videos=Videos::orderBy("id","desc")->paginate(12);
+    	$videos=Videos::orderBy("id","desc")->paginate(20);
     	$title="Videos";
 
         for ($i=0;$i<count($videos);$i++) {
                 $author=User::where('email',$videos[$i]->uploader_email)->first();
                 $videos[$i]->author=$author->first_name." ".$author->last_name;
             }
+
+        $catagories=Catagory::get();
             
-    	return view("video.videoList")->with(compact("title","videos"));
+    	return view("video.videoList")->with(compact("title","videos","catagories"));
     }
 
     public function viewVideo($id){
@@ -60,21 +63,20 @@ class VideoController extends Controller
     }
 
     private function checkUserinViewerList($viewer_id){
-
-        $user_id=','.Auth::user()->id;
-        
-        // dd($viewer_id);
-        //if current user id is not in viewer id list, add it
-        if(!strpos($viewer_id, $user_id)){
-            $viewer_id=$viewer_id.$user_id;
+         if(Auth::user()){
+            $user_id=','.Auth::user()->id;
+            
+            //if current user id is not in viewer id list, add it
+            if(!strpos($viewer_id, $user_id)){
+                $viewer_id=$viewer_id.$user_id;
+            }
+            return $viewer_id;
         }
-
-        return $viewer_id;
 
     }
 
     public function catagoryVideo($id){
-    	$videos=Videos::where("catagory_id",$id)->orderBy("id","desc")->paginate(12);
+    	$videos=Videos::where("catagory_id",$id)->orderBy("id","desc")->paginate(20);
     	$catagory=Catagory::where("id",$id)->first();
     	
     	if($catagory!=null){
@@ -90,11 +92,13 @@ class VideoController extends Controller
                 $videos[$i]->author=$author->first_name." ".$author->last_name;
             }
 
-    	return view("video.videoList")->with(compact("title","videos"));
+        $catagories=Catagory::get();
+            
+        return view("video.videoList")->with(compact("title","videos","catagories"));
     }
 
     public function authorVideo($email){
-    	$videos=Videos::where("uploader_email",$email)->orderBy("id","desc")->paginate(12);
+    	$videos=Videos::where("uploader_email",$email)->orderBy("id","desc")->paginate(20);
     	$author=User::where("email",$email)->first();
 
     	if($author!=null){
@@ -103,8 +107,14 @@ class VideoController extends Controller
     	else{
     		$title="No author found";
     	}
+
+        foreach ($videos as $video) {
+                $video->author=$title;
+            }
+
+        $catagories=Catagory::get();
             
-    	return view("video.videoList")->with(compact("title","videos"));
+        return view("video.videoList")->with(compact("title","videos","catagories"));
     }
 
     public function downloadVideo($id){

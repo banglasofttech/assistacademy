@@ -61,7 +61,7 @@ class RegisterController extends Controller
                 'country' => 'required|string|max:255',
                 'organization'=> 'required',
                 'occupation'=> 'required',
-                'picture'=> 'required|mimes:png',
+                'picture'=> 'required|mimes:jpg,jpeg,png',
             ]);
         }
 
@@ -97,10 +97,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        
+        $pp="";
         if($data['user_type']=='author'){
-            $data['picture']->storeAs('public/thumbnail/profile_picture',$data['email'].".png");
+            $pp=$data['email'].".".$data['picture']->extension();
+            $data['picture']->storeAs('public/thumbnail/author',$pp);
         }
-
+        
+        
         return User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
@@ -111,6 +115,7 @@ class RegisterController extends Controller
             'organization' => $data['organization'],
             'occupation' => $data['occupation'],
             'request' => $data['user_type'],
+            'pp' => $pp,
             'password' => Hash::make($data['password']),
         ]);
     }

@@ -14,15 +14,16 @@ use Auth;
 class BookController extends Controller
 {
     public function index(){
-    	$books=Books::orderBy("id","desc")->paginate(12);
+    	$books=Books::orderBy("id","desc")->paginate(20);
     	$title="Books";
 
-         for ($i=0;$i<count($books);$i++) {
-                $author=User::where('email',$books[$i]->uploader_email)->first();
-                $books[$i]->author=$author->first_name." ".$author->last_name;
+        foreach ($books as $book) {
+                $author=User::where('email',$book->uploader_email)->first();
+                $book->author=$author->first_name." ".$author->last_name;
             }
 
-    	return view("book.bookList")->with(compact("title","books"));
+        $catagories=Catagory::get();
+    	return view("book.bookList")->with(compact("title","books","catagories"));
     }
 
     public function viewBook($id){
@@ -39,7 +40,7 @@ class BookController extends Controller
                 "viewer_id"=>$viewer_id
             ]);
 
-            $related_books= Books::where("catagory_id",$book->catagory_id)->orderBy("id","desc")->limit(6)->get();
+            $related_books= Books::where("catagory_id",$book->catagory_id)->orderBy("id","desc")->limit(5)->get();
 
             for($i=0;$i<count($related_books);$i++) {
                 $author=User::where('email',$related_books[$i]->uploader_email)->first();
@@ -59,19 +60,20 @@ class BookController extends Controller
     }
 
     private function checkUserinViewerList($viewer_id){
-        $user_id=','.Auth::user()->id;
-        
-        //if current user id is not in viewer id list, add it
-        if(!strpos($viewer_id, $user_id)){
-            $viewer_id=$viewer_id.$user_id;
+        if(Auth::user()){
+            $user_id=','.Auth::user()->id;
+            
+            //if current user id is not in viewer id list, add it
+            if(!strpos($viewer_id, $user_id)){
+                $viewer_id=$viewer_id.$user_id;
+            }
+            return $viewer_id;
         }
-
-        return $viewer_id;
 
     }
 
     public function catagoryBook($id){
-    	$books=Books::where("catagory_id",$id)->orderBy("id","desc")->paginate(12);;
+    	$books=Books::where("catagory_id",$id)->orderBy("id","desc")->paginate(20);;
     	$catagory=Catagory::where("id",$id)->first();
 
         if($catagory!=null){
@@ -81,16 +83,18 @@ class BookController extends Controller
             $title="Not found";
         }
 
-        for ($i=0;$i<count($books);$i++) {
-                $author=User::where('email',$books[$i]->uploader_email)->first();
-                $books[$i]->author=$author->first_name." ".$author->last_name;
+        $catagories=Catagory::get();
+
+         foreach ($books as $book) {
+                $author=User::where('email',$book->uploader_email)->first();
+                $book->author=$author->first_name." ".$author->last_name;
             }
 
-    	return view("book.bookList")->with(compact("title","books"));
+        return view("book.bookList")->with(compact("title","books","catagories"));
     }
 
     public function authorBook($email){
-    	$books=Books::where("uploader_email",$email)->orderBy("id","desc")->paginate(12);
+    	$books=Books::where("uploader_email",$email)->orderBy("id","desc")->paginate(20);
     	$author=User::where("email",$email)->first();
 
     	if($author!=null){
@@ -100,7 +104,13 @@ class BookController extends Controller
             $title="Not found";
         }
 
-    	return view("book.bookList")->with(compact("title","books"));
+        foreach ($books as $book) {
+                $book->author=$title;
+            }
+
+    	$catagories=Catagory::get();
+
+        return view("book.bookList")->with(compact("title","books","catagories"));
     }
 
     public function downloadBook($id){
