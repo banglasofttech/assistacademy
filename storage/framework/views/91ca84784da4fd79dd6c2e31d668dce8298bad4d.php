@@ -227,7 +227,7 @@
                     <ul>
                       <li>Email: info@assistacademy.org</li>
                       <li>Phone:  +(88) 01672-420600</li>
-                      <li>40 Baria Sreet 133/2, Dhaka - 1100, Bangladesh</li>
+                      <li>Road-3A, House-18, Sector-9, Uttara, Dhaka</li>
                     </ul>
                   </div>
                 </div>

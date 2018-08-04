@@ -1029,6 +1029,7 @@ section
 	border-top-left-radius: 6px;
 	border-top-right-radius: 6px;
 	overflow: hidden;
+	height: 120px;
 }
 
 .course_image:hover{
