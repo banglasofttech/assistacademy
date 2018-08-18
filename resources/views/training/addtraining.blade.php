@@ -5,7 +5,7 @@
 @section('content_title', "Add Training")
 
 @section('content')
-    <div class="col-md-9">
+    <div class="col-md-7">
         <form class="panel-body" method="POST" action="{{ route('addtraining') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
 
@@ -27,23 +27,53 @@
             </div>
 
             <div class="form-group">
-                <label>Description</label> 
-                <textarea name="description" required placeholder="Enter Training Description" class="form-control" autofocus></textarea>
+                <label>About Trainer</label> 
+                <textarea name="trainer_description" required placeholder="Enter something about Trainer" class="form-control" autofocus></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Training Duration</label> <br>
+                <input type="number" class="form-control" placeholder="Enter training duration" name="duration" required autofocus style="display: inline; width: 250px"/>
+                <select class="form-control" name="duration_type" style="display: inline; width: 100px">
+                    <option value="Hours">Hours</option>
+                    <option value="Days">Days</option>
+                    <option value="Months">Months</option>
+                    <option value="Year">Year</option>
+                  </select>
             </div>
 
             <div class="form-group">
                 <label>Training Fee</label> 
                 <input type="number" class="form-control" placeholder="Enter 0 for free training" name="fee" required autofocus/>
-
             </div>
 
             <div class="form-group">
-                <label>Select File (<span id="file_format" style="color: gray;">mp4</span>)</label>
-                <input type="file" name="file" required autofocus/>
+                <label>Objective</label> 
+                <textarea name="objective" required placeholder="Enter Training Objective separated with comma (,)" class="form-control" autofocus></textarea>
             </div>
 
             <div class="form-group">
-                <label>Select Thumbnail (<span id="thumb_fromat" style="color: gray;">jpg,jpeg,png</span>)</label>
+                <label>Introduction</label> 
+                <textarea name="introduction_text" required placeholder="Enter Introduction" class="form-control" autofocus></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Select Introduction File (<span id="file_format" style="color: gray;">pdf, ppt, mp4</span>)</label>
+                <input type="file" name="introduction_file"/>
+            </div>
+
+            <div class="form-group">
+                <label>Select Video Files (<span id="file_format" style="color: gray;">You can select multiple mp4 files</span>)</label>
+                <input type="file" name="video_files[]" multiple />
+            </div>
+
+            <div class="form-group">
+                <label>Select PPT Files (<span id="file_format" style="color: gray;">You can select multiple ppt files</span>)</label>
+                <input type="file" name="ppt_files[]" multiple />
+            </div>
+
+            <div class="form-group">
+                <label>Select Banner (<span id="thumb_fromat" style="color: gray;">jpg, jpeg, png</span>)</label>
                 <input type="file" name="thumbnail" accept="image/x-png,image/gif,image/jpeg" required autofocus/>
             </div>
 

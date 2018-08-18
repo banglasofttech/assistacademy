@@ -12,28 +12,28 @@
         <!-- Course -->
         <div class="col-lg-8">
           <div class="course_container">
-            <div class="course_title">{{$book->file_name}}</div>
-            <div class="course_info d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
+            <div class="title">{{$book->file_name}}</div>
+            <div class="row content_short_info">
 
               <!-- Course Info Item -->
-              <div class="course_info_item">
-                <div class="course_info_title">Author:</div>
-                <div class="course_info_text"><a href="{{asset('books/author/'.$book->uploader_email)}}">{{$author->first_name}} {{$author->last_name}}</a></div>
+              <div class="col-lg-3">
+                <div class="course_info_title">Uploaded By:</div>
+                <div class="course_info_text"><a href="{{asset('author/'.$author->id)}}">{{$author->first_name}} {{$author->last_name}}</a></div>
               </div>
 
               <!-- Course Info Item -->
-              <div class="course_info_item">
+              <div class="col-lg-3">
                 <div class="course_info_title">Uploaded On:</div>
                 <div class="course_info_text">{{$book->created_at}}</div>
               </div>
 
-              <div class="course_info_item">
+              <div class="col-lg-3">
                 <div class="course_info_title">Views:</div>
                 <div class="course_info_text">{{$book->total_view}}</div>
               </div>
 
               <!-- Course Info Item -->
-              <div class="course_info_item">
+              <div class="col-lg-3">
                 <div class="course_info_title">Category:</div>
                 <div class="course_info_text"><a href="{{asset('books/catagory/'.$book->catagory_id)}}"> {{$book->catagory_name}}</a></div>
               </div>
@@ -51,14 +51,14 @@
             
               <!-- Author Section -->
               <div class="sidebar_section">
-                <div class="sidebar_section_title">Author</div>
+                <div class="sidebar_section_title">Uploaded by</div>
                 <div class="sidebar_teacher">
                   <div class="teacher_title_container d-flex flex-row align-items-center justify-content-start">
                     <div class="teacher_image">
                         <img src="{{asset('/storage/thumbnail/author/'.$author->pp)}}" alt="" width="100%">
                         </div>
                     <div class="teacher_title">
-                      <div class="teacher_name"><a href="{{asset('books/author/'.$book->uploader_email)}}">{{$author->first_name}} {{$author->last_name}}</a></div>
+                      <div class="teacher_name"><a href="{{asset('author/'.$author->id)}}">{{$author->first_name}} {{$author->last_name}}</a></div>
                       <div class="teacher_position">{{$author->occupation}} at {{$author->organization}}</div>
                     </div>
                   </div>

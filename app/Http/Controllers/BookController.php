@@ -14,7 +14,7 @@ use Auth;
 class BookController extends Controller
 {
     public function index(){
-    	$books=Books::orderBy("id","desc")->paginate(20);
+    	$books=Books::orderBy("id","desc")->where('request',0)->paginate(20);
     	$title="Books";
 
         foreach ($books as $book) {
@@ -73,7 +73,7 @@ class BookController extends Controller
     }
 
     public function catagoryBook($id){
-    	$books=Books::where("catagory_id",$id)->orderBy("id","desc")->paginate(20);;
+    	$books=Books::where("catagory_id",$id)->where('request',0)->orderBy("id","desc")->paginate(20);;
     	$catagory=Catagory::where("id",$id)->first();
 
         if($catagory!=null){
@@ -94,7 +94,7 @@ class BookController extends Controller
     }
 
     public function authorBook($email){
-    	$books=Books::where("uploader_email",$email)->orderBy("id","desc")->paginate(20);
+    	$books=Books::where("uploader_email",$email)->where('request',0)->orderBy("id","desc")->paginate(20);
     	$author=User::where("email",$email)->first();
 
     	if($author!=null){
@@ -112,6 +112,59 @@ class BookController extends Controller
 
         return view("book.bookList")->with(compact("title","books","catagories"));
     }
+
+    public function show_book_editor_form($id){
+        $categories  = Catagory::where('root_id',0)->get();
+        $book  = Books::where('id',$id)->first();
+
+        if(Auth::user()->email == $book->uploader_email || Auth::user()->user_type == 'admin'){
+
+            return view('book.editBook')->with(compact("categories", "book"));
+        }
+        else{
+            return redirect()->back();
+        }
+
+    }
+
+    public function editBook(Request $request){
+        $id = $request->id;
+        $book  = Books::where('id',$id)->first();
+
+        if(Auth::user()->email == $book->uploader_email || Auth::user()->user_type == 'admin'){
+            $this->validate($request, [
+                'file_name' => 'required',
+                'file' => 'mimes:pdf',
+                'thumbnail' => 'mimes:jpg,png,jpeg'
+            ]);
+
+            Books::where('id',$id)->update([
+                'file_name' => $request->file_name
+            ]);
+
+            //if user update category id
+            if($request->catagory_id != null){
+                Books::where('id',$id)->update([
+                    'catagory_id' => $request->catagory_id
+                ]);
+            }
+
+            //if user upload new file, save it to the existing file
+            if($request->file != null){
+                $request->file->storeAs('public/files/books',$book->file);
+            }
+
+            //if user upload new banner, save it to the existing file
+            if($request->thumbnail != null){
+                $request->thumbnail->storeAs('public/thumbnail/books',$book->thumbnail);
+            }
+
+            return redirect()->back()->withErrors('Book updated successfully');
+        }
+        else{
+            return redirect()->back();
+        }
+    }   
 
     public function downloadBook($id){
     	$book=Books::where("id",$id)->first();

@@ -12,7 +12,7 @@ use Auth;
 class pptController extends Controller
 {
     public function index(){
-    	$ppts=PPTs::orderBy("id","desc")->paginate(20);
+    	$ppts=PPTs::orderBy("id","desc")->where('request',0)->paginate(20);
     	$title="PPTs";
 
         for ($i=0;$i<count($ppts);$i++) {
@@ -72,7 +72,7 @@ class pptController extends Controller
     }
 
     public function catagoryPPT($id){
-    	$ppts=PPTs::where("catagory_id",$id)->orderBy("id","desc")->paginate(20);;
+    	$ppts=PPTs::where("catagory_id",$id)->where('request',0)->orderBy("id","desc")->paginate(20);;
     	$catagory=Catagory::where("id",$id)->first();
 
         if($catagory!=null){
@@ -93,7 +93,7 @@ class pptController extends Controller
     }
 
     public function authorPPT($email){
-    	$ppts=PPTs::where("uploader_email",$email)->orderBy("id","desc")->paginate(20);
+    	$ppts=PPTs::where("uploader_email",$email)->where('request',0)->orderBy("id","desc")->paginate(20);
     	$author=User::where("email",$email)->first();
 
     	if($author!=null){
@@ -111,6 +111,60 @@ class pptController extends Controller
             
         return view("ppt.pptList")->with(compact("title","ppts","catagories"));
     }
+
+
+    public function show_ppt_editor_form($id){
+        $categories  = Catagory::where('root_id',0)->get();
+        $ppt  = PPTs::where('id',$id)->first();
+
+        if(Auth::user()->email == $ppt->uploader_email || Auth::user()->user_type == 'admin'){
+
+            return view('ppt.editPPT')->with(compact("categories", "ppt"));
+        }
+        else{
+            return redirect()->back();
+        }
+
+    }
+
+    public function editPPT(Request $request){
+        $id = $request->id;
+        $ppt  = PPTs::where('id',$id)->first();
+
+        if(Auth::user()->email == $ppt->uploader_email || Auth::user()->user_type == 'admin'){
+            $this->validate($request, [
+                'file_name' => 'required',
+                'file' => 'mimes:ppt,pptx',
+                'thumbnail' => 'mimes:jpg,png,jpeg'
+            ]);
+
+            PPTs::where('id',$id)->update([
+                'file_name' => $request->file_name
+            ]);
+
+            //if user update category id
+            if($request->catagory_id != null){
+                PPTs::where('id',$id)->update([
+                    'catagory_id' => $request->catagory_id
+                ]);
+            }
+
+            //if user upload new file, save it to the existing file
+            if($request->file != null){
+                $request->file->storeAs('public/files/ppts',$ppt->file);
+            }
+
+            //if user upload new banner, save it to the existing file
+            if($request->thumbnail != null){
+                $request->thumbnail->storeAs('public/thumbnail/ppts',$ppt->thumbnail);
+            }
+
+            return redirect()->back()->withErrors('PPT updated successfully');
+        }
+        else{
+            return redirect()->back();
+        }
+    }   
 
     public function downloadPPT($id){
     	$ppt=PPTs::where("id",$id)->first();

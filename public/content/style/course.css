@@ -817,19 +817,19 @@ section
 }
 .course_container
 {
-	width: 100%;
+	/*width: 100%;*/
 }
 .course_title
 {
-	font-family: 'Roboto Slab', serif;
-	font-size: 30px;
-	font-weight: 700;
+	/*font-family: 'Roboto Slab', serif;*/
+	font-size: 20px;
+	/*font-weight: 700;*/
 	color: #384158;
 }
 .course_info
 {
 	width: 100%;
-	height: 92px;
+	/*height: 92px;*/
 	margin-top: 30px;
 	background: #f2f4f5;
 }
@@ -855,10 +855,13 @@ section
 	font-size: 18px;
 	font-weight: 700;
 	color: #384158;
+	margin-top: 10px;
 }
 .course_info_text
 {
-	margin-top: 8px;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	color: #384158;
 }
 .course_info_text a
 {
@@ -902,46 +905,70 @@ section
 .rating_r_5 i:nth-child(3)::before{content: "\f005";}
 .rating_r_5 i:nth-child(4)::before{content: "\f005";}
 .rating_r_5 i:nth-child(5)::before{content: "\f005";}
-.course_image
+
+.course_banner
 {
 	margin-top: 21px;
 	width: 100%;
 }
-.course_image img
+.course_banner img
 {
 	/*max-width: 100%;*/
-	width: 770px;
+	width: 100%;
+	height: 400px;
 }
 .course_tabs_container
 {
-	width: 100%;
+	/*width: 100%;*/
 	margin-top: 30px;
 }
+
+.tabs{
+	color: #fff;
+	width: 100%;
+	background: #ebebeb;
+	/*background: #f2f4f5;*/
+}
+
+@media(min-width: 800px){
+	.tabs{
+		width: 20%;
+		float: left;
+		height: 100%;
+	}
+
+	.tab_panels{
+		width: 80%;
+		float: left;
+	}
+}
+
+
+
 .tab
 {
 	height: 40px;
-	background: #f2f4f5;
 	font-size: 16px;
-	color: #384158;
+	color: #640756;
 	font-weight: 500;
 	line-height: 40px;
 	text-align: center;
 	/*text-transform: uppercase;*/
 	cursor: pointer;
-	margin-right: 5px;
-	padding-left: 21px;
-	padding-right: 20px;
-	-webkit-transition: all 200ms ease;
-	-moz-transition: all 200ms ease;
-	-ms-transition: all 200ms ease;
-	-o-transition: all 200ms ease;
-	transition: all 200ms ease;
+	margin-right: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+	font-weight: bold;
+
+	/*float: left;*/
 }
 .tab.active,
 .tab:hover
 {
-	background: #14bdee;
-	color: #FFFFFF;
+	/*background: #14bdee;*/
+	/*color: #fff;*/
+	color: #14bdee;
+	border-bottom: 2px solid #14bdee;
 }
 .tab_panels
 {
@@ -955,9 +982,9 @@ section
 	-webkit-animation: fadeEffect 1s;
     animation: fadeEffect 1s;
     border: solid 1px #ebebeb;
-    padding-left: 30px;
-    padding-right: 30px;
-    padding-top: 30px;
+    padding-left: 20px;
+    padding-right: 10px;
+    padding-top: 5px;
     padding-bottom: 25px;
 }
 /* Fade in tabs */
@@ -1416,7 +1443,7 @@ section
 {
 	width: 100%;
 	padding-left: 40px;
-	padding-top: 120px;
+	padding-top: 50px;
 }
 .sidebar_section:not(:last-child)
 {
@@ -1472,12 +1499,15 @@ section
 }
 .teacher_image
 {
-	width: 102px;
-	height: 102px;
+	width: 80px;
+	height: 80px;
+	padding: 2px;
+
 }
 .teacher_image img
 {
 	max-width: 100%;
+	border-radius: 50px;
 }
 .teacher_title
 {

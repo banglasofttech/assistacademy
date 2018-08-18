@@ -1,4 +1,4 @@
-\@extends('layouts.adminpanel')
+@extends('layouts.adminpanel')
 
 @section('title', "Add Course")
 @section('content_title', "Add Course")

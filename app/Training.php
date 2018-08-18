@@ -9,6 +9,6 @@ class Training extends Model
     protected $table='trainings';
     protected $primaryKey='id';
 
-    protected $guarded=['_token'];
+    protected $guarded=['_token','video_files','ppt_files'];
 
 }

@@ -1,8 +1,8 @@
 @extends('layouts.adminpanel')
 
-@section('title', "Manage Training")
+@section('title', "Manage Videos")
 
-@section('content_title', "Manage Training")
+@section('content_title', "Manage Videos")
 
 @section('content')
 
@@ -41,12 +41,9 @@
                   <a href="/author/{{ $video->user_id }}">{{ $video->uploader_email }} </a>
                 @endif
               </td>  
-              <td id="remove_file">
-                <a href="/managefiles/videos/remove/{{$video->id}}" class="btn btn-danger" id="remove_file_button">Remove</a>
-              </td>
-
-              <td id="undo_section" style="display: none">
-                <span id="admin_action_message" class="text-danger">Deleted</span>
+              <td>
+                <a href="/managefiles/videos/edit/{{$video->id}}" class="btn btn-success btn-sm">Edit</a>
+                <a href="/managefiles/videos/remove/{{$video->id}}" class="btn btn-danger btn-sm">Remove</a>
               </td>
             </tr>
           @endforeach

@@ -48,6 +48,8 @@ class FileController extends Controller
                 'file_type' => 'required',
             ]);
 
+        $type=Auth::user()->user_type;
+
         if($request->file_type=="book"){
             $this->validate($request,[
                 'file' => 'required|mimes:pdf',
@@ -62,11 +64,22 @@ class FileController extends Controller
             $fname=$data->id."_".$request->file_name.".".$file->extension();
             $thumbname=$data->id.".".$thumbnail->extension();
 
-            Books::where('id',$data->id)->update([
-                "file" => $fname,
-                "thumbnail" => $thumbname,
-                "viewer_id" => "0"
-            ]);
+            if ($type == 'admin') {
+                Books::where('id',$data->id)->update([
+                    "file" => $fname,
+                    "thumbnail" => $thumbname,
+                    "viewer_id" => "0",
+                    "request" => "0"
+                ]);
+            }
+            else{
+                Books::where('id',$data->id)->update([
+                    "file" => $fname,
+                    "thumbnail" => $thumbname,
+                    "viewer_id" => "0"
+                ]);
+            }
+            
 
             $file->storeAs('public/files/books',$fname);
             $thumbnail->storeAs('public/thumbnail/books',$thumbname);
@@ -85,11 +98,22 @@ class FileController extends Controller
             $fname=$data->id."_".$request->file_name.".".$file->extension();
             $thumbname=$data->id.".".$thumbnail->extension();
 
-            Videos::where('id',$data->id)->update([
-                "file" => $fname,
-                "thumbnail" => $thumbname,
-                "viewer_id" => "0"
-            ]);
+            if ($type == 'admin') {
+                Videos::where('id',$data->id)->update([
+                    "file" => $fname,
+                    "thumbnail" => $thumbname,
+                    "viewer_id" => "0",
+                    "request" => "0"
+                ]);
+            }
+            else{
+                Videos::where('id',$data->id)->update([
+                    "file" => $fname,
+                    "thumbnail" => $thumbname,
+                    "viewer_id" => "0"
+                ]);
+            }
+            
 
             $file->storeAs('public/files/videos',$fname);
             $thumbnail->storeAs('public/thumbnail/videos',$thumbname);
@@ -109,18 +133,33 @@ class FileController extends Controller
             $fname=$data->id."_".$request->file_name.".".$file->extension();
             $thumbname=$data->id.".".$thumbnail->extension();
 
-            PPTs::where('id',$data->id)->update([
-                "file" => $fname,
-                "thumbnail" => $thumbname,
-                "viewer_id" => "0"
-            ]);
+            if ($type == 'admin') {
+                PPTs::where('id',$data->id)->update([
+                    "file" => $fname,
+                    "thumbnail" => $thumbname,
+                    "viewer_id" => "0",
+                    "request" => "0"
+                ]);
+            }
+            else{
+                PPTs::where('id',$data->id)->update([
+                    "file" => $fname,
+                    "thumbnail" => $thumbname,
+                    "viewer_id" => "0"
+                ]);
+            }
 
             $file->storeAs('public/files/ppts',$fname);
             $thumbnail->storeAs('public/thumbnail/ppts',$thumbname);
 
         }
 
-        return redirect()->back()->withErrors('File Uploaded Successfully');
+        if ($type == 'admin') {
+            return redirect()->back()->withErrors('File Uploaded Successfully');
+        }
+        else{
+            return redirect()->back()->withErrors('File Uploaded Successfully. Please wait for admin confirmation');
+        }
     }
 
     public function showFileSearchForm(){
@@ -133,7 +172,7 @@ class FileController extends Controller
         $catagories=Catagory::get();
 
         if($file_type=="book"){
-            $books=Books::where("file_name",'like',$file_name)->paginate(12);
+            $books=Books::where("file_name",'like',$file_name)->where('request',0)->paginate(12);
             $title=$request->file_name;
 
             for ($i=0;$i<count($books);$i++) {
@@ -144,7 +183,7 @@ class FileController extends Controller
             return view("book.bookList")->with(compact("title","books","catagories"));
         }
         else if($file_type=="video"){
-            $videos=Videos::where("file_name",'like',$file_name)->paginate(12);
+            $videos=Videos::where("file_name",'like',$file_name)->where('request',0)->paginate(12);
             $title=$request->file_name;
 
             for ($i=0;$i<count($videos);$i++) {
@@ -155,7 +194,7 @@ class FileController extends Controller
             return view("video.videoList")->with(compact("title","videos","catagories"));
         }
         else if($file_type=="ppt"){
-            $ppts=PPTs::where("file_name",'like',$file_name)->paginate(12);
+            $ppts=PPTs::where("file_name",'like',$file_name)->where('request',0)->paginate(12);
             $title=$request->file_name;
 
             for ($i=0;$i<count($ppts);$i++) {
@@ -167,7 +206,7 @@ class FileController extends Controller
         }
 
         else if($file_type=="training"){
-            $trainings=Training::where("title",'like',$file_name)->paginate(12);
+            $trainings=Training::where("title",'like',$file_name)->where('request',0)->paginate(12);
             $title=$request->file_name;
 
             for ($i=0;$i<count($trainings);$i++) {
@@ -179,7 +218,7 @@ class FileController extends Controller
         }
 
         else if($file_type=="course"){
-            $courses=Course::where("title",'like',$file_name)->paginate(12);
+            $courses=Course::where("title",'like',$file_name)->where('request',0)->paginate(12);
             $title=$request->file_name;
 
             for ($i=0;$i<count($courses);$i++) {
@@ -191,11 +230,11 @@ class FileController extends Controller
         }
 
         else if($file_type=="all-files"){
-            $total_books=Books::where("file_name",'like',$file_name)->count();
-            $total_ppts=PPTs::where("file_name",'like',$file_name)->count();
-            $total_videos=Videos::where("file_name",'like',$file_name)->count();
-            $total_trainings=Training::where("title",'like',$file_name)->count();
-            $total_courses=Course::where("title",'like',$file_name)->count();
+            $total_books=Books::where("file_name",'like',$file_name)->where('request',0)->count();
+            $total_ppts=PPTs::where("file_name",'like',$file_name)->where('request',0)->count();
+            $total_videos=Videos::where("file_name",'like',$file_name)->where('request',0)->count();
+            $total_trainings=Training::where("title",'like',$file_name)->where('request',0)->count();
+            $total_courses=Course::where("title",'like',$file_name)->where('request',0)->count();
             $title=$request->file_name;
 
             return view("File.fileSearchResult")->with(compact("title","total_books","total_ppts","total_videos","total_trainings","total_courses"));

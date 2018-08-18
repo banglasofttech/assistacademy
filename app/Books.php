@@ -15,6 +15,7 @@ class Books extends Model
 		"uploader_email",
 		"file",
 		"thumbnail",
+		"request",
 	];
 }
 

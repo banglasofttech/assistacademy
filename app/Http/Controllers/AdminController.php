@@ -29,6 +29,7 @@ class AdminController extends Controller
             return redirect('/');
         }
     }
+
     public function showAuthorRequsetTable(){
     	$users=User::where('request',"author")->paginate(50);
     	return view('user.authorRequestView')->with(compact("users"));
@@ -380,6 +381,17 @@ class AdminController extends Controller
         foreach ($courses as $course) {
             $course->users=$this->countViewerID($course->viewer_id);
         }
+        //get catagory name from catagory id
+        foreach ($courses as $course) {
+            $catagory=Catagory::where("id",$course->catagory_id)->first();
+            $course->catagory_id=$catagory->catagory_name;
+
+            $user=User::where("email",$course->author_email)->first();
+            $course->author=$user->first_name." ".$user->last_name;
+            $course->user_id=$user->id;
+
+            $course->users=$this->countViewerID($course->viewer_id);
+        }
 
         return view('course.manageCourseView')->with(compact("courses"));
     }
@@ -387,6 +399,249 @@ class AdminController extends Controller
     private function countViewerID($viewer_id){
         $viewer=array(explode(',', $viewer_id));
         return count($viewer[0])-1; 
+    }
+
+    public function viewCategoryList(){
+        $categories = Catagory::orderBy('id','desc')->paginate(10);
+
+        return view('removeCategory')->with(compact('categories'));
+    }
+
+    public function removeCategory($id){
+        Catagory::destroy($id);
+
+        return redirect()->back()->withErrors("Category removed successfully");
+    }
+
+    public function showBookRequsetTable(){
+        $books=Books::where('request',1)->paginate(50);
+        $i=0;
+        $category = null;
+        $users = null;
+
+        foreach ($books as $book) {
+            $category[$i] = Catagory::where('id',$book->catagory_id)->first();
+            $users[$i++] = User::where('email',$book->uploader_email)->first();
+        }
+        return view('book.bookRequest')->with(compact("books","category","users"));
+    }
+
+    public function acceptBook($id){
+
+        Books::where('id',$id)->update([
+            'request' => '0'
+        ]);
+        return redirect()->back()->withErrors("Book Accepted");
+    }
+
+    public function rejectBook($id){
+        $book = Books::where('id',$id)->first();
+        if($book != null){
+            $file = '/public/files/books/'.$book->file;
+            $thumbnail = '/public/thumbnail/books/'.$book->thumbnail;
+            Storage::delete($file);
+            Storage::delete($thumbnail);
+
+            Books::destroy($id);
+        }
+
+       return redirect()->back()->withErrors("Book Deleted");
+    }
+
+    public function showVideoRequsetTable(){
+        $videos=Videos::where('request',1)->paginate(50);
+        $i=0;
+        $category = null;
+        $users = null;
+
+        foreach ($videos as $video) {
+            $category[$i] = Catagory::where('id',$video->catagory_id)->first();
+            $users[$i++] = User::where('email',$video->uploader_email)->first();
+        }
+        return view('video.videoRequest')->with(compact("videos","category","users"));
+    }
+
+    public function acceptVideo($id){
+
+        Videos::where('id',$id)->update([
+            'request' => '0'
+        ]);
+        return redirect()->back()->withErrors("Video Accepted");
+    }
+
+    public function rejectVideo($id){
+        $video = Videos::where('id',$id)->first();
+        
+        if($video != null){
+            $file = '/public/files/videos/'.$video->file;
+            $thumbnail = '/public/thumbnail/videos/'.$video->thumbnail;
+            Storage::delete($file);
+            Storage::delete($thumbnail);
+
+            Videos::destroy($id);
+        }
+       return redirect()->back()->withErrors("Video Deleted");
+    }
+
+    public function showPPTRequsetTable(){
+        $ppts=PPTs::where('request',1)->paginate(50);
+        $i=0;
+        $category = null;
+        $users = null;
+
+        foreach ($ppts as $ppt) {
+            $category[$i] = Catagory::where('id',$ppt->catagory_id)->first();
+            $users[$i++] = User::where('email',$ppt->uploader_email)->first();
+        }
+        return view('ppt.pptRequest')->with(compact("ppts","category","users"));
+    }
+
+    public function acceptPPT($id){
+
+        PPTs::where('id',$id)->update([
+            'request' => '0'
+        ]);
+        return redirect()->back()->withErrors("PPT Accepted");
+    }
+
+    public function rejectPPT($id){
+        $ppt = PPTs::where('id',$id)->first();
+        
+        if($ppt != null){
+            $file = '/public/files/ppts/'.$ppt->file;
+            $thumbnail = '/public/thumbnail/ppts/'.$ppt->thumbnail;
+            Storage::delete($file);
+            Storage::delete($thumbnail);
+
+            PPTs::destroy($id);
+        }
+
+       return redirect()->back()->withErrors("PPT Deleted");
+    }
+
+    public function showCourseRequsetTable(){
+        $courses=Course::where('request',1)->paginate(50);
+        $i=0;
+        $category = null;
+        $users = null;
+
+        foreach ($courses as $course) {
+            $category[$i] = Catagory::where('id',$course->catagory_id)->first();
+            $users[$i++] = User::where('email',$course->author_email)->first();
+        }
+        return view('course.courseRequest')->with(compact("courses","category","users"));
+    }
+
+    public function acceptCourse($id){
+
+        Course::where('id',$id)->update([
+            'request' => '0'
+        ]);
+        return redirect()->back()->withErrors("Course Accepted");
+    }
+
+    public function rejectCourse($id){
+        $course = Course::where('id',$id)->first();
+        
+        if($course != null){
+            $book_files=explode('|', $course->book_file);
+            $ppt_files=explode('|', $course->ppt_file);
+            $video_files=explode('|', $course->video_file);
+            $exam_files=explode('|', $course->exam_file);
+
+            //remove course introduction file
+            if($course->introduction_file != null){
+                $introduction_file = '/public/files/course/introduction_files/'.$course->introduction_file;
+                Storage::delete($introduction_file);
+            }
+
+            //remove all books 
+            for($i = 1; $i < count($book_files); $i++){
+                $book = '/public/files/course/books/'.$book_files[$i-1];
+                Storage::delete($book);
+
+            }
+
+            //remove all ppts 
+            for($i = 1; $i < count($ppt_files); $i++){
+                $ppt = '/public/files/course/ppts/'.$ppt_files[$i-1];
+                Storage::delete($ppt);
+            }
+
+            //remove all videos 
+            for($i = 1; $i < count($video_files); $i++){
+                $video = '/public/files/course/videos/'.$video_files[$i-1];
+                Storage::delete($video);
+            }
+
+            //remove all exam files 
+            for($i = 1; $i < count($exam_files); $i++){
+                $examfile = '/public/files/course/examfiles/'.$exam_files[$i-1];
+                Storage::delete($examfile);
+            }
+
+            $thumbnail = '/public/thumbnail/course/'.$course->thumbnail;
+            Storage::delete($thumbnail);
+
+            Course::destroy($id);
+        }
+
+       return redirect()->back()->withErrors("Course Deleted");
+    }
+
+    public function showTrainingRequsetTable(){
+        $trainings=Training::where('request',1)->paginate(50);
+        $i=0;
+        $category = null;
+        $users = null;
+
+        foreach ($trainings as $training) {
+            $category[$i] = Catagory::where('id',$training->catagory_id)->first();
+            $users[$i++] = User::where('email',$training->uploader_email)->first();
+        }
+        return view('training.trainingRequest')->with(compact("trainings","category","users"));
+    }
+
+    public function acceptTraining($id){
+
+        Training::where('id',$id)->update([
+            'request' => '0'
+        ]);
+        return redirect()->back()->withErrors("Training Accepted");
+    }
+
+    public function rejectTraining($id){
+        $training = Training::where('id',$id)->first();
+        
+        if($training != null){
+            $ppt_files=explode('|', $training->ppt_file);
+            $video_files=explode('|', $training->video_file);
+
+            //remove course introduction file
+            if($training->introduction_file != null){
+                $introduction_file = '/public/files/training/introduction_files/'.$training->introduction_file;
+                Storage::delete($introduction_file);
+            }
+
+            //remove all ppts 
+            for($i = 1; $i < count($ppt_files); $i++){
+                $ppt = '/public/files/training/ppts/'.$ppt_files[$i-1];
+                Storage::delete($ppt);
+            }
+
+            //remove all videos 
+            for($i = 1; $i < count($video_files); $i++){
+                $video = '/public/files/training/videos/'.$video_files[$i-1];
+                Storage::delete($video);
+            }
+
+            $thumbnail = '/public/thumbnail/training/'.$training->thumbnail;
+            Storage::delete($thumbnail);
+
+            Training::destroy($id);
+        }
+
+       return redirect()->back()->withErrors("Training Deleted");
     }
 
 }

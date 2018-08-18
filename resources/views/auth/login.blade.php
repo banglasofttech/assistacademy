@@ -19,9 +19,9 @@
 		          <div class="form-group">
 		            <label for="exampleInputEmail1">User Type</label>
 		            <h5 class="text-dark">
-		              <input type="radio" name="user_type" value="general_user" checked style="margin-left: 5px;"> Learner
-		              <input type="radio" name="user_type" value="author" style="margin-left: 5px;"> Trainer/Author/Teacher
-		              <input type="radio" name="user_type" value="corporate" style="margin-left: 5px;"> Corporate User
+		              <input type="radio" name="user_type" id="learner" value="general_user" checked style="margin-left: 5px;"> <label for="learner">Leaner</label>
+		              <input type="radio" name="user_type" value="author" id="author" style="margin-left: 5px;"> <label for="author">Trainer/Author/Teacher</label>
+		              <input type="radio" name="user_type" id="corporate" value="corporate" style="margin-left: 5px;"> <label for="corporate">Corporate User</label>
 		            </h5>
 		          </div>
 

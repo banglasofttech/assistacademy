@@ -7,6 +7,9 @@ use App\Books;
 use App\Videos;
 use App\PPTs;
 use App\User;
+use App\Authors;
+use App\Training;
+use App\Course;
 use Auth;
 use App\Catagory;
 use DB;
@@ -18,12 +21,14 @@ class AuthorController extends Controller
     	$author=User::where("id",$id)->first();
 
     	if($author!=null){
-    		$title=$author->first_name." ".$author->last_name;
+            $title=$author->first_name." ".$author->last_name;
     		$books=Books::where('uploader_email',$author->email)->count();
     		$videos=Videos::where('uploader_email',$author->email)->count();
-    		$ppts=PPTs::where('uploader_email',$author->email)->count();
+            $ppts=PPTs::where('uploader_email',$author->email)->count();
+            $training=Training::where('uploader_email',$author->email)->count();
+    		$courses=Course::where('author_email',$author->email)->count();
 
-    		return view("user.authorProfile")->with(compact("title","books","videos","ppts","author"));
+    		return view("user.authorProfile")->with(compact("title","books","videos","ppts","author","training", "courses"));
     	}
     	return redirect("/");
     }

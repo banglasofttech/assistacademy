@@ -30,25 +30,30 @@
                 @if(count($courses))
                   @foreach($courses as $course)
                     <div class="col-lg-3 course_col">
-                        <div class="course"><a href="{{asset('courses/view/'.$course->id)}}">
+                        <div class="course"><a href="{{asset('courses/preview/'.$course->id)}}">
                             <div class="course_image">
                                 <img src="{{asset('/storage/thumbnail/course/'.$course->thumbnail)}}" alt="">
                                 </div>
                             <div class="course_body">
                                 <h4 class="course_title">{{$course->title}}</h4>
-                                <div class="d-flex">
-                                    <div class="mr-auto p-2 course_teacher">{{$course->author}}</div>
-                                    <div class="p-2 course_price">
-                                          @if($course->course_fee>0)
-                                              ${{$course->course_fee}}  
-                                          @else
-                                              Free
-                                          @endif
-                                      </div>
-                                </div>
-
+                                                
+                                <div class="course_teacher">{{$course->author}}</div>
+                                
                                 <div class="course_text">
                                     <p>{{$course->description}}</p>
+                                </div>
+
+                                <div class="d-flex course-footer">
+                                    <div class="mr-auto p-2">
+                                    <i class="fa fa-clock-o"></i> {{$course->duration}} Hour</div>
+                                    <div class="p-2 course_price">
+                                    <i class="fa fa-dollar"></i>
+                                        @if($course->course_fee>0)
+                                            {{$course->course_fee}}  
+                                        @else
+                                            Free
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </a></div>

@@ -15,6 +15,7 @@ class Videos extends Model
 		"uploader_email",
 		"file",
 		"thumbnail",
+		"request",
 	];
 }
 

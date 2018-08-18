@@ -49,7 +49,7 @@
                 </ul>
                 <ul class="top_bar_login ml-auto">
                   @guest
-                    <li class="login_button"><a href="#" data-toggle="modal" data-target="#LoginModalCenter">Login or Register</a></li>
+                    <li class="login_button"><a href="#" data-toggle="modal" data-target="#LoginModalCenter">Become a Trainer/Instructor</a></li>
                   @else
                     <li class="login_button"><a href="{{ route('logout') }}"
                       onclick="event.preventDefault();
@@ -67,18 +67,18 @@
       </div>        
     </div>
 
-    @if (count($errors) > 0)
+    @if ($errors->has('message'))
+      <p class="bg-success text-white text-center">
+          {{$errors->first("message")}}
+      </p>
+    @endif
+
+    @if (count($errors) > 0 && !$errors->has('message'))
       <p class="bg-danger text-white text-center">
           @foreach($errors->all() as $error)
               {{$error}}
               <br>
           @endforeach
-      </p>
-    @endif
-
-    @if ($errors->has('message'))
-      <p class="bg-success text-white text-center">
-          {{$errors->messsage}}
       </p>
     @endif
 
@@ -336,9 +336,9 @@
           <div class="form-group">
             <label for="exampleInputEmail1">User Type</label>
             <h5 class="text-dark">
-              <input type="radio" name="user_type" value="general_user" checked style="margin-left: 5px;"> Learner
-              <input type="radio" name="user_type" value="author" style="margin-left: 5px;"> Trainer/Author/Teacher
-              <input type="radio" name="user_type" value="corporate" style="margin-left: 5px;"> Corporate User
+              <input type="radio" name="user_type" id="learner" value="general_user" checked style="margin-left: 5px;"> <label for="learner">Leaner</label>
+              <input type="radio" name="user_type" value="author" id="author" style="margin-left: 5px;"> <label for="author">Trainer/Author/Teacher</label>
+              <input type="radio" name="user_type" id="corporate" value="corporate" style="margin-left: 5px;"> <label for="corporate">Corporate User</label>
             </h5>
           </div>
 

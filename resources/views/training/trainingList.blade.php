@@ -30,25 +30,26 @@
                 @if(count($trainings))
                   @foreach($trainings as $training)
                     <div class="col-lg-3 course_col">
-                        <div class="course"><a href="{{asset('training/view/'.$training->id)}}">
+                        <div class="course"><a href="{{asset('training/preview/'.$training->id)}}">
                             <div class="course_image">
                                 <img src="{{asset('/storage/thumbnail/training/'.$training->thumbnail)}}" alt="">
                                 </div>
                             <div class="course_body">
                                 <h4 class="course_title">{{$training->title}}</h4>
-                                <div class="d-flex">
-                                    <div class="mr-auto p-2 course_teacher">{{$training->author}}</div>
-                                    <div class="p-2 course_price">
-                                          @if($training->course_fee>0)
-                                              ${{$training->course_fee}}  
-                                          @else
-                                              Free
-                                          @endif
-                                      </div>
-                                </div>
+                                                
+                                <div class="course_teacher">{{$training->author}}</div>
 
-                                <div class="course_text">
-                                    <p>{{$training->description}}</p>
+                                <div class="d-flex course-footer">
+                                    <div class="mr-auto p-2">
+                                    <i class="fa fa-clock-o"></i> {{$training->duration}} Hour</div>
+                                    <div class="p-2 course_price">
+                                    <i class="fa fa-dollar"></i>
+                                        @if($training->fee>0)
+                                            {{$training->fee}}  
+                                        @else
+                                            Free
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </a></div>

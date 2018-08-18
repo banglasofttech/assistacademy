@@ -42,7 +42,7 @@
             </div>
 
             <div class="form-group">
-                <label>Select Thumbnail (<span id="thumb_fromat" style="color: gray;">jpg,jpeg,png</span>)</label>
+                <label>Select Banner (<span id="thumb_fromat" style="color: gray;">jpg,jpeg,png</span>)</label>
                 <input type="file" class=" " id="thumbnail" name="thumbnail" accept="image/x-png,image/gif,image/jpeg" required autofocus/>
             </div>
 

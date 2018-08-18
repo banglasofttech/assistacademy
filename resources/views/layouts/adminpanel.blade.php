@@ -114,7 +114,7 @@
                         </li>
                         @if(Auth::user()->user_type=="admin")
                             <li>
-                                <a href="#"><i class="fa fa-check-square-o fa-fw"></i> User Request<span class="fa arrow"></span></a>
+                                <a href="#"><i class="fa fa-user-plus fa-fw"></i> User Request<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
                                         <a href="{{asset('authorrequest')}}">Author Request</a>
@@ -127,6 +127,28 @@
                                     </li>
                                 </ul>
                             </li>
+
+                            <li>
+                                <a href="#"><i class="fa fa-check-square-o fa-fw"></i> File Request<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="{{asset('bookrequest')}}">Book Request</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{asset('videorequest')}}">Video Request</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{asset('pptrequest')}}">PPT Request</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{asset('trainingrequest')}}">Training Request</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{asset('courserequest')}}">Course Request</a>
+                                    </li>
+                                </ul>
+                            </li>
+
                             <li>
                                 <a href="#"><i class="fa fa-user fa-fw"></i> Manage Members<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
@@ -141,6 +163,9 @@
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+                                <a href="{{asset('remove-category')}}"><i class="fa fa-trash"></i> Remove Category</a>
                             </li>
                         @endif
                     </ul>
@@ -212,6 +237,9 @@
     <script type="text/javascript" src="{{asset('content/js/panel/sb-admin-2.js')}}"></script>
     <script type="text/javascript" src="{{asset('content/js/adminpanel.js')}}"></script>
     <script type="text/javascript" src="{{asset('content/js/main.js')}}"></script>
+    
+
+    <script src="{{asset('content/js/editCourse.js')}}"></script>
 
 </body>
 

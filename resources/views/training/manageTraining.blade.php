@@ -17,7 +17,7 @@
               @if(Auth::user()->user_type=="author")
                 Added At
               @else
-                Author
+                Trainer
               @endif
             </th>
             <th scope="col">Action</th>
@@ -41,8 +41,9 @@
                   <a href="/author/{{ $training->user_id }}">{{ $training->uploader_email }} </a>
                 @endif
               </td>             
-              <td id="remove_file">
-                <a href="/managefiles/training/remove/{{$training->id}}" class="btn btn-danger" id="remove_file_button">Remove</a>
+              <td>
+                <a href="/managefiles/training/edit/{{$training->id}}" class="btn btn-success btn-sm">Edit</a>
+                <a href="/managefiles/training/remove/{{$training->id}}" class="btn btn-danger btn-sm" id="remove_file_button">Remove</a>
               </td>
             </tr>
           @endforeach

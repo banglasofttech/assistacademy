@@ -30,6 +30,7 @@ class Course extends Model
 		"instruction",
 		"thumbnail",
 		"exam_file",	
+		"request",	
 	];
 }
 

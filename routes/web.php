@@ -5,6 +5,10 @@ Auth::routes();
 Route::get('/', 'HomeController@index');
 Route::get('/adminpanel', 'AdminController@showLoginForm');
 
+Route::get('/profile', function(){
+	return view('user.authorProfile');
+});
+
 Route::post('/filesection', 'FileController@getoSection')->name('filesection');
 
 // Route::get('/register', function(){
@@ -18,7 +22,9 @@ Route::post('/filesection', 'FileController@getoSection')->name('filesection');
 
 // Route::post('/getsubcatagories', 'FileController@getSubcatagories');
 
-
+Route::get('test',function(){
+	return view('user.test');
+});
 
 Route::middleware(['adminauthor'])->group(function(){
     Route::get('/upload', 'FileController@showFileUploaderForm')->name('upload');
@@ -37,7 +43,39 @@ Route::middleware(['adminauthor'])->group(function(){
 	Route::get('/managefiles/books/remove/{id}', 'AdminController@removeBook');
 	Route::get('/managefiles/videos/remove/{id}', 'AdminController@removeVideo');
 	Route::get('/managefiles/ppts/remove/{id}', 'AdminController@removePPT');
-	Route::get('/managefiles/trainings/remove/{id}', 'AdminController@removeTraining');
+	Route::get('/managefiles/training/remove/{id}', 'AdminController@rejectTraining');
+	Route::get('/managefiles/courses/remove/{id}', 'AdminController@rejectCourse');
+
+	Route::get('/managefiles/books/edit/{id}', 'BookController@show_book_editor_form');
+	Route::get('/managefiles/videos/edit/{id}', 'VideoController@show_video_editor_form');
+	Route::get('/managefiles/ppts/edit/{id}', 'pptController@show_ppt_editor_form');
+	Route::get('/managefiles/training/edit/{id}', 'TrainingController@show_training_editor_form');
+	Route::get('/managefiles/courses/edit/{id}', 'CourseController@show_course_editor_form');
+
+	Route::post('/editBook',[
+		'uses' => 'BookController@editBook',
+		'as' => 'editBook'
+	]);
+
+	Route::post('/editPPT',[
+		'uses' => 'pptController@editPPT',
+		'as' => 'editPPT'
+	]);
+
+	Route::post('/editVideo',[
+		'uses' => 'VideoController@editVideo',
+		'as' => 'editVideo'
+	]);
+
+	Route::post('/editTraining',[
+		'uses' => 'TrainingController@editTraining',
+		'as' => 'editTraining'
+	]);
+
+	Route::post('/editCourse',[
+		'uses' => 'CourseController@editCourse',
+		'as' => 'editCourse'
+	]);
 
 	Route::get('/mypanel', 'AdminController@viewDashborad');
 
@@ -70,7 +108,17 @@ Route::middleware(['adminauthor'])->group(function(){
 });
 
 Route::middleware('auth')->group(function(){
-	// Route::get("/author/{id}",'AuthorController@viewProfile');
+	Route::get("/author/{id}",'AuthorController@viewProfile');
+
+	Route::post('/review',[
+		'uses'=>'ReviewController@addReview',
+		'as'=>'review'
+	]);
+
+	Route::post('/comment',[
+		'uses'=>'CommentController@addComment',
+		'as'=>'comment'
+	]);
 	
 
 	// Route::get("/search",'FileController@showFileSearchForm')->middleware('auth');
@@ -80,8 +128,14 @@ Route::middleware('auth')->group(function(){
 
 	Route::get("/videos/view/{id}",'VideoController@viewVideo');
 	Route::get("/ppts/view/{id}",'PPTController@viewPPT');
+	
 	Route::get("/courses/view/{id}",'CourseController@viewCourse');
+	Route::get("/courses/comment/{id}",'CourseController@viewComment');
+	Route::get("/courses/review/{id}",'CourseController@viewReview');
+
 	Route::get("/training/view/{id}",'TrainingController@viewTraining');
+	Route::get("/training/comment/{id}",'TrainingController@viewComment');
+	Route::get("/training/review/{id}",'TrainingController@viewReview');
 });
 
 Route::middleware(['admin'])->group(function(){
@@ -104,6 +158,29 @@ Route::middleware(['admin'])->group(function(){
 	Route::get('/makeauthor/{id}', 'AdminController@acceptAuthorRequest');
 
 	Route::get('/corporateuserlist', 'AdminController@showCorporateUserListTable');
+
+	Route::get('/remove-category', 'AdminController@viewCategoryList');
+	Route::get('/remove-category/remove/{id}', 'AdminController@removeCategory');
+
+	Route::get('/bookrequest', 'AdminController@showBookRequsetTable');
+	Route::get('/bookrequest/accept/{id}', 'AdminController@acceptBook');
+	Route::get('/bookrequest/reject/{id}', 'AdminController@rejectBook');
+
+	Route::get('/videorequest', 'AdminController@showVideoRequsetTable');
+	Route::get('/videorequest/accept/{id}', 'AdminController@acceptVideo');
+	Route::get('/videorequest/reject/{id}', 'AdminController@rejectVideo');
+
+	Route::get('/pptrequest', 'AdminController@showPPTRequsetTable');
+	Route::get('/pptrequest/accept/{id}', 'AdminController@acceptPPT');
+	Route::get('/pptrequest/reject/{id}', 'AdminController@rejectPPT');
+
+	Route::get('/courserequest', 'AdminController@showCourseRequsetTable');
+	Route::get('/courserequest/accept/{id}', 'AdminController@acceptCourse');
+	Route::get('/courserequest/reject/{id}', 'AdminController@rejectCourse');
+
+	Route::get('/trainingrequest', 'AdminController@showTrainingRequsetTable');
+	Route::get('/trainingrequest/accept/{id}', 'AdminController@acceptTraining');
+	Route::get('/trainingrequest/reject/{id}', 'AdminController@rejectTraining');
 });
 
 Route::get("/books",'BookController@index');
@@ -125,9 +202,11 @@ Route::get("/ppts/download/{id}",'PPTController@downloadPPT')->middleware('auth'
 Route::get("/courses",'CourseController@index');
 Route::get("/courses/catagory/{id}",'CourseController@catagorywiseCourse');
 Route::get("/courses/author/{email}",'CourseController@authorwiseCourse');
+Route::get("/courses/preview/{id}",'CourseController@previewCourse');
 
 Route::get("/training",'TrainingController@index');
 Route::get("/training/catagory/{id}",'TrainingController@catagorywiseTraining');
 Route::get("/training/author/{email}",'TrainingController@authorwiseTraining');
+Route::get("/training/preview/{id}",'TrainingController@previewTraining');
 
 Route::post("/search",'FileController@searchFile')->name('search');

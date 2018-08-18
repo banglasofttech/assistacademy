@@ -78,24 +78,29 @@
                             <div class="row courses_row">
                             	@for($i=0; $i < 4 && $i < count($courses); $i++)
     	                            <div class="col-lg-3 course_col">
-    	                                <div class="course"><a href="{{asset('courses/view/'.$courses[$i]->id)}}">
+    	                                <div class="course"><a href="{{asset('courses/preview/'.$courses[$i]->id)}}">
     	                                    <div class="course_image"><img src="{{asset('/storage/thumbnail/course/'.$courses[$i]->thumbnail)}}" alt=""></div>
     	                                    <div class="course_body">
     	                                        <h4 class="course_title">{{$courses[$i]->title}}</h4>
-    	                                        <div class="d-flex">
-    	                                            <div class="mr-auto p-2 course_teacher">{{$courses[$i]->author}}</div>
-    	                                            <div class="p-2 course_price">
-                                                        @if($courses[$i]->course_fee>0)
-                                                            ${{$courses[$i]->course_fee}}  
-                                                        @else
-                                                            Free
-                                                        @endif
-                                                    </div>
-    	                                        </div>
+
+	                                            <div class="course_teacher">{{$courses[$i]->author}}</div>
 
     	                                        <div class="course_text">
     	                                            <p>{{$courses[$i]->description}}</p>
     	                                        </div>
+
+                                                <div class="d-flex course-footer">
+                                                    <div class="mr-auto p-2">
+                                                    <i class="fa fa-clock-o"></i> {{$courses[$i]->duration}} {{$courses[$i]->duration_type}}</div>
+                                                    <div class="p-2 course_price">
+                                                    <i class="fa fa-dollar"></i>
+                                                        @if($courses[$i]->course_fee>0)
+                                                            {{$courses[$i]->course_fee}}  
+                                                        @else
+                                                            Free
+                                                        @endif
+                                                    </div>
+                                                </div>
     	                                    </div>
     	                                </a></div>
     	                            </div>
@@ -108,23 +113,27 @@
                                 <div class="row courses_row">
                                     @for($i=$j; $i < $j*4 && $i < count($courses); $i++)
                                         <div class="col-lg-3 course_col">
-                                            <div class="course"><a href="{{asset('courses/view/'.$courses[$i]->id)}}">
+                                            <div class="course"><a href="{{asset('courses/preview/'.$courses[$i]->id)}}">
                                                 <div class="course_image"><img src="{{asset('/storage/thumbnail/course/'.$courses[$i]->thumbnail)}}}" alt=""></div>
                                                 <div class="course_body">
                                                     <h4 class="course_title">{{$courses[$i]->title}}</h4>
-                                                    <div class="d-flex">
-                                                        <div class="mr-auto p-2 course_teacher">{{$courses[$i]->author}}</div>
-                                                        <div class="p-2 course_price">
-                                                            @if($courses[$i]->course_fee>0)
-                                                                ${{$courses[$i]->course_fee}}  
-                                                            @else
-                                                                Free
-                                                            @endif
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="course_text">
-                                                        <p>{{$courses[$i]->description}}</p>
+                                                <div class="course_teacher">{{$courses[$i]->author}}</div>
+
+                                                <div class="course_text">
+                                                    <p>{{$courses[$i]->description}}</p>
+                                                </div>
+
+                                                <div class="d-flex course-footer">
+                                                    <div class="mr-auto p-2">
+                                                    <i class="fa fa-clock-o"></i> {{$courses[$i]->duration}} {{$courses[$i]->duration_type}}</div>
+                                                    <div class="p-2 course_price">
+                                                    <i class="fa fa-dollar"></i>
+                                                        @if($courses[$i]->course_fee>0)
+                                                            {{$courses[$i]->course_fee}}  
+                                                        @else
+                                                            Free
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </a></div>
@@ -174,23 +183,24 @@
                             <div class="row courses_row">
                                 @for($i=0; $i < 4 && $i < count($trainings); $i++)
                                     <div class="col-lg-3 course_col">
-                                        <div class="course"><a href="{{asset('training/view/'.$trainings[$i]->id)}}">
+                                        <div class="course"><a href="{{asset('training/preview/'.$trainings[$i]->id)}}">
                                             <div class="course_image"><img src="{{asset('/storage/thumbnail/training/'.$trainings[$i]->thumbnail)}}" alt=""></div>
                                             <div class="course_body">
                                                 <h4 class="course_title">{{$trainings[$i]->title}}</h4>
-                                                <div class="d-flex">
-                                                    <div class="mr-auto p-2 course_teacher">{{$trainings[$i]->author}}</div>
+                                                
+                                                <div class="course_teacher">{{$trainings[$i]->author}}</div>
+
+                                                <div class="d-flex course-footer">
+                                                    <div class="mr-auto p-2">
+                                                    <i class="fa fa-clock-o"></i> {{$trainings[$i]->duration}} {{$trainings[$i]->duration_type}}</div>
                                                     <div class="p-2 course_price">
+                                                    <i class="fa fa-dollar"></i>
                                                         @if($trainings[$i]->fee>0)
-                                                            ${{$trainings[$i]->fee}}  
+                                                            {{$trainings[$i]->fee}}  
                                                         @else
                                                             Free
                                                         @endif
                                                     </div>
-                                                </div>
-
-                                                <div class="course_text">
-                                                    <p>{{$trainings[$i]->description}}</p>
                                                 </div>
                                             </div>
                                         </a></div>
@@ -204,23 +214,23 @@
                                 <div class="row courses_row">
                                     @for($i=$j; $i < $j*4 && $i < count($trainings); $i++)
                                         <div class="col-lg-3 course_col">
-                                            <div class="course"><a href="{{asset('training/view/'.$trainings[$i]->id)}}">
+                                            <div class="course"><a href="{{asset('training/preview/'.$trainings[$i]->id)}}">
                                                 <div class="course_image"><img src="{{asset('/storage/thumbnail/training/'.$trainings[$i]->thumbnail)}}" alt=""></div>
                                                 <div class="course_body">
                                                     <h4 class="course_title">{{$trainings[$i]->title}}</h4>
-                                                    <div class="d-flex">
-                                                        <div class="mr-auto p-2 course_teacher">{{$trainings[$i]->author}}</div>
-                                                        <div class="p-2 course_price">
-                                                            @if($trainings[$i]->fee>0)
-                                                                ${{$trainings[$i]->fee}}  
-                                                            @else
-                                                                Free
-                                                            @endif
-                                                        </div>
-                                                    </div>
+                                                
+                                                <div class="course_teacher">{{$trainings[$i]->author}}</div>
 
-                                                    <div class="course_text">
-                                                        <p>{{$trainings[$i]->description}}</p>
+                                                <div class="d-flex course-footer">
+                                                    <div class="mr-auto p-2">
+                                                    <i class="fa fa-clock-o"></i> {{$trainings[$i]->duration}} {{$trainings[$i]->duration_type}}</div>
+                                                    <div class="p-2 course_price">
+                                                    <i class="fa fa-dollar"></i>
+                                                        @if($trainings[$i]->fee>0)
+                                                            {{$trainings[$i]->fee}}  
+                                                        @else
+                                                            Free
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </a></div>
