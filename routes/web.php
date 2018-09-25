@@ -187,7 +187,7 @@ Route::get("/books",'BookController@index');
 Route::get("/books/catagory/{id}",'BookController@catagoryBook');
 Route::get("/books/author/{email}",'BookController@authorBook');
 Route::get("/books/view/{id}",'BookController@viewBook');
-Route::get("/books/download/{id}",'BookController@downloadBook')->middleware('auth');
+Route::get("/books/download/{id}",'BookController@downloadBook')->middleware('web');
 
 Route::get("/videos",'VideoController@index');
 Route::get("/videos/catagory/{id}",'VideoController@catagoryVideo');

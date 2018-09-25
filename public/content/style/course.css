@@ -1506,7 +1506,9 @@ section
 }
 .teacher_image img
 {
-	max-width: 100%;
+	/*max-width: 100%;*/
+	width: 92px;
+	height: 92px;
 	border-radius: 50px;
 }
 .teacher_title

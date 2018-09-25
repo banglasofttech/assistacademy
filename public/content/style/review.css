@@ -55,7 +55,8 @@ body {
 }
 
 .rating{
-	transform: translate(-78%,-0%) rotateY(180deg);
+	transform: translate(-75%,-0%) rotateY(180deg);
+	/*transform: rotateY(180deg);*/
 }
 .rating label{
 	/*display: block;*/

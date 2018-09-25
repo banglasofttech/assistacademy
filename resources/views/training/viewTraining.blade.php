@@ -173,7 +173,11 @@
                               <div class="review-block">
                                 <div class="row">
                                   <div class="col-sm-3">
-                                    <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+                                    @if($commented_users[$i]->pp != null)
+                                        <img src="{{asset('/storage/thumbnail/author/'.$commented_users[$i]->pp)}}" class="img-rounded" width="60px" height: "200px">
+                                      @else
+                                        <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded"  width="50px" height: "250px">
+                                      @endif
                                     <div class="review-block-name"> {{ $commented_users[$i]->first_name }} {{ $commented_users[$i]->last_name }}</div>
                                     <div class="review-block-date"> {{$comment->created_at }}</div>
                                   </div>
@@ -310,7 +314,11 @@
                               <div class="review-block">
                                 <div class="row">
                                   <div class="col-sm-3">
-                                    <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+                                      @if($reviewed_users[$i]->pp != null)
+                                        <img src="{{asset('/storage/thumbnail/author/'.$reviewed_users[$i]->pp)}}" class="img-rounded" width="60px" height: "200px">
+                                      @else
+                                        <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded"  width="50px" height: "250px">
+                                      @endif
                                     <div class="review-block-name"> {{ $reviewed_users[$i]->first_name }} {{ $reviewed_users[$i]->last_name }}</div>
                                     <div class="review-block-date"> {{$review->created_at }}</div>
                                   </div>
@@ -356,7 +364,7 @@
                   <div class="teacher_title_container d-flex flex-row align-items-center justify-content-start">
                     <div class="teacher_image">
                         <!-- <img src="{{asset('/storage/thumbnail/author/'.$author->pp)}}" alt=""> -->
-                        <img src="https://pbs.twimg.com/profile_images/930879582395174912/l-2mIcdB_400x400.jpg" alt="">
+                        <img src="{{asset('/storage/thumbnail/author/'.$author->pp)}}" alt="">
                         </div>
                     <div class="teacher_title">
                       <div class="teacher_name"><a href="{{asset('author/'.$author->id)}}">{{ $author->first_name }} {{ $author->last_name }}</a></div>

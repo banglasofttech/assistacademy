@@ -47,211 +47,8 @@
   </div>
 </div>
 
-    <!-- Popular Courses -->
-    <div class="courses item-section">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="d-flex section_title_container">
-                        <h2 class="mr-auto p-2 section_title">Recent Courses</h2>
-
-                        <form method="post" class="d-flex flex-row align-items-center justify-content-center" action="{{route('filesection')}}">
-                    		{{csrf_field()}}
-                    		<input type="hidden" name="section" value="courses">
-	                        <select name="catagory_id" class="p-2 dropdown_item_select custom-select" required>
-                                <option value="0">All Category</option>
-                                @foreach($catagories as $Category)
-                                	<option value="{{$Category->id}}">{{$Category->catagory_name}}</option>
-                                @endforeach
-	                        </select>
-	                        <input type="submit" class="p-2 btn section_button" value="View Courses">
-                   	 	</form>
-                    </div>
-                </div>
-            </div>
-
-            <div id="carouselCourseControls" class="carousel slide" data-ride="carousel" data-interval="false">
-
-                @if(count($courses)>0)
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="row courses_row">
-                            	@for($i=0; $i < 4 && $i < count($courses); $i++)
-    	                            <div class="col-lg-3 course_col">
-    	                                <div class="course"><a href="{{asset('courses/preview/'.$courses[$i]->id)}}">
-    	                                    <div class="course_image"><img src="{{asset('/storage/thumbnail/course/'.$courses[$i]->thumbnail)}}" alt=""></div>
-    	                                    <div class="course_body">
-    	                                        <h4 class="course_title">{{$courses[$i]->title}}</h4>
-
-	                                            <div class="course_teacher">{{$courses[$i]->author}}</div>
-
-    	                                        <div class="course_text">
-    	                                            <p>{{$courses[$i]->description}}</p>
-    	                                        </div>
-
-                                                <div class="d-flex course-footer">
-                                                    <div class="mr-auto p-2">
-                                                    <i class="fa fa-clock-o"></i> {{$courses[$i]->duration}} {{$courses[$i]->duration_type}}</div>
-                                                    <div class="p-2 course_price">
-                                                    <i class="fa fa-dollar"></i>
-                                                        @if($courses[$i]->course_fee>0)
-                                                            {{$courses[$i]->course_fee}}  
-                                                        @else
-                                                            Free
-                                                        @endif
-                                                    </div>
-                                                </div>
-    	                                    </div>
-    	                                </a></div>
-    	                            </div>
-    	                        @endfor
-                            </div>
-                        </div>
-                        
-                        @for($j=2; $j < 4 && $j < count($courses); $j++)
-                            <div class="carousel-item">
-                                <div class="row courses_row">
-                                    @for($i=$j; $i < $j*4 && $i < count($courses); $i++)
-                                        <div class="col-lg-3 course_col">
-                                            <div class="course"><a href="{{asset('courses/preview/'.$courses[$i]->id)}}">
-                                                <div class="course_image"><img src="{{asset('/storage/thumbnail/course/'.$courses[$i]->thumbnail)}}}" alt=""></div>
-                                                <div class="course_body">
-                                                    <h4 class="course_title">{{$courses[$i]->title}}</h4>
-
-                                                <div class="course_teacher">{{$courses[$i]->author}}</div>
-
-                                                <div class="course_text">
-                                                    <p>{{$courses[$i]->description}}</p>
-                                                </div>
-
-                                                <div class="d-flex course-footer">
-                                                    <div class="mr-auto p-2">
-                                                    <i class="fa fa-clock-o"></i> {{$courses[$i]->duration}} {{$courses[$i]->duration_type}}</div>
-                                                    <div class="p-2 course_price">
-                                                    <i class="fa fa-dollar"></i>
-                                                        @if($courses[$i]->course_fee>0)
-                                                            {{$courses[$i]->course_fee}}  
-                                                        @else
-                                                            Free
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </a></div>
-                                        </div>
-                                    @endfor
-                                </div>
-                            </div>
-                        @endfor
-                    </div>
-                    @endif
-                </div>
-
-
-          <div class="slider_nav slider_prev" href="#carouselCourseControls" role="button" data-slide="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
-        <div class="slider_nav slider_next" href="#carouselCourseControls" role="button" data-slide="next"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
-
-        </div>
-    </div>
-
-    <!-- Training Section -->
-    <div class="Trainging item-section">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="d-flex section_title_container">
-                        <h2 class="mr-auto p-2 section_title">Recent Training</h2>
-
-                        <form method="post" class="d-flex flex-row align-items-center justify-content-center" action="{{route('filesection')}}">
-                    		{{csrf_field()}}
-                    		<input type="hidden" name="section" value="training">
-	                        <select name="catagory_id" class="p-2 dropdown_item_select custom-select" required>
-                                <option value="0">All Category</option>
-                                @foreach($catagories as $Category)
-                                	<option value="{{$Category->id}}">{{$Category->catagory_name}}</option>
-                                @endforeach
-	                        </select>
-	                        <input type="submit" class="p-2 btn section_button" value="View Trainings">
-                   	 	</form>
-                    </div>
-                </div>
-            </div>
-
-            <div id="carouselTrainingControls" class="carousel slide" data-ride="carousel" data-interval="false">
-                @if(count($trainings)>0)
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="row courses_row">
-                                @for($i=0; $i < 4 && $i < count($trainings); $i++)
-                                    <div class="col-lg-3 course_col">
-                                        <div class="course"><a href="{{asset('training/preview/'.$trainings[$i]->id)}}">
-                                            <div class="course_image"><img src="{{asset('/storage/thumbnail/training/'.$trainings[$i]->thumbnail)}}" alt=""></div>
-                                            <div class="course_body">
-                                                <h4 class="course_title">{{$trainings[$i]->title}}</h4>
-                                                
-                                                <div class="course_teacher">{{$trainings[$i]->author}}</div>
-
-                                                <div class="d-flex course-footer">
-                                                    <div class="mr-auto p-2">
-                                                    <i class="fa fa-clock-o"></i> {{$trainings[$i]->duration}} {{$trainings[$i]->duration_type}}</div>
-                                                    <div class="p-2 course_price">
-                                                    <i class="fa fa-dollar"></i>
-                                                        @if($trainings[$i]->fee>0)
-                                                            {{$trainings[$i]->fee}}  
-                                                        @else
-                                                            Free
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a></div>
-                                    </div>
-                                @endfor
-                            </div>
-                        </div>
-                        
-                       @for($j=2; $j < 4 && $j < count($trainings); $j++)
-                            <div class="carousel-item">
-                                <div class="row courses_row">
-                                    @for($i=$j; $i < $j*4 && $i < count($trainings); $i++)
-                                        <div class="col-lg-3 course_col">
-                                            <div class="course"><a href="{{asset('training/preview/'.$trainings[$i]->id)}}">
-                                                <div class="course_image"><img src="{{asset('/storage/thumbnail/training/'.$trainings[$i]->thumbnail)}}" alt=""></div>
-                                                <div class="course_body">
-                                                    <h4 class="course_title">{{$trainings[$i]->title}}</h4>
-                                                
-                                                <div class="course_teacher">{{$trainings[$i]->author}}</div>
-
-                                                <div class="d-flex course-footer">
-                                                    <div class="mr-auto p-2">
-                                                    <i class="fa fa-clock-o"></i> {{$trainings[$i]->duration}} {{$trainings[$i]->duration_type}}</div>
-                                                    <div class="p-2 course_price">
-                                                    <i class="fa fa-dollar"></i>
-                                                        @if($trainings[$i]->fee>0)
-                                                            {{$trainings[$i]->fee}}  
-                                                        @else
-                                                            Free
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </a></div>
-                                        </div>
-                                    @endfor
-                                </div>
-                            </div>
-                        @endfor
-                    </div>
-                    @endif
-                </div>
-
-
-          <div class="slider_nav slider_prev" href="#carouselTrainingControls" role="button" data-slide="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
-        <div class="slider_nav slider_next" href="#carouselTrainingControls" role="button" data-slide="next"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
-        </div>
-    </div>
-
-
     <!-- Books Section -->
-    <div class="Books item-section">
+    <div class="Books item-section" style="margin-top: 30px;">
         <div class="container">
             <div class="row">
                 <div class="col">
@@ -468,6 +265,210 @@
 
         <div class="slider_nav slider_prev" href="#carouselPPTControls" role="button" data-slide="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
         <div class="slider_nav slider_next" href="#carouselPPTControls" role="button" data-slide="next"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+
+        </div>
+    </div>
+
+    <!-- Training Section -->
+    <div class="Trainging item-section" style="display: none;">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex section_title_container">
+                        <h2 class="mr-auto p-2 section_title">Recent Training</h2>
+
+                        <form method="post" class="d-flex flex-row align-items-center justify-content-center" action="{{route('filesection')}}">
+                    		{{csrf_field()}}
+                    		<input type="hidden" name="section" value="training">
+	                        <select name="catagory_id" class="p-2 dropdown_item_select custom-select" required>
+                                <option value="0">All Category</option>
+                                @foreach($catagories as $Category)
+                                	<option value="{{$Category->id}}">{{$Category->catagory_name}}</option>
+                                @endforeach
+	                        </select>
+	                        <input type="submit" class="p-2 btn section_button" value="View Trainings">
+                   	 	</form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="carouselTrainingControls" class="carousel slide" data-ride="carousel" data-interval="false">
+                @if(count($trainings)>0)
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row courses_row">
+                                @for($i=0; $i < 4 && $i < count($trainings); $i++)
+                                    <div class="col-lg-3 course_col">
+                                        <div class="course"><a href="{{asset('training/preview/'.$trainings[$i]->id)}}">
+                                            <div class="course_image"><img src="{{asset('/storage/thumbnail/training/'.$trainings[$i]->thumbnail)}}" alt=""></div>
+                                            <div class="course_body">
+                                                <h4 class="course_title">{{$trainings[$i]->title}}</h4>
+                                                
+                                                <div class="course_teacher">{{$trainings[$i]->author}}</div>
+
+                                                <div class="d-flex course-footer">
+                                                    <div class="mr-auto p-2">
+                                                    <i class="fa fa-clock-o"></i> {{$trainings[$i]->duration}} {{$trainings[$i]->duration_type}}</div>
+                                                    <div class="p-2 course_price">
+                                                    <i class="fa fa-dollar"></i>
+                                                        @if($trainings[$i]->fee>0)
+                                                            {{$trainings[$i]->fee}}  
+                                                        @else
+                                                            Free
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a></div>
+                                    </div>
+                                @endfor
+                            </div>
+                        </div>
+                        
+                        @for($j=2; $j < 4 && $j < count($trainings); $j++)
+                            <div class="carousel-item">
+                                <div class="row courses_row">
+                                    @for($i=$j; $i < $j*4 && $i < count($trainings); $i++)
+                                        <div class="col-lg-3 course_col">
+                                        <div class="course"><a href="{{asset('training/preview/'.$trainings[$i]->id)}}">
+                                            <div class="course_image"><img src="{{asset('/storage/thumbnail/training/'.$trainings[$i]->thumbnail)}}" alt=""></div>
+                                            <div class="course_body">
+                                                <h4 class="course_title">{{$trainings[$i]->title}}</h4>
+                                                
+                                                <div class="course_teacher">{{$trainings[$i]->author}}</div>
+
+                                                <div class="d-flex course-footer">
+                                                    <div class="mr-auto p-2">
+                                                    <i class="fa fa-clock-o"></i> {{$trainings[$i]->duration}} {{$trainings[$i]->duration_type}}</div>
+                                                    <div class="p-2 course_price">
+                                                    <i class="fa fa-dollar"></i>
+                                                        @if($trainings[$i]->fee>0)
+                                                            {{$trainings[$i]->fee}}  
+                                                        @else
+                                                            Free
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a></div>
+                                    </div>
+                                    @endfor
+                                </div>
+                            </div>
+                        @endfor
+                       
+                    </div>
+                    @endif
+                </div>
+
+
+          <div class="slider_nav slider_prev" href="#carouselTrainingControls" role="button" data-slide="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
+        <div class="slider_nav slider_next" href="#carouselTrainingControls" role="button" data-slide="next"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+        </div>
+    </div>
+
+    <!-- Popular Courses -->
+    <div class="courses item-section" style="display: none;">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex section_title_container">
+                        <h2 class="mr-auto p-2 section_title">Recent Courses</h2>
+
+                        <form method="post" class="d-flex flex-row align-items-center justify-content-center" action="{{route('filesection')}}">
+                    		{{csrf_field()}}
+                    		<input type="hidden" name="section" value="courses">
+	                        <select name="catagory_id" class="p-2 dropdown_item_select custom-select" required>
+                                <option value="0">All Category</option>
+                                @foreach($catagories as $Category)
+                                	<option value="{{$Category->id}}">{{$Category->catagory_name}}</option>
+                                @endforeach
+	                        </select>
+	                        <input type="submit" class="p-2 btn section_button" value="View Courses">
+                   	 	</form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="carouselCourseControls" class="carousel slide" data-ride="carousel" data-interval="false">
+
+                @if(count($courses)>0)
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row courses_row">
+                            	@for($i=0; $i < 4 && $i < count($courses); $i++)
+    	                            <div class="col-lg-3 course_col">
+    	                                <div class="course"><a href="{{asset('courses/preview/'.$courses[$i]->id)}}">
+    	                                    <div class="course_image"><img src="{{asset('/storage/thumbnail/course/'.$courses[$i]->thumbnail)}}" alt=""></div>
+    	                                    <div class="course_body">
+    	                                        <h4 class="course_title">{{$courses[$i]->title}}</h4>
+
+	                                            <div class="course_teacher">{{$courses[$i]->author}}</div>
+
+    	                                        <div class="course_text">
+    	                                            <p>{{$courses[$i]->description}}</p>
+    	                                        </div>
+
+                                                <div class="d-flex course-footer">
+                                                    <div class="mr-auto p-2">
+                                                    <i class="fa fa-clock-o"></i> {{$courses[$i]->duration}} {{$courses[$i]->duration_type}}</div>
+                                                    <div class="p-2 course_price">
+                                                    <i class="fa fa-dollar"></i>
+                                                        @if($courses[$i]->course_fee>0)
+                                                            {{$courses[$i]->course_fee}}  
+                                                        @else
+                                                            Free
+                                                        @endif
+                                                    </div>
+                                                </div>
+    	                                    </div>
+    	                                </a></div>
+    	                            </div>
+    	                        @endfor
+                            </div>
+                        </div>
+                        
+                        @for($j=2; $j < 4 && $j < count($courses); $j++)
+                            <div class="carousel-item">
+                                <div class="row courses_row">
+                                    @for($i=$j; $i < $j*4 && $i < count($courses); $i++)
+                                        <div class="col-lg-3 course_col">
+                                            <div class="course"><a href="{{asset('courses/preview/'.$courses[$i]->id)}}">
+                                                <div class="course_image"><img src="{{asset('/storage/thumbnail/course/'.$courses[$i]->thumbnail)}}}" alt=""></div>
+                                                <div class="course_body">
+                                                    <h4 class="course_title">{{$courses[$i]->title}}</h4>
+
+                                                <div class="course_teacher">{{$courses[$i]->author}}</div>
+
+                                                <div class="course_text">
+                                                    <p>{{$courses[$i]->description}}</p>
+                                                </div>
+
+                                                <div class="d-flex course-footer">
+                                                    <div class="mr-auto p-2">
+                                                    <i class="fa fa-clock-o"></i> {{$courses[$i]->duration}} {{$courses[$i]->duration_type}}</div>
+                                                    <div class="p-2 course_price">
+                                                    <i class="fa fa-dollar"></i>
+                                                        @if($courses[$i]->course_fee>0)
+                                                            {{$courses[$i]->course_fee}}  
+                                                        @else
+                                                            Free
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </a></div>
+                                        </div>
+                                    @endfor
+                                </div>
+                            </div>
+                        @endfor
+                    </div>
+                    @endif
+                </div>
+
+
+          <div class="slider_nav slider_prev" href="#carouselCourseControls" role="button" data-slide="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
+        <div class="slider_nav slider_next" href="#carouselCourseControls" role="button" data-slide="next"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
 
         </div>
     </div>

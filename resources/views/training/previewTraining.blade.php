@@ -110,7 +110,7 @@
                   <div class="teacher_title_container d-flex flex-row align-items-center justify-content-start">
                     <div class="teacher_image">
                         <!-- <img src="{{asset('/storage/thumbnail/author/'.$author->pp)}}" alt=""> -->
-                        <img src="https://pbs.twimg.com/profile_images/930879582395174912/l-2mIcdB_400x400.jpg" alt="">
+                        <img src="{{asset('/storage/thumbnail/author/'.$author->pp)}}" alt="">
                         </div>
                     <div class="teacher_title">
                       <div class="teacher_name"><a href="{{asset('author/'.$author->id)}}">{{ $author->first_name }} {{ $author->last_name }}</a></div>

@@ -41,7 +41,7 @@
 
                                 <div class="d-flex course-footer">
                                     <div class="mr-auto p-2">
-                                    <i class="fa fa-clock-o"></i> {{$training->duration}} Hour</div>
+                                    <i class="fa fa-clock-o"></i> {{$training->duration}} {{$training->duration_type}}</div>
                                     <div class="p-2 course_price">
                                     <i class="fa fa-dollar"></i>
                                         @if($training->fee>0)

@@ -280,7 +280,11 @@
                               <div class="review-block">
                                 <div class="row">
                                   <div class="col-sm-3">
-                                    <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+                                    @if($commented_users[$i]->pp != null)
+                                        <img src="{{asset('/storage/thumbnail/author/'.$commented_users[$i]->pp)}}" class="img-rounded" width="60px" height: "200px">
+                                      @else
+                                        <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded"  width="50px" height: "250px">
+                                      @endif
                                     <div class="review-block-name"> {{ $commented_users[$i]->first_name }} {{ $commented_users[$i]->last_name }}</div>
                                     <div class="review-block-date"> {{$comment->created_at }}</div>
                                   </div>
@@ -416,7 +420,11 @@
                               <div class="review-block">
                                 <div class="row">
                                   <div class="col-sm-3">
-                                    <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+                                    @if($reviewed_users[$i]->pp != null)
+                                        <img src="{{asset('/storage/thumbnail/author/'.$reviewed_users[$i]->pp)}}" class="img-rounded" width="60px" height: "200px">
+                                      @else
+                                        <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded"  width="50px" height: "250px">
+                                      @endif
                                     <div class="review-block-name"> {{ $reviewed_users[$i]->first_name }} {{ $reviewed_users[$i]->last_name }}</div>
                                     <div class="review-block-date"> {{$review->created_at }}</div>
                                   </div>
