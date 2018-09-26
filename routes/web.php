@@ -126,8 +126,6 @@ Route::middleware('auth')->group(function(){
 
 	// Route::get("/sendauhtorrequest",'AuthorController@sendAuthorRequest')->name('sendauhtorrequest')->middleware('auth');
 
-	Route::get("/videos/view/{id}",'VideoController@viewVideo');
-	Route::get("/ppts/view/{id}",'PPTController@viewPPT');
 	
 	Route::get("/courses/view/{id}",'CourseController@viewCourse');
 	Route::get("/courses/comment/{id}",'CourseController@viewComment');
@@ -187,17 +185,19 @@ Route::get("/books",'BookController@index');
 Route::get("/books/catagory/{id}",'BookController@catagoryBook');
 Route::get("/books/author/{email}",'BookController@authorBook');
 Route::get("/books/view/{id}",'BookController@viewBook');
-Route::get("/books/download/{id}",'BookController@downloadBook')->middleware('web');
+Route::get("/books/download/{id}",'BookController@downloadBook')->middleware('auth');
 
 Route::get("/videos",'VideoController@index');
 Route::get("/videos/catagory/{id}",'VideoController@catagoryVideo');
 Route::get("/videos/author/{email}",'VideoController@authorVideo');
+Route::get("/videos/view/{id}",'VideoController@viewVideo');
 Route::get("/videos/download/{id}",'VideoController@downloadVideo')->middleware('auth');
 
 Route::get("/ppts",'PPTController@index');
 Route::get("/ppts/catagory/{id}",'PPTController@catagoryPPT');
 Route::get("/ppts/author/{email}",'PPTController@authorPPT');
-Route::get("/ppts/download/{id}",'PPTController@downloadPPT')->middleware('auth');
+Route::get("/ppts/view/{id}",'PPTController@viewPPT');
+Route::get("/ppts/download/{id}",'PPTController@downloadPPT')->middleware('web');
 
 Route::get("/courses",'CourseController@index');
 Route::get("/courses/catagory/{id}",'CourseController@catagorywiseCourse');

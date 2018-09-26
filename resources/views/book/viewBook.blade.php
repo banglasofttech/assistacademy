@@ -48,8 +48,6 @@
         <!-- Course Sidebar -->
         <div class="col-lg-4">
           <div class="sidebar">
-              
-              <a href="{{asset('/books/download/'.$book->id)}}" class="btn btn-success btn-block" style="margin-bottom: 30px;"><i class="fa fa-download"></i> Download this Book</a>
             
               <!-- Author Section -->
               <div class="sidebar_section">
